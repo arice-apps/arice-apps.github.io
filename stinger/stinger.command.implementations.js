@@ -325,7 +325,8 @@
                     "============",
                     "Virus 1",
                     "Virus 2",
-                    "Virus 3"
+                    "Virus 3",
+                    "CorrectVirus"
                 ].join("\n"));
             }
             else if (param1 === "exls") {
@@ -334,10 +335,10 @@
                     "============",
                     "Exploit 1",
                     "Exploit 2",
-                    "Exploit 3"
+                    "CorrectExploit"
                 ].join("\n"));
             }
-            else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "aconite-secure4") {
+            else if (param1 === "CorrectExploit" && param2 === "CorrectVirus" && param3 === "aconite-secure") {
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
