@@ -49,21 +49,6 @@ body {
     color:#53FF42;
     background-color:#444;
 }
-.gitHub {
-    position:absolute;
-    top:0px;
-    right:0px;
-    margin: 10px;
-    text-decoration: none;
-    width: 134px;
-    height: 58px;
-    display: block;
-    font-size: 17px;
-    color:#fff;
-    padding-left: 68px;
-    padding-top: 22px;
-    background: rgba(0, 0, 0, 0) url(http://vtortola.github.io/WebSocketListener/images/github-button.png) 0 0 no-repeat;
-}
 .container {
     width: 720px;
     margin: 0px auto;
