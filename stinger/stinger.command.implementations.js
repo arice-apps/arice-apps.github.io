@@ -195,7 +195,8 @@
                     "<"+ param + " Directory>\n", 
                     "funny_cat_compilation.mp4",
                     "EPIC_FAILS.mp4",
-                    "Spectre 2015 1080p BluRay x264 DTS-JYK.mkv"
+                    "Spectre 2015 1080p BluRay x264 DTS-JYK.mkv",
+                    "Chris McKnett – The Investment Logic for Sustainability.mp4"
                     ].join("\n"));
             }
             else if (param === "aconite-1 Music") {
@@ -309,29 +310,42 @@
         var me = {};
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
-            "Example: stinger-exmal target ExploitName MalwareName",
-            "Set a target by typing stinger-exmal target=192.168.2.1",
+            "Example: stinger-exmal ExploitName MalwareName TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
         me.handle = function (session, param1, param2, param3) {
             var param = [param1, param2, param3].join(" ");
             var outText = [];
             if (!param) {
-                outText.push("You need to provide an exploit and malware name, type 'help stinger-exmal' to get a hint.");
+                outText.push("You need to provide an exploit, malware and target name, type 'help stinger-exmal' to get a hint.");
             }
-            else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "192.168.2.1") {
-                outText.push(param3 + " has been successfully exploited!");
-            }
-            else if (param === "aconite-1 SafariExploit TrojanVirus") {
+            else if (param1 === "mals") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "NOW EXECUTING <" + param + ">\n"
+                    "\nMalware List",
+                    "============",
+                    "Virus 1",
+                    "Virus 2",
+                    "Virus 3"
+                ].join("\n"));
+            }
+            else if (param1 === "exls") {
+                outText.push([
+                    "\nExploit List",
+                    "============",
+                    "Exploit 1",
+                    "Exploit 2",
+                    "Exploit 3"
+                ].join("\n"));
+            }
+            else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "aconite-secure4") {
+                outText.push([
+                    param3 + " has been successfully exploited!",
+                    ">>Your exploit success code is: DAV443<<"
                 ].join("\n"));
             }
             else {
                 outText.push([
                     "\nCould not run exploit/malware, check that the parameters are correct.",
-                    "Params are: " + param1 + " " + param2 + " " + param3,
                     "Type 'help stinger-exmal' to get a hint."
                 ].join("\n"));
             }
