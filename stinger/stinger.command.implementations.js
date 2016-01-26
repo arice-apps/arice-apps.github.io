@@ -3,21 +3,6 @@
 .config(['commandBrokerProvider', function (commandBrokerProvider) {
 
 
-    // STINGER hacking commands //
-    //==========================//
-
-    commandBrokerProvider.appendCommandHandler({
-        command: 'stinger-ls',
-        description: ['Diplays list of infected computer systems.'],
-        handle: function (session) {
-            session.output.push({ output: true, text: ['morpho-2 <INFO: Stacy Holden, Morpho Medical VP Assistant>'], breakLine: true });
-            session.output.push({ output: true, text: ['morpho-1 <INFO: Greg Fields, Morpho Medical SysAdmin>'], breakLine: false });
-            session.output.push({ output: true, text: ['aconite-1 <INFO: Oran Plaskett, Aconite Capital CFO>'], breakLine: false });
-        }
-    });
-
-    //======= END ============//
-
     commandBrokerProvider.appendCommandHandler({
         command: 'version',
         description: ['Shows this software version.'],
@@ -168,6 +153,16 @@
     // STINGER hacking commands //
     //==========================//
 
+    commandBrokerProvider.appendCommandHandler({
+        command: 'stinger-ls',
+        description: ['Diplays list of infected computer systems.'],
+        handle: function (session) {
+            session.output.push({ output: true, text: ['morpho-2 <INFO: Stacy Holden, Morpho Medical VP Assistant>'], breakLine: true });
+            session.output.push({ output: true, text: ['morpho-1 <INFO: Greg Fields, Morpho Medical SysAdmin>'], breakLine: false });
+            session.output.push({ output: true, text: ['aconite-1 <INFO: Oran Plaskett, Aconite Capital CFO>'], breakLine: false });
+        }
+    });
+
     var stingerDirectoryCommandHandler = function () {
         var me = {};
         me.command = 'stinger-cd';
@@ -242,7 +237,10 @@
                 outText.push("\nYour current mission access level does not grant permission to this infected system!");
             }
             else {
-                outText.push("Could not access directory. Check it exists or that you have permission to access.");
+                outText.push([
+                    "\nCould not access directory. Check it exists or that you have permission to access.",
+                    "Type 'help stinger-cd' to get a hint."
+                ].join("\n"));
             }
             session.output.push({ output: true, text: outText, breakLine: true });
         }
@@ -296,7 +294,10 @@
                     ].join("\n"));
             }
             else {
-                outText.push("File could not be opened. Check the filename is correct or that you have permission.");
+                outText.push([
+                    "\nFile could not be opened. Check the filename is correct or that you have permission.",
+                    "Type 'help stinger-rd' to get a hint."
+                ].join("\n"));
             }
             session.output.push({ output: true, text: outText, breakLine: true });
         }
