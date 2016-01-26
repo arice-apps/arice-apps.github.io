@@ -320,7 +320,7 @@
                 outText.push("You need to provide an exploit and malware name, type 'help stinger-exmal' to get a hint.");
             }
             else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "192.168.2.1") {
-                outText.push(param[2] + " has been successfully exploited!");
+                outText.push(param3 + " has been successfully exploited!");
             }
             else if (param === "aconite-1 SafariExploit TrojanVirus") {
                 outText.push([
