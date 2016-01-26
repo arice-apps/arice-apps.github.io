@@ -345,6 +345,4 @@
         return me;
     };
     commandBrokerProvider.appendCommandHandler(helpCommandHandler());
-}])
-
-;
+}]);
