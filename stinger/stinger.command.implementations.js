@@ -335,6 +335,7 @@
                     "============",
                     "Exploit 1",
                     "Exploit 2",
+                    "Exploit 3",
                     "CorrectExploit"
                 ].join("\n"));
             }
