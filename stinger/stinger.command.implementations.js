@@ -339,8 +339,13 @@
             }
             else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "aconite-secure4") {
                 outText.push([
-                    param3 + " has been successfully exploited!",
-                    ">>Your exploit success code is: DAV443<<"
+                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
+                    "\nEXECUTING.........",
+                    "....................",
+                    "...................!",
+                    "\n" + param3 + " has been successfully infected!",
+                    ">>Your success code is: DAV443<<"
                 ].join("\n"));
             }
             else {
