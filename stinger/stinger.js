@@ -36,9 +36,9 @@
     setTimeout(function () {
         $scope.$broadcast('terminal-output', {
             output: true,
-            text: ['STINGER (Version 2.5.3)',
+            text: ['STINGER (V2.5.3), TBW TermOS V6.6.4',
                    'Welcome to the STINGER Hacking Terminal Interface!',
-                   'Created by NITE Team 4',
+                   'Created by NITE Team 4 - Cyber Intel REIMAGINED',
                    'Click inside the terminal window to begin!\n\n',
                    "Please type 'help' to open a list of commands"],
             breakLine: true

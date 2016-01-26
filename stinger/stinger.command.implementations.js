@@ -305,6 +305,43 @@
     };
     commandBrokerProvider.appendCommandHandler(stingerReadCommandHandler());
 
+    var stingerExploitCommandHandler = function () {
+        var me = {};
+        me.command = 'stinger-exmal';
+        me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
+            "Example: stinger-exmal target ExploitName MalwareName",
+            "Set a target by typing stinger-exmal target=192.168.2.1",
+            "See a list of malware available by typing 'stinger-exmal mals'",
+            "See a list of exploits available by typing 'stinger-exmal exls'"];
+        me.handle = function (session, param1, param2, param3) {
+            var param = [param1, param2, param3].join(" ");
+            var outText = [];
+            if (!param) {
+                outText.push("You need to provide an exploit and malware name, type 'help stinger-exmal' to get a hint.");
+            }
+            else if (param1 === "ExploitName" && param2 === "MalwareName" && param3 === "192.168.2.1") {
+                outText.push(param[2] + " has been successfully exploited!");
+            }
+            else if (param === "aconite-1 SafariExploit TrojanVirus") {
+                outText.push([
+                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                    "NOW EXECUTING <" + param + ">\n"
+                ].join("\n"));
+            }
+            else {
+                outText.push([
+                    "\nCould not run exploit/malware, check that the parameters are correct.",
+                    "Params are: " + param1 + " " + param2 + " " + param3,
+                    "Type 'help stinger-exmal' to get a hint."
+                ].join("\n"));
+            }
+            session.output.push({ output: true, text: outText, breakLine: true });
+        }
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerExploitCommandHandler());
+
+
     //======= END ============//
 
     // this must be the last
