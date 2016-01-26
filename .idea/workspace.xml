@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bea3ba0a-51d6-40a0-848f-8b32550f943d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stinger/stinger.command.implementations.js" afterPath="$PROJECT_DIR$/stinger/stinger.command.implementations.js" />
     </list>
     <ignored path="ng-terminal-emulator.iws" />
@@ -36,8 +37,8 @@
       <file leaf-file-name="stinger.command.implementations.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stinger/stinger.command.implementations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6745868">
-              <caret line="342" column="97" selection-start-line="342" selection-start-column="97" selection-end-line="342" selection-end-column="97" />
+            <state vertical-scroll-proportion="0.8605372">
+              <caret line="354" column="30" selection-start-line="354" selection-start-column="30" selection-end-line="354" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -401,8 +402,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stinger/stinger.command.implementations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6745868">
-          <caret line="342" column="97" selection-start-line="342" selection-start-column="97" selection-end-line="342" selection-end-column="97" />
+        <state vertical-scroll-proportion="0.8605372">
+          <caret line="354" column="30" selection-start-line="354" selection-start-column="30" selection-end-line="354" selection-end-column="30" />
           <folding />
         </state>
       </provider>

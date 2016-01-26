@@ -350,7 +350,7 @@
             }
             else {
                 outText.push([
-                    "\nCould not run exploit/malware, check that the parameters are correct.",
+                    "\nCould not run exploit/malware against target, check that the parameters are correct.",
                     "Type 'help stinger-exmal' to get a hint."
                 ].join("\n"));
             }
