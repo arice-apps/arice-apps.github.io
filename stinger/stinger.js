@@ -38,9 +38,10 @@
             output: true,
             text: ['STINGER (V2.5.3), TBW TermOS V6.6.4',
                    'Welcome to the STINGER Hacking Terminal Interface!',
-                   'Created by NITE Team 4 - Cyber Intel REIMAGINED',
-                   'Click inside the terminal window to begin!\n\n',
-                   "Please type 'help' to open a list of commands"],
+                   'Created by NITE Team 4 - Cyber Intel REIMAGINED\n\n',
+                   'Click inside the terminal window to begin!',
+                   "Please type 'help' to open a list of commands",
+                   "STINGER input is CASE SENSITIVE."],
             breakLine: true
         });
         $scope.$apply();
