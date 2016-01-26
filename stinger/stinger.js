@@ -37,7 +37,7 @@
         $scope.$broadcast('terminal-output', {
             output: true,
             text: ['STINGER (Version 2.5.3)',
-                   'Welcome to the STINGER Hacking Terminal Igit nterface!',
+                   'Welcome to the STINGER Hacking Terminal Interface!',
                    'Created by NITE Team 4',
                    'Click inside the terminal window to begin!\n\n',
                    "Please type 'help' to open a list of commands"],
