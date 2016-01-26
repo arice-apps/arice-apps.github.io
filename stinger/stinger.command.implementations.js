@@ -337,7 +337,7 @@
         var me = {};
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
-            "Example: stinger-exmal ExploitName MalwareName TargetID",
+            "Example: stinger-exmal ExploitID MalwareID TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
         me.handle = function (session, param1, param2, param3) {
@@ -348,8 +348,8 @@
             }
             else if (param1 === "mals") {
                 outText.push([
-                    "\nMalware List",
-                    "============",
+                    "\nSTINGER Malware List",
+                    "========================",
                     "Virus 1",
                     "Virus 2",
                     "Virus 3",
@@ -358,15 +358,15 @@
             }
             else if (param1 === "exls") {
                 outText.push([
-                    "\nExploit List",
-                    "============",
-                    "Exploit 1",
-                    "Exploit 2",
-                    "Exploit 3",
-                    "CorrectExploit"
+                    "\nSTINGER Exploit List",
+                    "========================",
+                    "TITLE\t\t\t\t\t\t\t\t\t\tID",
+                    "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstn38535",
+                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
+                    "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tstn38374"
                 ].join("\n"));
             }
-            else if (param1 === "CorrectExploit" && param2 === "CorrectVirus" && param3 === "aconite-secure") {
+            else if (param1 === "stn38374" && param2 === "CorrectVirus" && param3 === "aconite-secure") {
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",

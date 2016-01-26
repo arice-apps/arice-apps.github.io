@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/stinger/stinger.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="71" selection-start-line="40" selection-start-column="71" selection-end-line="40" selection-end-column="71" />
+              <caret line="43" column="55" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -47,8 +47,8 @@
       <file leaf-file-name="stinger.command.implementations.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stinger/stinger.command.implementations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56060606">
-              <caret line="159" column="126" selection-start-line="159" selection-start-column="126" selection-end-line="159" selection-end-column="126" />
+            <state vertical-scroll-proportion="0.6060606">
+              <caret line="365" column="82" selection-start-line="365" selection-start-column="82" selection-end-line="365" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -64,8 +64,8 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/stinger/content/style.css" />
-        <option value="$PROJECT_DIR$/stinger/stinger.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/stinger/stinger.js" />
         <option value="$PROJECT_DIR$/stinger/stinger.command.implementations.js" />
       </list>
     </option>
@@ -395,14 +395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stinger/stinger.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="71" selection-start-line="40" selection-start-column="71" selection-end-line="40" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.125">
@@ -411,10 +403,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stinger/stinger.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="55" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stinger/stinger.command.implementations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56060606">
-          <caret line="159" column="126" selection-start-line="159" selection-start-column="126" selection-end-line="159" selection-end-column="126" />
+        <state vertical-scroll-proportion="0.6060606">
+          <caret line="365" column="82" selection-start-line="365" selection-start-column="82" selection-end-line="365" selection-end-column="82" />
           <folding />
         </state>
       </provider>
