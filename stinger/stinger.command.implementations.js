@@ -237,7 +237,7 @@
                 ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Desktop") {
-                var desktop_list = "App Store,Chrome,ITunes,Inverstors_List.pages,Contacts,Safari,Pages,IMG_0403.JPG,Invoice.pages,Strategic_Bussiness_Plan_Aconite(In Progress).pages,Tax Receipt 2014.pages,Aconite_Financial_Report.pages,Keynote,Mail,Reminders,Numbers,IMG_0401.JPG,rts00xVD553.png"
+                var desktop_list = "App Store,Chrome,ITunes,Investors_List.pages,Contacts,Safari,Pages,IMG_0403.JPG,Invoice.pages,Strategic_Business_Plan_Aconite(In Progress).pages,Tax Receipt 2014.pages,Aconite_Financial_Report.pages,Keynote,Mail,Reminders,Numbers,IMG_0401.JPG,rts00xVD553.png"
                     .split(",").join("\n");
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
@@ -254,11 +254,12 @@
                     ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Documents") {
+                var documents_list = "Alone_Edgar_Allen_Poe.pdf,comcast_nov2015.pdf"
+                    .split(",").join("\n");
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
-                        "Alone_Edgar_Allen_Poe.pdf",
-                        "comcast_nov2015.pdf"
+                        documents_list
                     ].join("\n"));
             }
             else {
