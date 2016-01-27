@@ -158,6 +158,11 @@
     // STINGER hacking commands //
     //==============================================================================//
 
+
+    //==============================================================================//
+    // STINGER <List> Command //
+    //==============================================================================//
+
     commandBrokerProvider.appendCommandHandler({
         command: 'stinger-ls',
         description: ['Diplays list of infected computer systems.'],
@@ -168,6 +173,11 @@
             session.output.push({ output: true, text: ['\n>>STINGER INFECTED SYSTEMS<<'], breakLine: true });
         }
     });
+
+
+    //==============================================================================//
+    // STINGER <Directory> Command //
+    //==============================================================================//
 
     var stingerDirectoryCommandHandler = function () {
         var me = {};
@@ -253,6 +263,11 @@
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerDirectoryCommandHandler());
+
+
+    //==============================================================================//
+    // STINGER <Read> Command //
+    //==============================================================================//
 
     var stingerReadCommandHandler = function () {
         var me = {};
@@ -342,6 +357,11 @@
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerReadCommandHandler());
+
+
+    //==============================================================================//
+    // STINGER <Exploit/Malware> Command //
+    //==============================================================================//
 
     var stingerExploitCommandHandler = function () {
         var correct_virus = "correct_virus";
