@@ -167,7 +167,11 @@
         command: 'stinger-ls',
         description: ['Diplays list of infected computer systems.'],
         handle: function (session) {
-            session.output.push({ output: true, text: ['morpho-2\t << INFO: Stacy Holden, Morpho Medical VP Assistant (Office) >>\n\n'], breakLine: false });
+            session.output.push({ output: true, text: ['\n'], breakLine: false });
+            session.output.push({ output: true, text: ['lorenz-3\t << INFO: Sven Daecher, Lorenz Ocean Science Expert (Office) >>'], breakLine: false });
+            session.output.push({ output: true, text: ['lorenz-2\t << INFO: Seb Reiniger, Lorenz Tropical Storm Expert (Office) >>'], breakLine: false });
+            session.output.push({ output: true, text: ['lorenz-1\t << INFO: Olivier Mothé, Lorenz Chaos Theory Specialist (Office) >>'], breakLine: false });
+            session.output.push({ output: true, text: ['morpho-2\t << INFO: Stacy Holden, Morpho Medical VP Assistant (Office) >>'], breakLine: false });
             session.output.push({ output: true, text: ['morpho-1\t << INFO: Greg Fields, Morpho Medical SysAdmin (Office) >>'], breakLine: false });
             session.output.push({ output: true, text: ['aconite-1\t << INFO: Oran Plaskett, Aconite Capital CFO (Home) >>'], breakLine: false });
             session.output.push({ output: true, text: ['\n>>STINGER INFECTED SYSTEMS<<'], breakLine: true });
@@ -205,7 +209,7 @@
                         "reminders.txt"
                     ].join("\n"));
             }
-            else if (param1 === "morpho-1" || param1 === "morpho-2") {
+            else if (param1 === "morpho-1" || param1 === "morpho-2" || param1 === "lorenz-1" || param1 === "lorenz-2" || param1 == "lorenz-3") {
                 outText.push("\n>>STINGER DIRECTORY ACCESS DENIED<<\n");
                 outText.push("\nYour current mission access level does not grant permission to this infected system!");
             }
