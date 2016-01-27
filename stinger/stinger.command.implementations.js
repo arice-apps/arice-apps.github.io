@@ -374,9 +374,9 @@
     //==============================================================================//
 
     var stingerExploitCommandHandler = function () {
-        var correct_virus = "correct_virus";
-        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tcorrect_id";
-        var correct_exploit_id = "correct_id";
+        var correct_virus = "OSX.Wirelurker";
+        var correct_exploit_id = "stg36608";
+        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id;
         var correct_target = "aconite-secure";
 
         var me = {};
@@ -418,7 +418,6 @@
                     "OSX.Laoshu",
                     correct_virus,
                     "OSX.Ventir",
-                    "OSX.Wirelurker",
                     "OSX.Loosemaque",
                     "OSX.Olyx.C",
                     "OSX.Netweird",
@@ -446,13 +445,13 @@
                     "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstg30922",
                     "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstg31165",
                     correct_exploit_desc,
-                    "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstn35776",
-                    "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstn33384",
-                    "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstn34421",
-                    "remote - MacKeeper URL Handler Remote Code Execution\t\t\t\tstn36643",
-                    "dos - Mac OS X - Local Denial of Service\t\t\t\t\tstn37234",
-                    "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\t\t\tstn38324",
-                    "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstn35284"
+                    "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstg35776",
+                    "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstg33384",
+                    "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstg34421",
+                    "remote - MacKeeper URL Handler Remote Code Execution\t\t\t\tstg36643",
+                    "dos - Mac OS X - Local Denial of Service\t\t\t\t\tstg37234",
+                    "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\t\t\tstg38324",
+                    "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
                 ].join("\n"));
             }
             else if (param1 === correct_exploit_id && param2 === correct_virus && param3 === correct_target) {
