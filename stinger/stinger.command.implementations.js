@@ -431,7 +431,7 @@
                 outText.push([
                     "\nSTINGER Exploit List",
                     "========================",
-                    "TITLE\t\t\t\t\t\t\t\t\t\tID",
+                    "stTITLE\t\t\t\t\t\t\t\t\t\tID",
                     "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
                     "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstg38371",
                     "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
@@ -456,7 +456,7 @@
             }
             else if (param1 === correct_exploit_id && param2 === correct_virus && param3 === correct_target) {
                 outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
                     "\nEXECUTING.........",
                     "....................",
@@ -467,7 +467,7 @@
             }
             else if (param1 !== correct_exploit_id) {
                 outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
                     "\nEXECUTING.........",
                     "....................",
@@ -479,7 +479,7 @@
             }
             else if (param2 !== correct_virus) {
                 outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
                     "\nEXECUTING.........",
                     "....................",
@@ -491,7 +491,7 @@
             }
             else if (param3 !== correct_target) {
                 outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
                     "\nEXECUTING.........",
                     "....................",
