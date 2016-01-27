@@ -310,7 +310,7 @@
                         "Total bill\t\t\t\t$83.22"
                     ].join("\n"));
             }
-            else if (param2 === "Alone_Edgar_Allen_Poe.pdf") {
+            else if (param2 === "Alone-Edgar_Allen_Poe.pdf") {
                 outText.push([
                         "\nSTINGER READ ACCESS <" + param + ">\n",
                         "From childhood's hour I have not been",
