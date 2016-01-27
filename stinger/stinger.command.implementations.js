@@ -119,7 +119,7 @@
             session.login = login;
             session.commands.push({ command: 'change-prompt', prompt: { user: login }});
             session.output.push({ output: true, text: ["Identity changed."], breakLine: true });
-        }
+        };
         return me;
     };
     commandBrokerProvider.appendCommandHandler(suCommandHandler());
@@ -145,7 +145,7 @@
                 _ga('send', 'event', 'Console', 'Feedback', param);
             }
             session.output.push({ output: true, text: outText, breakLine: true });
-        }
+        };
         return me;
     };
     commandBrokerProvider.appendCommandHandler(feedbackCommandHandler());
@@ -244,7 +244,7 @@
                 ].join("\n"));
             }
             session.output.push({ output: true, text: outText, breakLine: true });
-        }
+        };
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerDirectoryCommandHandler());
@@ -333,7 +333,7 @@
                 ].join("\n"));
             }
             session.output.push({ output: true, text: outText, breakLine: true });
-        }
+        };
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerReadCommandHandler());
@@ -437,7 +437,7 @@
                 ].join("\n"));
             }
             session.output.push({ output: true, text: outText, breakLine: true });
-        }
+        };
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerExploitCommandHandler());
