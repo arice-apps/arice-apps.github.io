@@ -342,8 +342,8 @@
         var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tcorrect_id";
         var correct_exploit_id = "correct_id";
         var correct_target = "aconite-secure";
-        var me = {};
 
+        var me = {};
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
             "Example: stinger-exmal ExploitID MalwareID TargetID",
@@ -385,7 +385,7 @@
                     "....................",
                     "...................!",
                     "\n" + param3 + " has been successfully infected!",
-                    ">>Your success code is: DAV443<<"
+                    ">>Your success code is: RAR278<<"
                 ].join("\n"));
             }
             else if (param1 !== correct_exploit_id) {
