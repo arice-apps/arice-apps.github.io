@@ -220,7 +220,7 @@
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
                         "The Man Who Sold the World - Midge Ure.mp3",
-                        "She's Lost Control - Joy Division.mp3"
+                        "Train in Vain - The Clash.mp3"
                     ].join("\n"));
             }
             else if (param2 === "Applications") {
@@ -348,7 +348,7 @@
             }
             else {
                 outText.push([
-                    "\nFile could not be opened on <" + param1 + ">. Filename may be incorrect or you may not be authorized.",
+                    "\nFile could not be opened on <" + param1 + ">. Filename is incorrect or you may not be authorized.",
                     "Type 'help stinger-rd' to get a hint."
                 ].join("\n"));
             }
