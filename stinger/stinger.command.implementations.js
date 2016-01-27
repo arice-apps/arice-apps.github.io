@@ -411,7 +411,11 @@
                     "OSX.Wirelurker",
                     "OSX.Loosemaque",
                     "OSX.Olyx.C",
-                    "OSX.Netweird"
+                    "OSX.Netweird",
+                    "OSX.Lamzev.A",
+                    "OSX.RSPlug.A",
+                    "OSX.Sudoprint",
+                    "OSX.SMSSend"
                 ].join("\n"));
             }
             else if (param1 === "exls") {
