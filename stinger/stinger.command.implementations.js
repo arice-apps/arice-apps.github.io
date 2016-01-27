@@ -178,58 +178,59 @@
             }
             else if (param1 === "aconite-1" && !param2) {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<aconite-1 Main Directory>\n", 
-                    "Applications",
-                    "Desktop",
-                    "Documents",
-                    "Downloads",
-                    "Movies",
-                    "Music",
-                    "Pictures",
-                    "reminders.txt"].join("\n"));
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<aconite-1 Main Directory>\n",
+                        "Applications",
+                        "Desktop",
+                        "Documents",
+                        "Downloads",
+                        "Movies",
+                        "Music",
+                        "Pictures",
+                        "reminders.txt"
+                    ].join("\n"));
             }
             else if (param2 === "Movies") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n", 
-                    "funny_cat_compilation.mp4",
-                    "EPIC_FAILS.mp4",
-                    "Spectre 2015 1080p BluRay x264 DTS-JYK.mkv",
-                    "Chris McKnett – The Investment Logic for Sustainability.mp4"
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<"+ param + " Directory>\n",
+                        "funny_cat_compilation.mp4",
+                        "EPIC_FAILS.mp4",
+                        "Spectre 2015 1080p BluRay x264 DTS-JYK.mkv",
+                        "Chris McKnett – The Investment Logic for Sustainability.mp4"
                     ].join("\n"));
             }
             else if (param2 === "Music") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n", 
-                    "The Man Who Sold the World - Midge Ure.mp3",
-                    "She's Lost Control - Joy Division.mp3"
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<"+ param + " Directory>\n",
+                        "The Man Who Sold the World - Midge Ure.mp3",
+                        "She's Lost Control - Joy Division.mp3"
                     ].join("\n"));
             }
             else if (param2 === "Applications") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n", 
-                    "Chrome Apps.localized",
-                    "Chrome Canary Apps.localized"
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<"+ param + " Directory>\n",
+                        "Chrome Apps.localized",
+                        "Chrome Canary Apps.localized"
                     ].join("\n"));
             }
             else if (param2 === "Desktop"
                 || param === "aconite-1 Downloads" 
                 || param === "aconite-1 Pictures") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    "Directory is empty.\n"
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<"+ param + " Directory>\n",
+                        "Directory is empty.\n"
                     ].join("\n"))
             }
             else if (param2 === "Documents") {
                 outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    "Alone_Edgar_Allen_Poe.pdf",
-                    "comcast_nov2015.pdf"
+                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                        "<"+ param + " Directory>\n",
+                        "Alone_Edgar_Allen_Poe.pdf",
+                        "comcast_nov2015.pdf"
                     ].join("\n"));
             }
             else if (param1 === "morpho-1" || param1 === "morpho-2") {
@@ -374,6 +375,11 @@
                     "TITLE\t\t\t\t\t\t\t\t\t\tID",
                     "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstn38535",
                     "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
+                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation",
+                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit",
+                    "local - Cisco AnyConnect 3.1.08009 - Privilege Escalation via DMG Install Script",
+                    "dos - Apple qlmanage - SceneKit::daeElement::setElementName Heap Overflow",
+                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow",
                     correct_exploit_desc
                 ].join("\n"));
             }
