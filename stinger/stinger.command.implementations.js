@@ -338,17 +338,24 @@
     commandBrokerProvider.appendCommandHandler(stingerReadCommandHandler());
 
     var stingerExploitCommandHandler = function () {
+        var correct_virus = "CorrectVirus";
+        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tstn38374";
+        var correct_exploit_id = "stn38374";
+        var correct_target = "aconite-secure";
         var me = {};
+
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
             "Example: stinger-exmal ExploitID MalwareID TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
         me.handle = function (session, param1, param2, param3) {
-            var param = [param1, param2, param3].join(" ");
             var outText = [];
             if (!param1) {
-                outText.push("You need to provide an exploit, malware and target name, type 'help stinger-exmal' to get a hint.");
+                outText.push([
+                    "\nYou need to provide an exploit, malware and target name. ",
+                    "Type 'help stinger-exmal' to get a hint."
+                ].join("\n"));
             }
             else if (param1 === "mals") {
                 outText.push([
@@ -357,7 +364,7 @@
                     "Virus 1",
                     "Virus 2",
                     "Virus 3",
-                    "CorrectVirus"
+                    correct_virus
                 ].join("\n"));
             }
             else if (param1 === "exls") {
@@ -367,10 +374,10 @@
                     "TITLE\t\t\t\t\t\t\t\t\t\tID",
                     "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstn38535",
                     "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
-                    "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tstn38374"
+                    correct_exploit_desc
                 ].join("\n"));
             }
-            else if (param1 === "stn38374" && param2 === "CorrectVirus" && param3 === "aconite-secure") {
+            else if (param1 === correct_exploit_id && param2 === correct_virus && param3 === correct_target) {
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
@@ -379,6 +386,42 @@
                     "...................!",
                     "\n" + param3 + " has been successfully infected!",
                     ">>Your success code is: DAV443<<"
+                ].join("\n"));
+            }
+            else if (param1 !== correct_exploit_id) {
+                outText.push([
+                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
+                    "\nEXECUTING.........",
+                    "....................",
+                    "...................!",
+                    "\n" + param3 + " was not infected!",
+                    "The exploit: " + param1 + " failed.",
+                    "Check that the exploit is correct for the target."
+                ].join("\n"));
+            }
+            else if (param2 !== correct_virus) {
+                outText.push([
+                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
+                    "\nEXECUTING.........",
+                    "....................",
+                    "...................!",
+                    "\n" + param3 + " was not infected!",
+                    "The virus: " + param2 + " failed.",
+                    "Check that the virus is correct for the target."
+                ].join("\n"));
+            }
+            else if (param3 !== correct_target) {
+                outText.push([
+                    "\nSTINGER Exploit Malware Manager is currently the following package:",
+                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
+                    "\nEXECUTING.........",
+                    "....................",
+                    "...................!",
+                    "\n" + param3 + " was not infected!",
+                    "Could not access target " + param3 + ".",
+                    "The target may not be authorized for STINGER attack or it may be misspelled."
                 ].join("\n"));
             }
             else {
