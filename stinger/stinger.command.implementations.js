@@ -289,7 +289,7 @@
             var param = [param1, param2].join(" ");
             var outText = [];
             if (!param1) {
-                outText.push("You need to provide a file name, type 'help stinger-rd' to get a hint.");
+                outText.push("You need to provide an infected system name, type 'help stinger-rd' to get a hint.");
             }
             else if (param1 !== "aconite-1") {
                 outText.push([
