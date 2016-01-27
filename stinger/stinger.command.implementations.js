@@ -227,6 +227,15 @@
                         music_list
                     ].join("\n"));
             }
+            else if (param1 === "aconite-1" && param2 === "Pictures") {
+                var pictures_list = "IMG_0501.JPG,IMG_2988.JPG,CUTEpuppy_1302.JPG,IMG_0725.JPG,IMG_1238.JPG,IMG_2308.JPG,Japan_Nature_WallpaperHD_0307.JPG,IMG_0602.JPG,Invitation.JPG,IMG_2019.JPG,IMG_0411.JPG,IMG_0496.JPG,IMG_1089.JPG,IMG_0402.JPG,IMG_1752.JPG,HJd82971_0582.gif,IMG_0339.JPG,IMG_1095.JPG,IMG_0056.JPG,sa1vxh00.JPG"
+                    .split(",").join("\n");
+                outText.push([
+                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                    "<"+ param + " Directory>\n",
+                    pictures_list
+                ].join("\n"));
+            }
             else if (param1 === "aconite-1" && param2 === "Applications") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
@@ -236,13 +245,12 @@
                     ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Desktop"
-                || param === "aconite-1 Downloads" 
-                || param === "aconite-1 Pictures") {
+                || param === "aconite-1 Downloads") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
                         "Directory is empty.\n"
-                    ].join("\n"))
+                    ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Documents") {
                 outText.push([
