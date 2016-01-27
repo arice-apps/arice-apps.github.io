@@ -170,14 +170,13 @@
         me.description = ['Changes directory to access an infected computer system.', 
                             "Example: stinger-cd company-1 or stinger-cd company-1 DirectoryName",
                             "See a list of infected systems by typing 'stinger-ls'"];
-        me.handle = function (session, param) {
-            param = Array.prototype.slice.call(arguments, 1);
-            param = param.join(' ');
+        me.handle = function (session, param1, param2) {
+            var param = [param1, param2].join(" ");
             var outText = [];
             if (!param) {
                 outText.push("You need to provide a directory name, type 'help stinger-cd' to get a hint.");
             }
-            else if (param === "aconite-1") {
+            else if (param1 === "aconite-1" && !param2) {
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                     "<aconite-1 Main Directory>\n", 
@@ -190,7 +189,7 @@
                     "Pictures",
                     "reminders.txt"].join("\n"));
             }
-            else if (param === "aconite-1 Movies") {
+            else if (param2 === "Movies") {
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                     "<"+ param + " Directory>\n", 
@@ -200,7 +199,7 @@
                     "Chris McKnett – The Investment Logic for Sustainability.mp4"
                     ].join("\n"));
             }
-            else if (param === "aconite-1 Music") {
+            else if (param2 === "Music") {
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                     "<"+ param + " Directory>\n", 
@@ -208,7 +207,7 @@
                     "She's Lost Control - Joy Division.mp3"
                     ].join("\n"));
             }
-            else if (param === "aconite-1 Applications") {
+            else if (param2 === "Applications") {
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                     "<"+ param + " Directory>\n", 
@@ -216,7 +215,7 @@
                     "Chrome Canary Apps.localized"
                     ].join("\n"));
             }
-            else if (param === "aconite-1 Desktop" 
+            else if (param2 === "Desktop"
                 || param === "aconite-1 Downloads" 
                 || param === "aconite-1 Pictures") {
                 outText.push([
@@ -225,7 +224,7 @@
                     "Directory is empty.\n"
                     ].join("\n"))
             }
-            else if (param === "aconite-1 Documents") {
+            else if (param2 === "Documents") {
                 outText.push([
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                     "<"+ param + " Directory>\n",
@@ -233,7 +232,7 @@
                     "comcast_nov2015.pdf"
                     ].join("\n"));
             }
-            else if (param === "morpho-1" || param === "morpho-2") {
+            else if (param1 === "morpho-1" || param1 === "morpho-2") {
                 outText.push("\n>>STINGER DIRECTORY ACCESS DENIED<<\n");
                 outText.push("\nYour current mission access level does not grant permission to this infected system!");
             }
@@ -255,14 +254,19 @@
         me.description = ['Reads a file within an infected computer system.', 
                             "Example: stinger-rd company-1 document.txt",
                             "See a list of infected systems by typing 'stinger-ls'"];
-        me.handle = function (session, param) {
-            param = Array.prototype.slice.call(arguments, 1);
-            param = param.join(' ');
+        me.handle = function (session, param1, param2) {
+            var param = [param1, param2].join(" ");
             var outText = [];
             if (!param) {
                 outText.push("You need to provide a file name, type 'help stinger-rd' to get a hint.");
             }
-            else if (param === "aconite-1 comcast_nov2015.pdf") {
+            if (param1 !== "aconite-1") {
+                outText.push([
+                    "\nCould not access, either the infected system does not exist or you are not authorized.",
+                    "Type 'help stinger-rd' to get a hint."
+                ].join("\n"));
+            }
+            else if (param2 === "comcast_nov2015.pdf") {
                 outText.push([
                         "\nSTINGER READ ACCESS <" + param + ">\n",
                         "ACCOUNT INFORMATION\n",
@@ -285,7 +289,7 @@
                         "Total bill\t\t\t\t$83.22"
                     ].join("\n"));
             }
-            else if (param === "aconite-1 Alone_Edgar_Allen_Poe.pdf") {
+            else if (param2 === "Alone_Edgar_Allen_Poe.pdf") {
                 outText.push([
                         "\nSTINGER READ ACCESS <" + param + ">\n",
                         "From childhood's hour I have not been",
@@ -312,7 +316,7 @@
                         "Of a demon in my view --"
                     ].join("\n"));
             }
-            else if (param === "aconite-1 reminders.txt") {
+            else if (param2 === "reminders.txt") {
                 outText.push([
                         "\nSTINGER READ ACCESS <" + param + ">\n",
                         "Reminders!",
