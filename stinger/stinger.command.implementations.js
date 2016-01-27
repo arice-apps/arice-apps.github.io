@@ -400,12 +400,25 @@
                     "TITLE\t\t\t\t\t\t\t\t\t\tID",
                     "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstn38535",
                     "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
-                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation",
-                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit",
-                    "local - Cisco AnyConnect 3.1.08009 - Privilege Escalation via DMG Install Script",
-                    "dos - Apple qlmanage - SceneKit::daeElement::setElementName Heap Overflow",
-                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow",
-                    correct_exploit_desc
+                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
+                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstn38371",
+                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow\t\t\tstn38371",
+                    "shellcode - OS X x64 - tcp bind shellcode, NULL byte free (144 bytes)\t\tstn38371",
+                    "local - OS X Install.framework suid Helper Privilege Escalation\t\t\tstn38371",
+                    "local - OS X Install.framework Arbitrary mkdir, unlink and chown to admin Group\tstn38371",
+                    "local - OS X Install.framework suid root Runner Binary Privilege Escalation\tstn38371",
+                    "local - Disconnect.me Mac OS X Client <= 2.0 - Local Privilege Escalation\t\tstn38371",
+                    "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstn38371",
+                    "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstn38371",
+                    "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstn38371",
+                    correct_exploit_desc,
+                    "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\tstn38371",
+                    "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstn38371",
+                    "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstn38371",
+                    "remote - MacKeeper URL Handler Remote Code Execution\t\tstn38371",
+                    "dos - Mac OS X - Local Denial of Service\t\tstn38371",
+                    "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\tstn38371",
+                    "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\tstn38371"
                 ].join("\n"));
             }
             else if (param1 === correct_exploit_id && param2 === correct_virus && param3 === correct_target) {
