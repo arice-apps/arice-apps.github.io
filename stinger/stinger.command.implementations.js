@@ -260,7 +260,7 @@
             if (!param1) {
                 outText.push("You need to provide a file name, type 'help stinger-rd' to get a hint.");
             }
-            if (param1 !== "aconite-1") {
+            else if (param1 !== "aconite-1") {
                 outText.push([
                     "\nCould not access " + param1 + ", the infected system does not exist or you are not authorized.",
                     "Type 'help stinger-rd' to get a hint."
