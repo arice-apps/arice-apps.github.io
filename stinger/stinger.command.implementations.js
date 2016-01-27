@@ -205,7 +205,11 @@
                         "reminders.txt"
                     ].join("\n"));
             }
-            else if (param2 === "Movies") {
+            else if (param1 === "morpho-1" || param1 === "morpho-2") {
+                outText.push("\n>>STINGER DIRECTORY ACCESS DENIED<<\n");
+                outText.push("\nYour current mission access level does not grant permission to this infected system!");
+            }
+            else if (param1 === "aconite-1" && param2 === "Movies") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
@@ -215,7 +219,7 @@
                         "Chris McKnett – The Investment Logic for Sustainability.mp4"
                     ].join("\n"));
             }
-            else if (param2 === "Music") {
+            else if (param1 === "aconite-1" && param2 === "Music") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
@@ -223,7 +227,7 @@
                         "Train in Vain - The Clash.mp3"
                     ].join("\n"));
             }
-            else if (param2 === "Applications") {
+            else if (param1 === "aconite-1" && param2 === "Applications") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
@@ -231,7 +235,7 @@
                         "Chrome Canary Apps.localized"
                     ].join("\n"));
             }
-            else if (param2 === "Desktop"
+            else if (param1 === "aconite-1" && param2 === "Desktop"
                 || param === "aconite-1 Downloads" 
                 || param === "aconite-1 Pictures") {
                 outText.push([
@@ -240,17 +244,13 @@
                         "Directory is empty.\n"
                     ].join("\n"))
             }
-            else if (param2 === "Documents") {
+            else if (param1 === "aconite-1" && param2 === "Documents") {
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
                         "Alone_Edgar_Allen_Poe.pdf",
                         "comcast_nov2015.pdf"
                     ].join("\n"));
-            }
-            else if (param1 === "morpho-1" || param1 === "morpho-2") {
-                outText.push("\n>>STINGER DIRECTORY ACCESS DENIED<<\n");
-                outText.push("\nYour current mission access level does not grant permission to this infected system!");
             }
             else {
                 outText.push([
