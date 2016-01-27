@@ -264,61 +264,61 @@
             }
             else if (param === "aconite-1 comcast_nov2015.pdf") {
                 outText.push([
-                    "\nSTINGER READ ACCESS <" + param + ">\n",
-                    "ACCOUNT INFORMATION\n",
-                    "Account number",
-                    "================================================",
-                    "344547642",
-                    "\nService address",
-                    "================================================",
-                    "3250 Broadway Street",
-                    "San Francisco, CA 94115",
-                    "\nBILLING SUMMARY\n",
-                    "Previous bill",
-                    "================================================",
-                    "Previous balance\t\t\t$76.92",
-                    "\nCurrent Bill (11/01 - 11/30)",
-                    "================================================",
-                    "Service (recurring charges)\t\t$77.93",
-                    "One-time fees, PPV, Usage\t\t$0.00",
-                    "Taxes, surcharges, fees\t\t\t$5.29",
-                    "Total bill\t\t\t\t$83.22"
+                        "\nSTINGER READ ACCESS <" + param + ">\n",
+                        "ACCOUNT INFORMATION\n",
+                        "Account number",
+                        "================================================",
+                        "344547642",
+                        "\nService address",
+                        "================================================",
+                        "3250 Broadway Street",
+                        "San Francisco, CA 94115",
+                        "\nBILLING SUMMARY\n",
+                        "Previous bill",
+                        "================================================",
+                        "Previous balance\t\t\t$76.92",
+                        "\nCurrent Bill (11/01 - 11/30)",
+                        "================================================",
+                        "Service (recurring charges)\t\t$77.93",
+                        "One-time fees, PPV, Usage\t\t$0.00",
+                        "Taxes, surcharges, fees\t\t\t$5.29",
+                        "Total bill\t\t\t\t$83.22"
                     ].join("\n"));
             }
             else if (param === "aconite-1 Alone_Edgar_Allen_Poe.pdf") {
                 outText.push([
-                    "\nSTINGER READ ACCESS <" + param + ">\n",
-                    "From childhood's hour I have not been",
-                    "As others were -- I have not seen",
-                    "As others saw -- I could not bring",
-                    "My passions from a common spring --",
-                    "From the same source I have not taken",
-                    "My sorrow -- I could not awaken",
-                    "My heart to joy at the same tone --",
-                    "And all I lov'd -- I lov'd alone --",
-                    "Then -- in my childhood -- in the dawn",
-                    "Of a most stormy life -- was drawn",
-                    "From ev'ry depth of good and ill",
-                    "The mystery which binds me still --",
-                    "From the torrent, or the fountain --",
-                    "From the red cliff of the mountain --",
-                    "From the sun that 'round me roll'd",
-                    "In its autumn tint of gold --",
-                    "From the lightning in the sky",
-                    "As it pass'd me flying by --",
-                    "From the thunder, and the storm --",
-                    "And the cloud that took the form",
-                    "(When the rest of Heaven was blue)",
-                    "Of a demon in my view --"
+                        "\nSTINGER READ ACCESS <" + param + ">\n",
+                        "From childhood's hour I have not been",
+                        "As others were -- I have not seen",
+                        "As others saw -- I could not bring",
+                        "My passions from a common spring --",
+                        "From the same source I have not taken",
+                        "My sorrow -- I could not awaken",
+                        "My heart to joy at the same tone --",
+                        "And all I lov'd -- I lov'd alone --",
+                        "Then -- in my childhood -- in the dawn",
+                        "Of a most stormy life -- was drawn",
+                        "From ev'ry depth of good and ill",
+                        "The mystery which binds me still --",
+                        "From the torrent, or the fountain --",
+                        "From the red cliff of the mountain --",
+                        "From the sun that 'round me roll'd",
+                        "In its autumn tint of gold --",
+                        "From the lightning in the sky",
+                        "As it pass'd me flying by --",
+                        "From the thunder, and the storm --",
+                        "And the cloud that took the form",
+                        "(When the rest of Heaven was blue)",
+                        "Of a demon in my view --"
                     ].join("\n"));
             }
             else if (param === "aconite-1 reminders.txt") {
                 outText.push([
-                    "\nSTINGER READ ACCESS <" + param + ">\n",
-                    "Reminders!",
-                    "+Take the dog for a walk",
-                    "+Buy more paper towels",
-                    "+Find a better golf course to take Haruki to"
+                        "\nSTINGER READ ACCESS <" + param + ">\n",
+                        "Reminders!",
+                        "+Take the dog for a walk",
+                        "+Buy more paper towels",
+                        "+Find a better golf course to take Haruki to"
                     ].join("\n"));
             }
             else {
