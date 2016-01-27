@@ -458,7 +458,7 @@
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING.........",
+                    "\nEXECUTING...........",
                     "....................",
                     "...................!",
                     "\n" + param3 + " has been successfully infected!",
@@ -469,7 +469,7 @@
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING.........",
+                    "\nEXECUTING...........",
                     "....................",
                     "...................!",
                     "\nTarget <" + param3 + "> was not infected!",
@@ -481,7 +481,7 @@
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING.........",
+                    "\nEXECUTING...........",
                     "....................",
                     "...................!",
                     "\nTarget <" + param3 + "> was not infected!",
@@ -493,7 +493,7 @@
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING.........",
+                    "\nEXECUTING...........",
                     "....................",
                     "...................!",
                     "\nTarget <" + param3 + "> was not infected!",
