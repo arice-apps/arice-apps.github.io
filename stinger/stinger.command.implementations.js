@@ -395,7 +395,7 @@
                     "\nEXECUTING.........",
                     "....................",
                     "...................!",
-                    "\n" + param3 + " was not infected!",
+                    "\nTarget <" + param3 + "> was not infected!",
                     "The exploit <" + param1 + "> failed.",
                     "Check that the exploit is correct for the target."
                 ].join("\n"));
@@ -407,7 +407,7 @@
                     "\nEXECUTING.........",
                     "....................",
                     "...................!",
-                    "\n" + param3 + " was not infected!",
+                    "\nTarget <" + param3 + "> was not infected!",
                     "The virus <" + param2 + "> failed.",
                     "Check that the virus is correct for the target."
                 ].join("\n"));
@@ -419,7 +419,7 @@
                     "\nEXECUTING.........",
                     "....................",
                     "...................!",
-                    "\n" + param3 + " was not infected!",
+                    "\nTarget <" + param3 + "> was not infected!",
                     "Could not access target <" + param3 + ">",
                     "The target may not be authorized for STINGER attack or it may be misspelled."
                 ].join("\n"));
