@@ -338,9 +338,9 @@
     commandBrokerProvider.appendCommandHandler(stingerReadCommandHandler());
 
     var stingerExploitCommandHandler = function () {
-        var correct_virus = "CorrectVirus";
-        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tstn38374";
-        var correct_exploit_id = "stn38374";
+        var correct_virus = "correct_virus";
+        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\tcorrect_id";
+        var correct_exploit_id = "correct_id";
         var correct_target = "aconite-secure";
         var me = {};
 
@@ -361,9 +361,9 @@
                 outText.push([
                     "\nSTINGER Malware List",
                     "========================",
-                    "Virus 1",
-                    "Virus 2",
-                    "Virus 3",
+                    "virus_1",
+                    "virus_2",
+                    "virus_3",
                     correct_virus
                 ].join("\n"));
             }
@@ -396,7 +396,7 @@
                     "....................",
                     "...................!",
                     "\n" + param3 + " was not infected!",
-                    "The exploit: " + param1 + " failed.",
+                    "The exploit <" + param1 + "> failed.",
                     "Check that the exploit is correct for the target."
                 ].join("\n"));
             }
@@ -408,7 +408,7 @@
                     "....................",
                     "...................!",
                     "\n" + param3 + " was not infected!",
-                    "The virus: " + param2 + " failed.",
+                    "The virus <" + param2 + "> failed.",
                     "Check that the virus is correct for the target."
                 ].join("\n"));
             }
@@ -420,7 +420,7 @@
                     "....................",
                     "...................!",
                     "\n" + param3 + " was not infected!",
-                    "Could not access target " + param3 + ".",
+                    "Could not access target <" + param3 + ">",
                     "The target may not be authorized for STINGER attack or it may be misspelled."
                 ].join("\n"));
             }
