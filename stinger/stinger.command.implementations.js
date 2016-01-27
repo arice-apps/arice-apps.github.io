@@ -431,7 +431,7 @@
                 outText.push([
                     "\nSTINGER Exploit List",
                     "========================",
-                    "stTITLE\t\t\t\t\t\t\t\t\t\tID",
+                    "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID",
                     "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
                     "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstg38371",
                     "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
