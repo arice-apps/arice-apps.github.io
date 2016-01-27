@@ -254,7 +254,7 @@
                     ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Documents") {
-                var documents_list = "Alone_Edgar_Allen_Poe.pdf,comcast_nov2015.pdf"
+                var documents_list = "Business_Trip_Budget.pages,Resume_2011.pages,Revised_CV_2014.pages,comcast_nov2015.pdf,Tax_Receipt_2011.pages,Tax_Receipt_2012.pages,Tax_receipt_2013.pages,Alone_Edgar_Allen_Poe.pdf"
                     .split(",").join("\n");
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
