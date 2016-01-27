@@ -356,7 +356,7 @@
             }
             else {
                 outText.push([
-                    "\nFile could not be opened on <" + param1 + ">. Filename is incorrect or you may not be authorized.",
+                    "\nFile could not be opened on <" + param1 + ">. Filename is incorrect or could not read filetype.",
                     "Type 'help stinger-rd' to get a hint."
                 ].join("\n"));
             }
