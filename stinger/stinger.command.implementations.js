@@ -210,13 +210,13 @@
                 outText.push("\nYour current mission access level does not grant permission to this infected system!");
             }
             else if (param1 === "aconite-1" && param2 === "Movies") {
+                var movies = "Chris McKnett – The Investment Logic for Sustainability.mp4,EPIC_FAILS.mp4,funny_cat_compilation.mp4,Spectre 2015 1080p BluRay x264 DTS-JYK.mkv,Fury.mov,Mission: Impossible - Rogue Nation.mov,Ex Machina.avi,Mad Max - Fury Road.mov,Interstellar_hd1920x1080(2014).mp4,The_Imitation_Game.mov,The Wolf of Wall Street[2013].mov,The Hunger Games-hd.mov,Her.avi,The Hobbit: The Battle of the Five Armies.mov,Boyhood[2014].avi,American Sniper.mov,Dawn of the Planet of the Apes.mov,Lucy_1920x1080HD.mp4,Transcendence.avi,Wild.mov,Whiplash_HD.mov,The Grand Budapest Hotel.mov"
+                    .split(",").join("\n");
+                var movies_list = movies.toString();
                 outText.push([
                         "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
                         "<"+ param + " Directory>\n",
-                        "funny_cat_compilation.mp4",
-                        "EPIC_FAILS.mp4",
-                        "Spectre 2015 1080p BluRay x264 DTS-JYK.mkv",
-                        "Chris McKnett – The Investment Logic for Sustainability.mp4"
+                        movies_list
                     ].join("\n"));
             }
             else if (param1 === "aconite-1" && param2 === "Music") {
@@ -387,8 +387,8 @@
                 outText.push([
                     "\nSTINGER Malware List",
                     "========================",
-                    "TITLE",
-                    "OSX.RSPlug.A",
+                    "TITLE\t\t\t\t\t\t\t\t\t\tID",
+                    "OSX.RSPlug.A\t\t\t\t\t\t",
                     "OSX.HellRTS",
                     "OSX.Backloader",
                     "OSX.Crisis",
@@ -423,18 +423,18 @@
                     "\nSTINGER Exploit List",
                     "========================",
                     "TITLE\t\t\t\t\t\t\t\t\t\tID",
-                    "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstn38535",
-                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstn38371",
-                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstn32234",
-                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow\t\t\t\tstn36487",
-                    "shellcode - OS X x64 - tcp bind shellcode, NULL byte free (144 bytes)\t\tstn32874",
-                    "local - OS X Install.framework suid Helper Privilege Escalation\t\t\tstn35543",
-                    "local - OS X Install.framework Arbitrary mkdir, unlink and chown to admin Group\tstn31298",
-                    "local - OS X Install.framework suid root Runner Binary Privilege Escalation\tstn30046",
-                    "local - Disconnect.me Mac OS X Client <= 2.0 - Local Privilege Escalation\tstn30765",
-                    "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstn31774",
-                    "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstn30922",
-                    "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstn31165",
+                    "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
+                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstg38371",
+                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
+                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow\t\t\t\tstg36487",
+                    "shellcode - OS X x64 - tcp bind shellcode, NULL byte free (144 bytes)\t\tstg32874",
+                    "local - OS X Install.framework suid Helper Privilege Escalation\t\t\tstg35543",
+                    "local - OS X Install.framework Arbitrary mkdir, unlink and chown to admin Group\tstg31298",
+                    "local - OS X Install.framework suid root Runner Binary Privilege Escalation\tstg30046",
+                    "local - Disconnect.me Mac OS X Client <= 2.0 - Local Privilege Escalation\tstg30765",
+                    "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstg31774",
+                    "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstg30922",
+                    "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstg31165",
                     correct_exploit_desc,
                     "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstn35776",
                     "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstn33384",
