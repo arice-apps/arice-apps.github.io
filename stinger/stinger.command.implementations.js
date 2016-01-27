@@ -238,7 +238,7 @@
             }
             else {
                 outText.push([
-                    "\nCould not access directory" + param2 + ". Check it exists or that you have permission to access.",
+                    "\nCould not access directory " + param2 + ". Check it exists or that you have permission to access.",
                     "Type 'help stinger-cd' to get a hint."
                 ].join("\n"));
             }
