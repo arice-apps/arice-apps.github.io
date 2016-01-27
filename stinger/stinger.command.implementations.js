@@ -173,7 +173,7 @@
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
             var outText = [];
-            if (!param) {
+            if (!param1) {
                 outText.push("You need to provide a directory name, type 'help stinger-cd' to get a hint.");
             }
             else if (param1 === "aconite-1" && !param2) {
@@ -257,7 +257,7 @@
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
             var outText = [];
-            if (!param) {
+            if (!param1) {
                 outText.push("You need to provide a file name, type 'help stinger-rd' to get a hint.");
             }
             if (param1 !== "aconite-1") {
@@ -347,7 +347,7 @@
         me.handle = function (session, param1, param2, param3) {
             var param = [param1, param2, param3].join(" ");
             var outText = [];
-            if (!param) {
+            if (!param1) {
                 outText.push("You need to provide an exploit, malware and target name, type 'help stinger-exmal' to get a hint.");
             }
             else if (param1 === "mals") {
