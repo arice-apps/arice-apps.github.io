@@ -382,7 +382,7 @@
         var me = {};
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
-            "Example: stinger-exmal ExploitID MalwareID TargetID",
+            "Example: stinger-exmal ExploitID MalwareName TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
         me.handle = function (session, param1, param2, param3) {
@@ -397,8 +397,8 @@
                 outText.push([
                     "\nSTINGER Malware List",
                     "========================",
-                    "TITLE\t\t\t\t\t\t\t\t\t\tID",
-                    "OSX.RSPlug.A\t\t\t\t\t\t",
+                    "TITLE",
+                    "OSX.RSPlug.A",
                     "OSX.HellRTS",
                     "OSX.Backloader",
                     "OSX.Crisis",
