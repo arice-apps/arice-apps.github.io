@@ -150,8 +150,13 @@
     };
     commandBrokerProvider.appendCommandHandler(feedbackCommandHandler());
 
+
+
+
+
+    //==============================================================================//
     // STINGER hacking commands //
-    //==========================//
+    //==============================================================================//
 
     commandBrokerProvider.appendCommandHandler({
         command: 'stinger-ls',
@@ -443,7 +448,13 @@
     commandBrokerProvider.appendCommandHandler(stingerExploitCommandHandler());
 
 
-    //======= END ============//
+    //===============================================================================================//
+    //======= END ====================================================================================//
+    //===============================================================================================//
+
+
+
+
 
     // this must be the last
     var helpCommandHandler = function () {
