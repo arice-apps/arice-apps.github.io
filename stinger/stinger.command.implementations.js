@@ -387,10 +387,31 @@
                 outText.push([
                     "\nSTINGER Malware List",
                     "========================",
-                    "virus_1",
-                    "virus_2",
-                    "virus_3",
-                    correct_virus
+                    "TITLE",
+                    "OSX.RSPlug.A",
+                    "OSX.HellRTS",
+                    "OSX.Backloader",
+                    "OSX.Crisis",
+                    "OSX.Flashback",
+                    "OSX.Inqtana.A",
+                    "OSX.Macontrol",
+                    "OSX.Janicab",
+                    "OSX.Stealbit.A",
+                    "OSX.Tsunami",
+                    "OSX.Ransomcrypt",
+                    "OSX.Pintsized",
+                    "OSX.Slordu",
+                    "OSX.Imauler",
+                    "OSX.Hormesu",
+                    "OSX.Kitmos",
+                    "OSX.Luaddit",
+                    "OSX.Laoshu",
+                    correct_virus,
+                    "OSX.Ventir",
+                    "OSX.Wirelurker",
+                    "OSX.Loosemaque",
+                    "OSX.Olyx.C",
+                    "OSX.Netweird"
                 ].join("\n"));
             }
             else if (param1 === "exls") {
