@@ -261,13 +261,6 @@
                         "comcast_nov2015.pdf"
                     ].join("\n"));
             }
-            else if (param1 === "aconite-1" && param2 === "Desktop") {
-                outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    "Directory is empty.\n"
-                ].join("\n"));
-            }
             else {
                 outText.push([
                     "\nCould not access directory on <" + param1 + ">. Check it exists or that you have permission.",
