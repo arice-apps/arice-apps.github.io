@@ -378,6 +378,7 @@
     //==============================================================================//
 
     var stingerExploitCommandHandler = function () {
+        // Set the answers to Mission 22 Puzzle 1 here.
         var correct_virus = "OSX.Wirelurker";
         var correct_exploit_id = "stg36608";
         var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id;
