@@ -238,7 +238,7 @@
             }
             else {
                 outText.push([
-                    "\nCould not access directory. Check it exists or that you have permission to access.",
+                    "\nCould not access directory" + param2 + ". Check it exists or that you have permission to access.",
                     "Type 'help stinger-cd' to get a hint."
                 ].join("\n"));
             }
@@ -262,7 +262,7 @@
             }
             if (param1 !== "aconite-1") {
                 outText.push([
-                    "\nCould not access, either the infected system does not exist or you are not authorized.",
+                    "\nCould not access " + param1 + ", the infected system does not exist or you are not authorized.",
                     "Type 'help stinger-rd' to get a hint."
                 ].join("\n"));
             }
@@ -327,7 +327,7 @@
             }
             else {
                 outText.push([
-                    "\nFile could not be opened. Check the filename is correct or that you have permission.",
+                    "\nFile could not be opened on " + param1 + ". Filename may be incorrect or you may not be authorized.",
                     "Type 'help stinger-rd' to get a hint."
                 ].join("\n"));
             }
