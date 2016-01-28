@@ -382,7 +382,7 @@
         var correct_virus = "OSX.Wirelurker";
         var correct_exploit_id = "stg36608";
         var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id;
-        var correct_target = "aconite-secure";
+        var correct_target = "clover-tar1";
 
         var me = {};
         me.command = 'stinger-exmal';
