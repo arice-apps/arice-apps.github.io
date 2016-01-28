@@ -112,6 +112,4 @@
     terminalConfigurationProvider.config('vintage').allowTypingWriteDisplaying = false;
     terminalConfigurationProvider.config('vintage').typeSoundUrl ='stinger/content/type.wav';
     terminalConfigurationProvider.config('vintage').startSoundUrl ='stinger/content/start.wav';
-}])
-
-;
+}]);
