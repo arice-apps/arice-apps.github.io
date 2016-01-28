@@ -40,8 +40,10 @@
                    'Welcome to the STINGER Hacking Terminal Interface!',
                    'Created by NITE Team 4 - Cyber Intel REIMAGINED\n\n',
                    'Click inside the terminal window to begin!',
-                   "Please type 'help' to open a list of commands",
-                   "STINGER input is CASE SENSITIVE."],
+                   "Please type 'help' to open a list of commands\n\n",
+                   "STINGER input is CASE SENSITIVE.",
+                   "Use the 'clear' command to clear the terminal if you need more space.",
+                   "The 'up arrow' can be used to cycle through previous commands."],
             breakLine: true
         });
         $scope.$apply();
