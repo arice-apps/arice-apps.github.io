@@ -386,7 +386,7 @@
 
         var me = {};
         me.command = 'stinger-exmal';
-        me.description = ['Exploit and malware manager toolset, for use in cyberwarfare and cyberintel operations.',
+        me.description = ['Exploit and malware manager toolset, for use in cyber warfare and cyber intel operations.',
             "Example: stinger-exmal ExploitID MalwareID TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
