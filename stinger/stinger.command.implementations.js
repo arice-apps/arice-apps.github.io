@@ -141,7 +141,7 @@
             }
             else {
                 outText.push("Your message have been sent.");
-                outText.push("Thanks for the feedback!.");
+                outText.push("Thanks for the feedback!");
                 _ga('send', 'event', 'Console', 'Feedback', param);
             }
             session.output.push({ output: true, text: outText, breakLine: true });
