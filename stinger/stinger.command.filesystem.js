@@ -482,6 +482,4 @@
 .run(['fileSystemConfiguration', 'storage', function (fs, storage) {
 	if (!storage.getItem(fs.directorySeparator + "_dir"))
 		storage.setItem(fs.directorySeparator + "_dir", "_dir");
-}])
-
-;
+}]);

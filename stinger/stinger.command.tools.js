@@ -215,6 +215,4 @@
 
 .run(['commandBroker', function (commandBroker) {
     commandBroker.init();
-}])
-
-;
+}]);
