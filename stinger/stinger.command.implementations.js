@@ -378,12 +378,8 @@
     //==============================================================================//
 
     var stingerExploitCommandHandler = function () {
-        // Set the answers to Mission 22 Puzzle 1 here.
-        var correct_virus = "OSX.Wirelurker";
-        var correct_exploit_id = "stg36608";
-        var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id;
+        var correct_exploit_id = "stg" + (256*143).toString();
         var correct_target = "clover-tar1";
-        var success_code = "RAR278";
 
         var me = {};
         me.command = 'stinger-exmal';
@@ -422,7 +418,7 @@
                     "OSX.Kitmos",
                     "OSX.Luaddit",
                     "OSX.Laoshu",
-                    correct_virus,
+                    "OSX.Wirelurker",
                     "OSX.Ventir",
                     "OSX.Loosemaque",
                     "OSX.Olyx.C",
@@ -450,7 +446,7 @@
                     "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstg31774",
                     "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstg30922",
                     "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstg31165",
-                    correct_exploit_desc,
+                    "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id,
                     "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstg35776",
                     "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstg33384",
                     "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstg34421",
@@ -460,7 +456,8 @@
                     "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
                 ].join("\n"));
             }
-            else if (param1 === correct_exploit_id && param2 === correct_virus && param3 === correct_target) {
+            else if (param1 === correct_exploit_id && param2 === "OSX.Wirelurker" && param3 === correct_target) {
+                var success_code = 43*29*46*2;
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
@@ -483,7 +480,7 @@
                     "Check that the exploit is correct for the target."
                 ].join("\n"));
             }
-            else if (param2 !== correct_virus) {
+            else if (param2 !== "OSX.Wirelurker") {
                 outText.push([
                     "\nSTINGER Exploit Malware Manager is currently running the following package:",
                     "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
