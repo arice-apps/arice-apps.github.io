@@ -383,6 +383,7 @@
         var correct_exploit_id = "stg36608";
         var correct_exploit_desc = "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id;
         var correct_target = "clover-tar1";
+        var success_code = "RAR278";
 
         var me = {};
         me.command = 'stinger-exmal';
@@ -467,7 +468,7 @@
                     "....................",
                     "...................!",
                     "\n" + param3 + " has been successfully infected!",
-                    ">>Your success code is: RAR278<<"
+                    ">>Your success code is: " + success_code + "<<"
                 ].join("\n"));
             }
             else if (param1 !== correct_exploit_id) {
