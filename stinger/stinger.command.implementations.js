@@ -266,6 +266,15 @@
                         documents_list
                     ].join("\n"));
             }
+            else if (param1 === "aconite-1" && param2 === "Downloads") {
+                var downloads_list = "18277051_584547341_613671_n.jpg,275-001_20150728-2046_14_6715376.VGA.mp3,5426-97623-1-PB (1).pages,acstn_form (4).pages,ADE_4.5_Installer.dmg,advanced-systemcare-setup (1).dmg,advanced-systemcare-setup.dmg,April2015_Statement.pages,Augustine.pages ,Burke.pages,Chromeinstall-8u65.dmg,C49Y23 decoys.pptx,C59A99 decoys.pptx,Dussen.pages,esfs4.14.48-updater.dmg,February2015_Statement.pages,FreeYouTubeDownloaderOC.dmg,googledrivesync.dmg,Harris.pages,iCloudSetup.dmg,January2015_Statement.pages,July2015_Statement.pages,June2015_Statement.pages,k9_2015_Malkin.docx,March2015_Statement.pages,SetupOfficeTab.dmg ,SkypeSetup.dmg"
+                    .split(",").join("\n");
+                outText.push([
+                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                    "<"+ param + " Directory>\n",
+                    downloads_list
+                ].join("\n"));
+            }
             else {
                 outText.push([
                     "\nCould not access directory on <" + param1 + ">. Check it exists or that you have permission.",
