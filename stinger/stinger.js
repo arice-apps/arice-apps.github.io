@@ -7,7 +7,7 @@
     var script = document.createElement('script');
     var prevScript = document.getElementsByTagName('script')[0];
     script.async = 1;
-    script.src = '//www.google-analytics.com/analytics_debug.js';
+    script.src = '';
     prevScript.parentNode.insertBefore(script, prevScript);
 
     var provider = function () {
@@ -100,10 +100,6 @@
             $scope.session.output.push({ output: true, breakLine: true, text: [err.message] });
         }
     });
-}])
-
-.config(['$gaProvider',function ($gaProvider) {
-    $gaProvider.ga('create', 'UA-53263543-1', 'auto');
 }])
 
 .config(['terminalConfigurationProvider', function (terminalConfigurationProvider) {
