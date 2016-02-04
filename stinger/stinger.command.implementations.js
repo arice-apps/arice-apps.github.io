@@ -288,12 +288,14 @@
     //==============================================================================//
 
     var stingerReadCommandHandler = function () {
+        var account_number = (66734*5163).toString();
+
         // Files with read access and contents
         var comcast_file = [
             "\nACCOUNT INFORMATION\n",
             "Account number",
             "================================================",
-            "344547642",
+            account_number,
             "\nService address",
             "================================================",
             "3250 Broadway Street",
