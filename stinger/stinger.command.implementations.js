@@ -155,7 +155,7 @@
 
 
     //==============================================================================//
-    // STINGER hacking commands //
+    // /////////// STINGER hacking commands ///////////
     //==============================================================================//
 
 
@@ -186,7 +186,7 @@
     //==============================================================================//
 
     var stingerDirectoryCommandHandler = function () {
-
+        // Directory contents lists
         var aconite_dir_list = [
             "Applications",
             "Desktop",
@@ -221,6 +221,7 @@
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
 
+            // Function to print out initial directory message with access status
             var directory_message = function(dir_name) {
                 session.output.push({ output: true, text: [
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
@@ -228,6 +229,7 @@
                 ], breakLine: true });
             };
 
+            // Conditional messages returned based on directory name
             if (!param1) {
                 session.output.push({ output: true, text: ["You need to provide an infected system name, type 'help stinger-cd' to get a hint."], breakLine: true });
             }
@@ -286,6 +288,58 @@
     //==============================================================================//
 
     var stingerReadCommandHandler = function () {
+        // Files with read access and contents
+        var comcast_file = [
+            "\nACCOUNT INFORMATION\n",
+            "Account number",
+            "================================================",
+            "344547642",
+            "\nService address",
+            "================================================",
+            "3250 Broadway Street",
+            "San Francisco, CA 94115",
+            "\nBILLING SUMMARY\n",
+            "Previous bill",
+            "================================================",
+            "Previous balance\t\t\t$76.92",
+            "\nCurrent Bill (11/01 - 11/30)",
+            "================================================",
+            "Service (recurring charges)\t\t$77.93",
+            "One-time fees, PPV, Usage\t\t$0.00",
+            "Taxes, surcharges, fees\t\t$5.29",
+            "Total bill\t\t\t\t$83.22"
+        ];
+        var poe_file = [
+            "From childhood's hour I have not been",
+            "As others were -- I have not seen",
+            "As others saw -- I could not bring",
+            "My passions from a common spring --",
+            "From the same source I have not taken",
+            "My sorrow -- I could not awaken",
+            "My heart to joy at the same tone --",
+            "And all I lov'd -- I lov'd alone --",
+            "Then -- in my childhood -- in the dawn",
+            "Of a most stormy life -- was drawn",
+            "From ev'ry depth of good and ill",
+            "The mystery which binds me still --",
+            "From the torrent, or the fountain --",
+            "From the red cliff of the mountain --",
+            "From the sun that 'round me roll'd",
+            "In its autumn tint of gold --",
+            "From the lightning in the sky",
+            "As it pass'd me flying by --",
+            "From the thunder, and the storm --",
+            "And the cloud that took the form",
+            "(When the rest of Heaven was blue)",
+            "Of a demon in my view --"
+        ];
+        var reminders_file = [
+            "Reminders!",
+            "+Take the dog for a walk",
+            "+Buy more paper towels",
+            "+Find a better golf course to take Haruki to"
+        ];
+
         var me = {};
         me.command = 'stinger-rd';
         me.description = ['Reads a file within an infected computer system.', 
@@ -294,82 +348,46 @@
 
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
-            var outText = [];
+
+            // Function to print out file name location and access status
+            var read_message = function(dirfile_name) {
+                session.output.push({ output: true, text: [
+                    "\nSTINGER READ ACCESS <" + dirfile_name + ">\n"
+                ], breakLine: true });
+            };
+
+            // Conditional messages returned based on filename given
             if (!param1) {
-                outText.push("You need to provide an infected system name, type 'help stinger-rd' to get a hint.");
+                session.output.push({ output: true, text: [
+                    "You need to provide an infected system name, type 'help stinger-rd' to get a hint."
+                ], breakLine: true });
             }
             else if (param1 !== "aconite-1") {
-                outText.push([
-                    "\nCould not access <" + param1 + ">, the infected system does not exist or you are not authorized.",
+                session.output.push({ output: true, text: [
+                    "Could not access <" + param1 + ">",
+                    "The infected system does not exist or you are not authorized.",
                     "Type 'help stinger-rd' to get a hint."
-                ].join("\n"));
+                ], breakLine: true });
             }
             else if (param2 === "comcast_nov2015.pdf") {
-                outText.push([
-                        "\nSTINGER READ ACCESS <" + param + ">\n",
-                        "ACCOUNT INFORMATION\n",
-                        "Account number",
-                        "================================================",
-                        "344547642",
-                        "\nService address",
-                        "================================================",
-                        "3250 Broadway Street",
-                        "San Francisco, CA 94115",
-                        "\nBILLING SUMMARY\n",
-                        "Previous bill",
-                        "================================================",
-                        "Previous balance\t\t\t$76.92",
-                        "\nCurrent Bill (11/01 - 11/30)",
-                        "================================================",
-                        "Service (recurring charges)\t\t$77.93",
-                        "One-time fees, PPV, Usage\t\t$0.00",
-                        "Taxes, surcharges, fees\t\t\t$5.29",
-                        "Total bill\t\t\t\t$83.22"
-                    ].join("\n"));
+                session.output.push({ output: true, text: comcast_file, breakLine: true });
+                read_message(param);
             }
             else if (param2 === "Alone-Edgar_Allen_Poe.pdf") {
-                outText.push([
-                        "\nSTINGER READ ACCESS <" + param + ">\n",
-                        "From childhood's hour I have not been",
-                        "As others were -- I have not seen",
-                        "As others saw -- I could not bring",
-                        "My passions from a common spring --",
-                        "From the same source I have not taken",
-                        "My sorrow -- I could not awaken",
-                        "My heart to joy at the same tone --",
-                        "And all I lov'd -- I lov'd alone --",
-                        "Then -- in my childhood -- in the dawn",
-                        "Of a most stormy life -- was drawn",
-                        "From ev'ry depth of good and ill",
-                        "The mystery which binds me still --",
-                        "From the torrent, or the fountain --",
-                        "From the red cliff of the mountain --",
-                        "From the sun that 'round me roll'd",
-                        "In its autumn tint of gold --",
-                        "From the lightning in the sky",
-                        "As it pass'd me flying by --",
-                        "From the thunder, and the storm --",
-                        "And the cloud that took the form",
-                        "(When the rest of Heaven was blue)",
-                        "Of a demon in my view --"
-                    ].join("\n"));
+                session.output.push({ output: true, text: poe_file, breakLine: true });
+                read_message(param);
             }
             else if (param2 === "reminders.txt") {
-                outText.push([
-                        "\nSTINGER READ ACCESS <" + param + ">\n",
-                        "Reminders!",
-                        "+Take the dog for a walk",
-                        "+Buy more paper towels",
-                        "+Find a better golf course to take Haruki to"
-                    ].join("\n"));
+                session.output.push({ output: true, text: reminders_file, breakLine: true });
+                read_message(param);
             }
             else {
-                outText.push([
-                    "\nFile could not be opened on <" + param1 + ">. File name is incorrect or could not read file type.",
+                session.output.push({ output: true, text: [
+                    "File could not be opened on <" + param1 + ">",
+                    "File name is incorrect or could not read file type.",
                     "Type 'help stinger-rd' to get a hint."
-                ].join("\n"));
+                ], breakLine: true });
             }
-            session.output.push({ output: true, text: outText, breakLine: true });
         };
         return me;
     };
@@ -381,9 +399,11 @@
     //==============================================================================//
 
     var stingerExploitCommandHandler = function () {
+        // Correct flags for exploit id and target
         var correct_exploit_id = "stg" + (256*143).toString();
         var correct_target = "clover-tar1";
 
+        // Exploit and malware list to display when hitting list commands
         var exploit_list = [
             "\nSTINGER Exploit List",
             "========================",
@@ -409,7 +429,6 @@
             "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\t\t\tstg38324",
             "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
         ];
-
         var malware_list = [
             "\nSTINGER Malware List",
             "========================",
@@ -463,7 +482,7 @@
                 ], breakLine: false});
             };
 
-            // Conditional return messages
+            // Conditional return messages based on id combos
             if (!param1) {
                 session.output.push({ output: true, text: [
                     "You need to provide an exploit, malware and target ID. ",
@@ -521,11 +540,8 @@
 
 
     //===============================================================================================//
-    //======= END ====================================================================================//
+    //======= END OF HACKING TERMINAL COMMANDS CODE ====================================================================================//
     //===============================================================================================//
-
-
-
 
 
     // this must be the last
