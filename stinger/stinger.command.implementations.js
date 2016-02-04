@@ -390,136 +390,136 @@
         var correct_exploit_id = "stg" + (256*143).toString();
         var correct_target = "clover-tar1";
 
+        var exploit_list = [
+            "\nSTINGER Exploit List",
+            "========================",
+            "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID",
+            "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
+            "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstg38371",
+            "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
+            "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow\t\t\t\tstg36487",
+            "shellcode - OS X x64 - tcp bind shellcode, NULL byte free (144 bytes)\t\tstg32874",
+            "local - OS X Install.framework suid Helper Privilege Escalation\t\t\tstg35543",
+            "local - OS X Install.framework Arbitrary mkdir, unlink and chown to admin Group\tstg31298",
+            "local - OS X Install.framework suid root Runner Binary Privilege Escalation\tstg30046",
+            "local - Disconnect.me Mac OS X Client <= 2.0 - Local Privilege Escalation\tstg30765",
+            "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstg31774",
+            "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstg30922",
+            "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstg31165",
+            "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id,
+            "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstg35776",
+            "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstg33384",
+            "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstg34421",
+            "remote - MacKeeper URL Handler Remote Code Execution\t\t\t\tstg36643",
+            "dos - Mac OS X - Local Denial of Service\t\t\t\t\tstg37234",
+            "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\t\t\tstg38324",
+            "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
+        ];
+
+        var malware_list = [
+            "\nSTINGER Malware List",
+            "========================",
+            "MALWARE ID",
+            "OSX.RSPlug.A",
+            "OSX.HellRTS",
+            "OSX.Backloader",
+            "OSX.Crisis",
+            "OSX.Flashback",
+            "OSX.Inqtana.A",
+            "OSX.Macontrol",
+            "OSX.Janicab",
+            "OSX.Stealbit.A",
+            "OSX.Tsunami",
+            "OSX.Ransomcrypt",
+            "OSX.Pintsized",
+            "OSX.Slordu",
+            "OSX.Imauler",
+            "OSX.Hormesu",
+            "OSX.Kitmos",
+            "OSX.Luaddit",
+            "OSX.Laoshu",
+            "OSX.Wirelurker",
+            "OSX.Ventir",
+            "OSX.Loosemaque",
+            "OSX.Olyx.C",
+            "OSX.Netweird",
+            "OSX.Lamzev.A",
+            "OSX.RSPlug.A",
+            "OSX.Sudoprint",
+            "OSX.SMSSend"
+        ];
+
         var me = {};
         me.command = 'stinger-exmal';
         me.description = ['Exploit and malware manager toolset, for use in cyber warfare and cyber intel operations.',
             "Example: stinger-exmal ExploitID MalwareID TargetID",
             "See a list of malware available by typing 'stinger-exmal mals'",
             "See a list of exploits available by typing 'stinger-exmal exls'"];
+
         me.handle = function (session, param1, param2, param3) {
-            var outText = [];
+
+            // Output message functions
+            var exploit_message = function() {
+                session.output.push({ output: true, text: [
+                    "\nSTINGER Exploit Malware Manager is currently running the following package:\n\n",
+                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
+                    "\nEXECUTING...........",
+                    "..................",
+                    ".................!"
+                ], breakLine: false});
+            };
+
+            // Conditional return messages
             if (!param1) {
-                outText.push([
+                session.output.push({ output: true, text: [
                     "\nYou need to provide an exploit, malware and target name. ",
                     "Type 'help stinger-exmal' to get a hint."
-                ].join("\n"));
+                ], breakLine: true });
             }
             else if (param1 === "mals") {
-                outText.push([
-                    "\nSTINGER Malware List",
-                    "========================",
-                    "MALWARE ID",
-                    "OSX.RSPlug.A",
-                    "OSX.HellRTS",
-                    "OSX.Backloader",
-                    "OSX.Crisis",
-                    "OSX.Flashback",
-                    "OSX.Inqtana.A",
-                    "OSX.Macontrol",
-                    "OSX.Janicab",
-                    "OSX.Stealbit.A",
-                    "OSX.Tsunami",
-                    "OSX.Ransomcrypt",
-                    "OSX.Pintsized",
-                    "OSX.Slordu",
-                    "OSX.Imauler",
-                    "OSX.Hormesu",
-                    "OSX.Kitmos",
-                    "OSX.Luaddit",
-                    "OSX.Laoshu",
-                    "OSX.Wirelurker",
-                    "OSX.Ventir",
-                    "OSX.Loosemaque",
-                    "OSX.Olyx.C",
-                    "OSX.Netweird",
-                    "OSX.Lamzev.A",
-                    "OSX.RSPlug.A",
-                    "OSX.Sudoprint",
-                    "OSX.SMSSend"
-                ].join("\n"));
+                session.output.push({ output: true, text: malware_list, breakLine: true });
             }
             else if (param1 === "exls") {
-                outText.push([
-                    "\nSTINGER Exploit List",
-                    "========================",
-                    "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID",
-                    "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
-                    "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\t\tstg38371",
-                    "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
-                    "dos - OS X Regex Engine (TRE) - Stack Buffer Overflow\t\t\t\tstg36487",
-                    "shellcode - OS X x64 - tcp bind shellcode, NULL byte free (144 bytes)\t\tstg32874",
-                    "local - OS X Install.framework suid Helper Privilege Escalation\t\t\tstg35543",
-                    "local - OS X Install.framework Arbitrary mkdir, unlink and chown to admin Group\tstg31298",
-                    "local - OS X Install.framework suid root Runner Binary Privilege Escalation\tstg30046",
-                    "local - Disconnect.me Mac OS X Client <= 2.0 - Local Privilege Escalation\tstg30765",
-                    "shellcode - OS X x64 /bin/sh Shellcode, NULL Byte Free, 34 bytes\t\tstg31774",
-                    "local - Apple OS X Entitlements Rootpipe Privilege Escalation\t\t\tstg30922",
-                    "local - OS X 10.10.5 - XNU Local Privilege Escalation\t\t\t\tstg31165",
-                    "remote - Safari User-Assisted Applescript Exec Attack\t\t\t\t" + correct_exploit_id,
-                    "dos - OSX Keychain - EXC_BAD_ACCESS DoS\t\t\t\t\t\tstg35776",
-                    "local - OS X 10.10 - DYLD_PRINT_TO_FILE Local Privilege Escalation\t\tstg33384",
-                    "dos - Safari 8.0.X / OS X Yosemite 10.10.3 - Crash Proof Of Concept\t\tstg34421",
-                    "remote - MacKeeper URL Handler Remote Code Execution\t\t\t\tstg36643",
-                    "dos - Mac OS X - Local Denial of Service\t\t\t\t\tstg37234",
-                    "local - Apple MAC OS X < 10.9/10 - Local Root Exploit\t\t\t\tstg38324",
-                    "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
-                ].join("\n"));
+                session.output.push({ output: true, text: exploit_list, breakLine: true });
             }
             else if (param1 === correct_exploit_id && param2 === "OSX.Wirelurker" && param3 === correct_target) {
                 var success_code = 43*29*46*2;
-                outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
-                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING...........",
-                    "....................",
-                    "...................!",
-                    "\n" + param3 + " has been successfully infected!",
+                session.output.push({ output: true, text: [
+                    "\n" + param3 + " has been successfully infected!\n\n",
                     ">>Your success code is: " + success_code + "<<"
-                ].join("\n"));
+                ], breakLine: true });
+                exploit_message();
             }
             else if (param1 !== correct_exploit_id) {
-                outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
-                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING...........",
-                    "....................",
-                    "...................!",
-                    "\nTarget <" + param3 + "> was not infected!",
+                session.output.push({ output: true, text: [
+                    "\nTarget <" + param3 + "> was not infected!\n\n",
                     "The exploit <" + param1 + "> failed.",
                     "Check that the exploit is correct for the target."
-                ].join("\n"));
+                ], breakLine: true });
+                exploit_message();
             }
             else if (param2 !== "OSX.Wirelurker") {
-                outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
-                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING...........",
-                    "....................",
-                    "...................!",
-                    "\nTarget <" + param3 + "> was not infected!",
+                session.output.push({ output: true, text: [
+                    "\nTarget <" + param3 + "> was not infected!\n\n",
                     "The virus <" + param2 + "> failed.",
                     "Check that the virus is correct for the target."
-                ].join("\n"));
+                ], breakLine: true });
+                exploit_message();
             }
             else if (param3 !== correct_target) {
-                outText.push([
-                    "\nSTINGER Exploit Malware Manager is currently running the following package:",
-                    "<< " + param1 + " with malware " + param2 + " against target " + param3 + " >>",
-                    "\nEXECUTING...........",
-                    "....................",
-                    "...................!",
-                    "\nTarget <" + param3 + "> was not infected!",
+                session.output.push({ output: true, text: [
+                    "\nTarget <" + param3 + "> was not infected!\n\n",
                     "Could not access target <" + param3 + ">",
                     "The target may not be authorized for STINGER attack or it may be misspelled."
-                ].join("\n"));
+                ], breakLine: true });
+                exploit_message();
             }
             else {
-                outText.push([
+                session.output.push({ output: true, text: [
                     "\nCould not run exploit/malware against target, check that the parameters are correct.",
                     "Type 'help stinger-exmal' to get a hint."
-                ].join("\n"));
+                ], breakLine: true });
             }
-            session.output.push({ output: true, text: outText, breakLine: true });
         };
         return me;
     };
