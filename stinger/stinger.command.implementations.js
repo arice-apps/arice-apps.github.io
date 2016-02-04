@@ -167,14 +167,16 @@
         command: 'stinger-ls',
         description: ['Diplays list of infected computer systems.'],
         handle: function (session) {
-            session.output.push({ output: true, text: ['\n'], breakLine: false });
-            session.output.push({ output: true, text: ['lorenz-3\t << INFO: Sven Daecher, Lorenz Ocean Science Expert (Office) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['lorenz-2\t << INFO: Seb Reiniger, Lorenz Tropical Storm Expert (Office) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['lorenz-1\t << INFO: Olivier Mothé, Lorenz Chaos Theory Specialist (Office) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['morpho-2\t << INFO: Stacy Holden, Morpho Medical VP Assistant (Office) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['morpho-1\t << INFO: Greg Fields, Morpho Medical SysAdmin (Office) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['aconite-1\t << INFO: Oran Plaskett, Aconite Capital CFO (Home) >>'], breakLine: false });
-            session.output.push({ output: true, text: ['\n>>STINGER INFECTED SYSTEMS<<'], breakLine: true });
+            var infected_list = [
+                '\n>>STINGER INFECTED SYSTEMS<<\n\n',
+                'aconite-1\t << INFO: Oran Plaskett, Aconite Capital CFO (Home) >>',
+                'morpho-1\t << INFO: Greg Fields, Morpho Medical SysAdmin (Office) >>',
+                'morpho-2\t << INFO: Stacy Holden, Morpho Medical VP Assistant (Office) >>',
+                'lorenz-1\t << INFO: Olivier Mothé, Lorenz Chaos Theory Specialist (Office) >>',
+                'lorenz-2\t << INFO: Seb Reiniger, Lorenz Tropical Storm Expert (Office) >>',
+                'lorenz-3\t << INFO: Sven Daecher, Lorenz Ocean Science Expert (Office) >>'
+            ];
+            session.output.push({ output: true, text: infected_list, breakLine: true });
         }
     });
 
@@ -184,104 +186,95 @@
     //==============================================================================//
 
     var stingerDirectoryCommandHandler = function () {
+
+        var aconite_dir_list = [
+            "Applications",
+            "Desktop",
+            "Documents",
+            "Downloads",
+            "Movies",
+            "Music",
+            "Pictures",
+            "reminders.txt"
+        ];
+        var movies_list = "Chris McKnett – The Investment Logic for Sustainability.mp4,EPIC_FAILS.mp4,funny_cat_compilation.mp4,Spectre 2015 1080p BluRay x264 DTS-JYK.mkv,Fury.mov,Mission: Impossible - Rogue Nation.mov,Ex Machina.avi,Mad Max - Fury Road.mov,Interstellar_hd1920x1080(2014).mp4,The_Imitation_Game.mov,The Wolf of Wall Street[2013].mov,The Hunger Games-hd.mov,Her.avi,The Hobbit: The Battle of the Five Armies.mov,Boyhood[2014].avi,American Sniper.mov,Dawn of the Planet of the Apes.mov,Lucy_1920x1080HD.mp4,Transcendence.avi,Wild.mov,Whiplash_HD.mov,The Grand Budapest Hotel.mov"
+            .split(",");
+        var music_list = "Train in Vain - The Clash.mp3,The Man Who Sold the World - Midge Ure.mp3,David Bowie - Space Oddity.mp3,Louis Armstrong - What a Wonderful World.mp3,Elton John - Your Song(Remix).mp3,Dexys Midnight Runners - Come on Eileen(1982).mp3,U2 - I Still Haven’t Found What I’m Looking For.mp3,Nirvana - Smells Like Teen Spirit.mp3,Neil Diamond - I Am. I Said(1971).mp3,The Beatles - Help!.mp3,Queen - Somebody to Love.mp3,Hozier - Take Me To Church(remix).mp3,Snow Patrol - Run.mp3,Jerry and the Pacemakers - You’ll Never Walk Alone.mp3,John Lennon - Jealous Guy.mp3,Richard Harris - MacArthur Park.mp3,Norah Jones - Cold Cold Heart.mp3,The Monkees - I’m a Believer(1966).mp3,The Eagles - Hotel California.mp3,Coldplay - The Scientist.mp3,Johnny Cash - The Mercy Seat.mp3,Prince - When Doves Cry.mp3"
+            .split(",");
+        var pictures_list = "IMG_0501.JPG,IMG_2988.JPG,CUTEpuppy_1302.JPG,IMG_0725.JPG,IMG_1238.JPG,IMG_2308.JPG,Japan_Nature_WallpaperHD_0307.JPG,IMG_0602.JPG,Invitation.JPG,IMG_2019.JPG,IMG_0411.JPG,IMG_0496.JPG,IMG_1089.JPG,IMG_0402.JPG,IMG_1752.JPG,HJd82971_0582.gif,IMG_0339.JPG,IMG_1095.JPG,IMG_0056.JPG,sa1vxh00.JPG"
+            .split(",");
+        var desktop_list = "App Store,Chrome,ITunes,Investors_List.pages,Contacts,Safari,Pages,IMG_0403.JPG,Invoice.pages,Strategic_Business_Plan_Aconite(In Progress).pages,Tax Receipt 2014.pages,Aconite_Financial_Report.pages,Keynote,Mail,Reminders,Numbers,IMG_0401.JPG,rts00xVD553.png"
+            .split(",");
+        var applications_list = "Chrome Apps.localized, Chrome Canary Apps.localized"
+            .split(",");
+        var documents_list = "Business_Trip_Budget.pages,Resume_2011.pages,Revised_CV_2014.pages,comcast_nov2015.pdf,Tax_Receipt_2011.pages,Tax_Receipt_2012.pages,Tax_receipt_2013.pages,Alone-Edgar_Allen_Poe.pdf"
+            .split(",");
+        var downloads_list = "18277051_584547341_613671_n.jpg,275-001_20150728-2046_14_6715376.VGA.mp3,5426-97623-1-PB (1).pages,acstn_form (4).pages,ADE_4.5_Installer.dmg,advanced-systemcare-setup (1).dmg,advanced-systemcare-setup.dmg,April2015_Statement.pages,Augustine.pages ,Burke.pages,Chromeinstall-8u65.dmg,C49Y23 decoys.pptx,C59A99 decoys.pptx,Dussen.pages,esfs4.14.48-updater.dmg,February2015_Statement.pages,FreeYouTubeDownloaderOC.dmg,googledrivesync.dmg,Harris.pages,iCloudSetup.dmg,January2015_Statement.pages,July2015_Statement.pages,June2015_Statement.pages,k9_2015_Malkin.docx,March2015_Statement.pages,SetupOfficeTab.dmg ,SkypeSetup.dmg"
+            .split(",");
+
         var me = {};
         me.command = 'stinger-cd';
         me.description = ['Changes directory to access an infected computer system.', 
                             "Example: stinger-cd company-1 or stinger-cd company-1 DirectoryName",
                             "See a list of infected systems by typing 'stinger-ls'"];
+
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
-            var outText = [];
+
+            var directory_message = function(dir_name) {
+                session.output.push({ output: true, text: [
+                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
+                    "<"+ dir_name + " Directory>\n"
+                ], breakLine: true });
+            };
+
             if (!param1) {
-                outText.push("You need to provide an infected system name, type 'help stinger-cd' to get a hint.");
+                session.output.push({ output: true, text: ["You need to provide an infected system name, type 'help stinger-cd' to get a hint."], breakLine: true });
             }
             else if (param1 === "aconite-1" && !param2) {
-                outText.push([
-                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                        "<aconite-1 Main Directory>\n",
-                        "Applications",
-                        "Desktop",
-                        "Documents",
-                        "Downloads",
-                        "Movies",
-                        "Music",
-                        "Pictures",
-                        "reminders.txt"
-                    ].join("\n"));
+                session.output.push({ output: true, text: aconite_dir_list, breakLine: true });
+                directory_message(param1 + " Main");
             }
             else if (param1 === "morpho-1" || param1 === "morpho-2" || param1 === "lorenz-1" || param1 === "lorenz-2" || param1 == "lorenz-3") {
-                outText.push("\n>>STINGER DIRECTORY ACCESS DENIED<<\n");
-                outText.push("\nYour current mission access level does not grant permission to this infected system!");
+                session.output.push({ output: true, text: [
+                    "\n>>STINGER DIRECTORY ACCESS DENIED<<\n",
+                    "\nYour current mission access level does not grant permission to this infected system!"
+                ], breakLine: true });
             }
             else if (param1 === "aconite-1" && param2 === "Movies") {
-                var movies_list = "Chris McKnett – The Investment Logic for Sustainability.mp4,EPIC_FAILS.mp4,funny_cat_compilation.mp4,Spectre 2015 1080p BluRay x264 DTS-JYK.mkv,Fury.mov,Mission: Impossible - Rogue Nation.mov,Ex Machina.avi,Mad Max - Fury Road.mov,Interstellar_hd1920x1080(2014).mp4,The_Imitation_Game.mov,The Wolf of Wall Street[2013].mov,The Hunger Games-hd.mov,Her.avi,The Hobbit: The Battle of the Five Armies.mov,Boyhood[2014].avi,American Sniper.mov,Dawn of the Planet of the Apes.mov,Lucy_1920x1080HD.mp4,Transcendence.avi,Wild.mov,Whiplash_HD.mov,The Grand Budapest Hotel.mov"
-                    .split(",").join("\n").toString();
-                outText.push([
-                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                        "<"+ param + " Directory>\n",
-                        movies_list
-                    ].join("\n"));
+                session.output.push({ output: true, text: movies_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Music") {
-                var music_list = "Train in Vain - The Clash.mp3,The Man Who Sold the World - Midge Ure.mp3,David Bowie - Space Oddity.mp3,Louis Armstrong - What a Wonderful World.mp3,Elton John - Your Song(Remix).mp3,Dexys Midnight Runners - Come on Eileen(1982).mp3,U2 - I Still Haven’t Found What I’m Looking For.mp3,Nirvana - Smells Like Teen Spirit.mp3,Neil Diamond - I Am. I Said(1971).mp3,The Beatles - Help!.mp3,Queen - Somebody to Love.mp3,Hozier - Take Me To Church(remix).mp3,Snow Patrol - Run.mp3,Jerry and the Pacemakers - You’ll Never Walk Alone.mp3,John Lennon - Jealous Guy.mp3,Richard Harris - MacArthur Park.mp3,Norah Jones - Cold Cold Heart.mp3,The Monkees - I’m a Believer(1966).mp3,The Eagles - Hotel California.mp3,Coldplay - The Scientist.mp3,Johnny Cash - The Mercy Seat.mp3,Prince - When Doves Cry.mp3"
-                    .split(",").join("\n").toString();
-                outText.push([
-                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                        "<"+ param + " Directory>\n",
-                        music_list
-                    ].join("\n"));
+                session.output.push({ output: true, text: music_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Pictures") {
-                var pictures_list = "IMG_0501.JPG,IMG_2988.JPG,CUTEpuppy_1302.JPG,IMG_0725.JPG,IMG_1238.JPG,IMG_2308.JPG,Japan_Nature_WallpaperHD_0307.JPG,IMG_0602.JPG,Invitation.JPG,IMG_2019.JPG,IMG_0411.JPG,IMG_0496.JPG,IMG_1089.JPG,IMG_0402.JPG,IMG_1752.JPG,HJd82971_0582.gif,IMG_0339.JPG,IMG_1095.JPG,IMG_0056.JPG,sa1vxh00.JPG"
-                    .split(",").join("\n");
-                outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    pictures_list
-                ].join("\n"));
+                session.output.push({ output: true, text: pictures_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Desktop") {
-                var desktop_list = "App Store,Chrome,ITunes,Investors_List.pages,Contacts,Safari,Pages,IMG_0403.JPG,Invoice.pages,Strategic_Business_Plan_Aconite(In Progress).pages,Tax Receipt 2014.pages,Aconite_Financial_Report.pages,Keynote,Mail,Reminders,Numbers,IMG_0401.JPG,rts00xVD553.png"
-                    .split(",").join("\n");
-                outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    desktop_list
-                ].join("\n"));
+                session.output.push({ output: true, text: desktop_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Applications") {
-                outText.push([
-                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                        "<"+ param + " Directory>\n",
-                        "Chrome Apps.localized",
-                        "Chrome Canary Apps.localized"
-                    ].join("\n"));
+                session.output.push({ output: true, text: applications_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Documents") {
-                var documents_list = "Business_Trip_Budget.pages,Resume_2011.pages,Revised_CV_2014.pages,comcast_nov2015.pdf,Tax_Receipt_2011.pages,Tax_Receipt_2012.pages,Tax_receipt_2013.pages,Alone-Edgar_Allen_Poe.pdf"
-                    .split(",").join("\n");
-                outText.push([
-                        "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                        "<"+ param + " Directory>\n",
-                        documents_list
-                    ].join("\n"));
+                session.output.push({ output: true, text: documents_list, breakLine: true });
+                directory_message(param);
             }
             else if (param1 === "aconite-1" && param2 === "Downloads") {
-                var downloads_list = "18277051_584547341_613671_n.jpg,275-001_20150728-2046_14_6715376.VGA.mp3,5426-97623-1-PB (1).pages,acstn_form (4).pages,ADE_4.5_Installer.dmg,advanced-systemcare-setup (1).dmg,advanced-systemcare-setup.dmg,April2015_Statement.pages,Augustine.pages ,Burke.pages,Chromeinstall-8u65.dmg,C49Y23 decoys.pptx,C59A99 decoys.pptx,Dussen.pages,esfs4.14.48-updater.dmg,February2015_Statement.pages,FreeYouTubeDownloaderOC.dmg,googledrivesync.dmg,Harris.pages,iCloudSetup.dmg,January2015_Statement.pages,July2015_Statement.pages,June2015_Statement.pages,k9_2015_Malkin.docx,March2015_Statement.pages,SetupOfficeTab.dmg ,SkypeSetup.dmg"
-                    .split(",").join("\n");
-                outText.push([
-                    "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ param + " Directory>\n",
-                    downloads_list
-                ].join("\n"));
+                session.output.push({ output: true, text: downloads_list, breakLine: true });
+                directory_message(param);
             }
             else {
-                outText.push([
-                    "\nCould not access directory on <" + param1 + ">. Check it exists or that you have permission.",
+                session.output.push({ output: true, text: [
+                    "Could not access directory on <" + param1 + ">. Check it exists or that you have permission.",
                     "Type 'help stinger-cd' to get a hint."
-                ].join("\n"));
+                ], breakLine: true });
             }
-            session.output.push({ output: true, text: outText, breakLine: true });
         };
         return me;
     };
@@ -298,6 +291,7 @@
         me.description = ['Reads a file within an infected computer system.', 
                             "Example: stinger-rd company-1 document.txt",
                             "See a list of infected systems by typing 'stinger-ls'"];
+
         me.handle = function (session, param1, param2) {
             var param = [param1, param2].join(" ");
             var outText = [];
@@ -472,7 +466,7 @@
             // Conditional return messages
             if (!param1) {
                 session.output.push({ output: true, text: [
-                    "\nYou need to provide an exploit, malware and target name. ",
+                    "You need to provide an exploit, malware and target ID. ",
                     "Type 'help stinger-exmal' to get a hint."
                 ], breakLine: true });
             }
@@ -516,7 +510,7 @@
             }
             else {
                 session.output.push({ output: true, text: [
-                    "\nCould not run exploit/malware against target, check that the parameters are correct.",
+                    "Could not run exploit/malware against target, check that the parameters are correct.",
                     "Type 'help stinger-exmal' to get a hint."
                 ], breakLine: true });
             }
