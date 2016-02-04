@@ -104,7 +104,7 @@
 
 .config(['terminalConfigurationProvider', function (terminalConfigurationProvider) {
 
-    terminalConfigurationProvider.config('vintage').outputDelay = 10;
+    terminalConfigurationProvider.config('vintage').outputDelay = 8.5;
     terminalConfigurationProvider.config('vintage').allowTypingWriteDisplaying = false;
     terminalConfigurationProvider.config('vintage').typeSoundUrl ='stinger/content/type.wav';
     terminalConfigurationProvider.config('vintage').startSoundUrl ='stinger/content/start.wav';
