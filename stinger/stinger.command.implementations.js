@@ -158,6 +158,20 @@
     // /////////// STINGER hacking commands ///////////
     //==============================================================================//
 
+    //==============================================================================//
+    // STINGER helper functions //
+    //==============================================================================//
+
+    var makeLower = function(param) {
+        try {
+            param = param.toLowerCase();
+            return param;
+        } catch(e) {
+            param = "undefined";
+            return param;
+        }
+    };
+
 
     //==============================================================================//
     // STINGER <List> Command //
@@ -184,16 +198,6 @@
     //==============================================================================//
     // STINGER <Directory> Command //
     //==============================================================================//
-
-    var makeLower = function(param) {
-        try {
-            param = param.toLowerCase();
-            return param;
-        } catch(e) {
-            param = "undefined";
-            return param;
-        }
-    };
 
     var stingerDirectoryCommandHandler = function () {
         // Directory contents lists
