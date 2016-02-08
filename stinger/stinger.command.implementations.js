@@ -564,6 +564,69 @@
     commandBrokerProvider.appendCommandHandler(stingerExploitCommandHandler());
 
 
+    //==============================================================================//
+    // STINGER <Payload> Command //
+    //==============================================================================//
+//==============================================================================//
+    // STINGER <Read> Command //
+    //==============================================================================//
+
+    var stingerPayloadCommandHandler = function () {
+
+        var me = {};
+        me.command = 'stinger-pl';
+        me.description = ['Launches a NITE Team 4 payload against a target.',
+            "Example: stinger-pl target-1 PayloadID"];
+
+        me.handle = function (session, param1, param2) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+
+
+            // Function to print out file name location and access status
+            var payload_message = function() {
+                session.output.push({ output: true, text: [
+                    "\nSTINGER NITE Team 4 payload is currently launching:\n\n",
+                    "<< " + param1 + " receiving payload " + param2 + " >>",
+                    "\nEXECUTING...........",
+                    "..................",
+                    ".................!"
+                ], breakLine: false});
+            };
+
+            // Conditional messages returned based on filename given
+            if (param1 === "undefined") {
+                session.output.push({
+                    output: true, text: [
+                        "You need to provide an infected system name, type 'help stinger-rd' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param1 === "orchid-tar1") {
+                session.output.push({
+                    output: true, text: [
+                        "You need to provide a payload name, type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param1 === "orchid-tar1" && param2 === "honeycomb") {
+                session.output.push({
+                    output: true, text: [
+                        "System was infected! Printing contents of database>>>"
+                    ], breakLine: true
+                });
+            }
+            else {
+                session.output.push({ output: true, text: [
+                    "File could not be opened on <" + param1 + ">",
+                    "File name is incorrect or could not read file type.",
+                    "Type 'help stinger-rd' to get a hint."
+                ], breakLine: true });
+            }
+        };
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerPayloadCommandHandler());
+
+
     //===============================================================================================//
     //======= END OF HACKING TERMINAL COMMANDS CODE ====================================================================================//
     //===============================================================================================//
