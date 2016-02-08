@@ -185,6 +185,17 @@
     // STINGER <Directory> Command //
     //==============================================================================//
 
+    var makeLower = function(param) {
+        try {
+            param = param.toLowerCase();
+            return param;
+        } catch(e) {
+            param = "undefined";
+            console.log(e);
+            return param;
+        }
+    };
+
     var stingerDirectoryCommandHandler = function () {
         // Directory contents lists
         var aconite_dir_list = [
@@ -219,21 +230,24 @@
                             "See a list of infected systems by typing 'stinger-ls'"];
 
         me.handle = function (session, param1, param2) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+
             var param = [param1, param2].join(" ");
 
             // Function to print out initial directory message with access status
             var directory_message = function(dir_name) {
                 session.output.push({ output: true, text: [
                     "\n>>STINGER DIRECTORY ACCESS GRANTED<<\n",
-                    "<"+ dir_name + " Directory>\n"
+                    "<"+ dir_name + " directory>\n"
                 ], breakLine: true });
             };
 
             // Conditional messages returned based on directory name
-            if (!param1) {
+            if (param1 === "undefined") {
                 session.output.push({ output: true, text: ["You need to provide an infected system name, type 'help stinger-cd' to get a hint."], breakLine: true });
             }
-            else if (param1 === "aconite-1" && !param2) {
+            else if (param1 === "aconite-1" && param2 === "undefined") {
                 session.output.push({ output: true, text: aconite_dir_list, breakLine: true });
                 directory_message(param1 + " Main");
             }
@@ -243,31 +257,31 @@
                     "\nYour current mission access level does not grant permission to this infected system!"
                 ], breakLine: true });
             }
-            else if (param1 === "aconite-1" && param2 === "Movies") {
+            else if (param1 === "aconite-1" && param2 === "movies") {
                 session.output.push({ output: true, text: movies_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Music") {
+            else if (param1 === "aconite-1" && param2 === "music") {
                 session.output.push({ output: true, text: music_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Pictures") {
+            else if (param1 === "aconite-1" && param2 === "pictures") {
                 session.output.push({ output: true, text: pictures_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Desktop") {
+            else if (param1 === "aconite-1" && param2 === "desktop") {
                 session.output.push({ output: true, text: desktop_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Applications") {
+            else if (param1 === "aconite-1" && param2 === "applications") {
                 session.output.push({ output: true, text: applications_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Documents") {
+            else if (param1 === "aconite-1" && param2 === "documents") {
                 session.output.push({ output: true, text: documents_list, breakLine: true });
                 directory_message(param);
             }
-            else if (param1 === "aconite-1" && param2 === "Downloads") {
+            else if (param1 === "aconite-1" && param2 === "downloads") {
                 session.output.push({ output: true, text: downloads_list, breakLine: true });
                 directory_message(param);
             }
@@ -350,6 +364,9 @@
                             "See a list of infected systems by typing 'stinger-ls'"];
 
         me.handle = function (session, param1, param2) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+
             var param = [param1, param2].join(" ");
 
             // Function to print out file name location and access status
@@ -360,7 +377,7 @@
             };
 
             // Conditional messages returned based on filename given
-            if (!param1) {
+            if (param1 === "undefined") {
                 session.output.push({ output: true, text: [
                     "You need to provide an infected system name, type 'help stinger-rd' to get a hint."
                 ], breakLine: true });
@@ -376,7 +393,7 @@
                 session.output.push({ output: true, text: comcast_file, breakLine: true });
                 read_message(param);
             }
-            else if (param2 === "Alone-Edgar_Allen_Poe.pdf") {
+            else if (param2 === "alone-edgar_allen_poe.pdf") {
                 session.output.push({ output: true, text: poe_file, breakLine: true });
                 read_message(param);
             }
@@ -472,6 +489,9 @@
             "See a list of exploits available by typing 'stinger-exmal exls'"];
 
         me.handle = function (session, param1, param2, param3) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+            param3 = makeLower(param3);
 
             // Output message functions
             var exploit_message = function() {
@@ -485,7 +505,7 @@
             };
 
             // Conditional return messages based on id combos
-            if (!param1) {
+            if (param1 === "undefined") {
                 session.output.push({ output: true, text: [
                     "You need to provide an exploit, malware and target ID. ",
                     "Type 'help stinger-exmal' to get a hint."
@@ -497,7 +517,7 @@
             else if (param1 === "exls") {
                 session.output.push({ output: true, text: exploit_list, breakLine: true });
             }
-            else if (param1 === correct_exploit_id && param2 === "OSX.Wirelurker" && param3 === correct_target) {
+            else if (param1 === correct_exploit_id && param2 === "osx.wirelurker" && param3 === correct_target) {
                 var success_code = 43*29*46*2;
                 session.output.push({ output: true, text: [
                     "\n" + param3 + " has been successfully infected!\n\n",
@@ -513,7 +533,7 @@
                 ], breakLine: true });
                 exploit_message();
             }
-            else if (param2 !== "OSX.Wirelurker") {
+            else if (param2 !== "osx.wirelurker") {
                 session.output.push({ output: true, text: [
                     "\nTarget <" + param3 + "> was not infected!\n\n",
                     "The virus <" + param2 + "> failed.",
