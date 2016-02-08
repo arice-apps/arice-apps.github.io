@@ -191,7 +191,6 @@
             return param;
         } catch(e) {
             param = "undefined";
-            console.log(e);
             return param;
         }
     };
