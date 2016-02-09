@@ -693,7 +693,7 @@
 
         var me = {};
         me.command = 'stinger-rp';
-        me.description = ['Grants access to NITE 4 evidence and report database',
+        me.description = ['Grants access to NITE Team 4 evidence and report database',
             "Example: stinger-rp DatabaseID (list all entries in report database)",
             "Example: stinger-rp DatabaseID ReportID (read a report from the database)"
         ];
