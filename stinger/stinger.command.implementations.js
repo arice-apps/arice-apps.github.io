@@ -580,7 +580,7 @@
 
         var me = {};
         me.command = 'stinger-pl';
-        me.description = ['Launches a NITE Team 4 payload against a target.',
+        me.description = ['Launches a NITE Team 4 payload against a target to gain root access.',
             "Example: stinger-pl PayloadID TargetID"];
 
         var correct_payload = "honey-" + 9*59; //honey-531
@@ -645,7 +645,7 @@
                 session.output.push({output: true, text: vehicle_list, breakLine: true});
                 session.output.push({
                     output: true, text: [
-                        "System was infected! Printing contents of database >>>\n\n",
+                        "System access obtained! Printing contents of system >>>\n\n",
                         "VEHICLE NAME\t\t\tCATEGORY\t\tDESCRIPTION",
                         "============\t\t\t========\t\t==========="
                     ], breakLine: false
