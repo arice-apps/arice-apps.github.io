@@ -664,6 +664,8 @@
                 session.output.push({
                     output: true, text: [
                         "System access obtained! Printing contents of system >>>\n\n",
+                        "VENEZUELAN ARMY VEHICLE DATABASE-04\n",
+                        "-----------------------------------\n\n",
                         "VEHICLE NAME\t\t\tQUANTITY",
                         "============\t\t\t========"
                     ], breakLine: false
