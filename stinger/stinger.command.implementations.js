@@ -581,7 +581,7 @@
         var me = {};
         me.command = 'stinger-pl';
         me.description = ['Launches a NITE Team 4 payload against a target.',
-            "Example: stinger-pl target-1 PayloadID"];
+            "Example: stinger-pl PayloadID TargetID"];
 
         var correct_payload = "honey-" + 9*59; //honey-531
         var correct_db = "orchid-db1";
