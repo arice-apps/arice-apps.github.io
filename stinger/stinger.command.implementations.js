@@ -698,7 +698,7 @@
             "Example: stinger-rp DatabaseID ReportID (read a report from the database)"
         ];
 
-        var m26_db = "combdb-" + 4*7 + "g"; // combdb-28g
+        var m26_db = "combdb-" + 4*7; // combdb-28
         var m26_rp1 = "rep_sigilmal" + 4*23; // rep_sigilmal92
         var m26_rp2 = "rep_crypt" + 4*14; // rep_crypt56
 
