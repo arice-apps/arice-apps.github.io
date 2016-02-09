@@ -578,6 +578,17 @@
         me.description = ['Launches a NITE Team 4 payload against a target.',
             "Example: stinger-pl target-1 PayloadID"];
 
+        var correct_payload = "honey-" + 9*59; //honey-531
+        var correct_db = "orchid-db1";
+
+        var vehicle_list = [
+            "Tiuna\t\t\t\tMWV\t\t\tLight utility vehicle",
+            "Pinzgauer\t\t\tMWV\t\t\tMultipurpose military vehicle",
+            "Toyota Land Cruiser\t\tMWV\t\t\tMultipurpose military vehicle",
+            "M35 Fenix\t\t\tTruck\t\t\t6x6 cargo truck",
+            "M-35/A2 Reo\t\t\tTruck\t\t\t6x6 cargo truck"
+        ];
+
         me.handle = function (session, param1, param2) {
             param1 = makeLower(param1);
             param2 = makeLower(param2);
@@ -587,10 +598,10 @@
             var payload_message = function() {
                 session.output.push({ output: true, text: [
                     "\nSTINGER NITE Team 4 payload is currently launching:\n\n",
-                    "<< " + param1 + " receiving payload " + param2 + " >>",
+                    "<< " + param2 + " receiving payload " + param1 + " >>",
                     "\nEXECUTING...........",
                     "..................",
-                    ".................!"
+                    ".................!\n\n"
                 ], breakLine: false});
             };
 
@@ -598,27 +609,49 @@
             if (param1 === "undefined") {
                 session.output.push({
                     output: true, text: [
-                        "You need to provide an infected system name, type 'help stinger-rd' to get a hint."
-                    ], breakLine: true
-                });
-            } else if (param1 === "orchid-tar1") {
-                session.output.push({
-                    output: true, text: [
                         "You need to provide a payload name, type 'help stinger-pl' to get a hint."
                     ], breakLine: true
                 });
-            } else if (param1 === "orchid-tar1" && param2 === "honeycomb") {
+            } else if (param2 === "undefined") {
                 session.output.push({
                     output: true, text: [
-                        "System was infected! Printing contents of database>>>"
+                        "You need to provide a target name, type 'help stinger-pl' to get a hint."
                     ], breakLine: true
                 });
+            } else if (param1 !== correct_payload) {
+                session.output.push({
+                    output: true, text: [
+                        "Payload could not execute against target!",
+                        "Ensure you are using the proper payload or that the name is not incorrect.",
+                        "Type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+                payload_message();
+            } else if (param2 !== correct_db) {
+                session.output.push({
+                    output: true, text: [
+                        "Payload could not execute against target!",
+                        "Ensure you are authorized to attack target or that the name is not incorrect.",
+                        "Type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+                payload_message();
+            } else if (param1 === correct_payload && param2 === correct_db) {
+                session.output.push({output: true, text: vehicle_list, breakLine: true});
+                session.output.push({
+                    output: true, text: [
+                        "System was infected! Printing contents of database >>>\n\n",
+                        "VEHICLE NAME\t\t\tCATEGORY\t\tDESCRIPTION",
+                        "============\t\t\t========\t\t==========="
+                    ], breakLine: false
+                });
+                payload_message();
             }
             else {
                 session.output.push({ output: true, text: [
-                    "File could not be opened on <" + param1 + ">",
-                    "File name is incorrect or could not read file type.",
-                    "Type 'help stinger-rd' to get a hint."
+                    "<" + param1 + "> could not be launched against <" + param2 + ">",
+                    "Target name is incorrect or you are not authorized.",
+                    "Type 'help stinger-pl' to get a hint."
                 ], breakLine: true });
             }
         };
