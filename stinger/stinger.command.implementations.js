@@ -587,29 +587,29 @@
         var correct_db = "orchid-db4";
 
         var vehicle_list = [
-            "Tiuna\t\t\t\t3054\t\t\tLight utility vehicle",
-            "Pinzgauer\t\t\t244\t\t\tMultipurpose military vehicle",
-            "Toyota Land Cruiser\t\t1423\t\t\tMultipurpose military vehicle",
-            "M35 Fenix\t\t\t433\t\t\t6x6 cargo truck",
-            "M-35/A2 Reo\t\t\t545\t\t\t6x6 cargo truck",
-            "Chevrolet Kodiak 7A15\t\t643\t\t\tKodiak 7A15",
-            "MAN 20.280D\t\t\t677\t\t\t6x6 cargo truck",
-            "Ural-4320\t\t\t254\t\t\t6x6 cargo truck",
-            "Ural-375D\t\t\t623\t\t\t6x6 cargo truck",
-            "IVECO/Fiat 90PM16\t\t605\t\t\t8x8 cargo truck",
-            "T-72B1V\t\t\t204\t\t\tMain battle tank",
-            "AMX-30\t\t\t84\t\t\tMain battle tank",
-            "AMX-13C.90\t\t\t36\t\t\tLight tank",
-            "Scorpion 90 FV-101\t\t78\t\t\tLight tank",
-            "BMP-3\t\t\t\t163\t\t\tInfantry fighting vehicles",
-            "BTR-80A\t\t\t114\t\t\tArmoured personnel carrier",
-            "AMX-13 Rafaga\t\t\t25\t\t\tLight tank",
-            "AMX-13 VTT-VCI\t\t75\t\t\tLight tank/armoured personnel carrier",
-            "Panhard AML S 530\t\t10\t\t\tArmoured scout car",
-            "Dragoon 3000 LFV2\t\t42\t\t\tArmoured car",
-            "Dragoon AFV\t\t\t59\t\t\tArmoured car",
-            "V-100/V-150 Commando\t\t80\t\t\tArmoured personnel carrier",
-            "TPz Fuchs\t\t\t10\t\t\tArmoured personnel carrier"
+            "Tiuna\t\t\t\t3054",
+            "Pinzgauer\t\t\t244",
+            "Toyota Land Cruiser\t\t1423",
+            "M35 Fenix\t\t\t433",
+            "M-35/A2 Reo\t\t\t545",
+            "Chevrolet Kodiak 7A15",
+            "MAN 20.280D\t\t\t677",
+            "Ural-4320\t\t\t254",
+            "Ural-375D\t\t\t623",
+            "IVECO/Fiat 90PM16\t\t605",
+            "T-72B1V\t\t\t204",
+            "AMX-30\t\t\t84",
+            "AMX-13C.90\t\t\t36",
+            "Scorpion 90 FV-101\t\t78",
+            "BMP-3\t\t\t\t163",
+            "BTR-80A\t\t\t114",
+            "AMX-13 Rafaga\t\t\t25",
+            "AMX-13 VTT-VCI\t\t75",
+            "Panhard AML S 530\t\t10",
+            "Dragoon 3000 LFV2\t\t42",
+            "Dragoon AFV\t\t\t59",
+            "V-100/V-150 Commando\t\t80",
+            "TPz Fuchs\t\t\t10"
         ];
 
         me.handle = function (session, param1, param2) {
@@ -664,8 +664,8 @@
                 session.output.push({
                     output: true, text: [
                         "System access obtained! Printing contents of system >>>\n\n",
-                        "VEHICLE NAME\t\t\tQUANTITY\t\tDESCRIPTION",
-                        "============\t\t\t========\t\t==========="
+                        "VEHICLE NAME\t\t\tQUANTITY",
+                        "============\t\t\t========"
                     ], breakLine: false
                 });
                 payload_message();
