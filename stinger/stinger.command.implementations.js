@@ -685,6 +685,92 @@
     commandBrokerProvider.appendCommandHandler(stingerPayloadCommandHandler());
 
 
+    //==============================================================================//
+    // STINGER <Report> Command //
+    //==============================================================================//
+
+    var stingerReportCommandHandler = function () {
+
+        var me = {};
+        me.command = 'stinger-rp';
+        me.description = ['Grants access to NITE 4 evidence and report database',
+            "Example: stinger-rp DatabaseID (access all entries in report database)",
+            "Example: stinger-rp DatabaseID ReportID (read a report from the database)"
+        ];
+
+        var m26_db = "combdb-" + 4*7 + "g"; // combdb-28g
+        var m26_rp1 = "rep_sigilmal" + 4*23; // rep_sigilmal92
+        var m26_rp2 = "rep_pcapcrypt" + 4*14; // rep_pcapcrypt56
+
+        var m26_db_list = [
+            "+ Report on the SIGIL malware: ID>>> " + m26_rp1,
+            "+ Encrypted traffic from SIGIL malware sample: ID>>> " + m26_rp2
+        ];
+
+        me.handle = function (session, param1, param2) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+
+
+            // Function to print out file name location and access status
+            var report_message = function(db_name, report_name) {
+                session.output.push({ output: true, text: [
+                    "\nAccessing NITE Team 4 report <" + report_name + "> from database <" + db_name + ">\n\n",
+                    "\nREADING...........",
+                    "..................",
+                    ".................!\n\n"
+                ], breakLine: false});
+            };
+
+            // Conditional messages returned based on filename given
+            if (param1 === "undefined") {
+                session.output.push({
+                    output: true, text: [
+                        "You need to provide a report database name, type 'help stinger-rp' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param1 === m26_db && param2 === "undefined") {
+                session.output.push({
+                    output: true, text: m26_db_list, breakLine: true
+                });
+            } else if (param1 !== m26_db) {
+                session.output.push({
+                    output: true, text: [
+                        "Database <" + param1 + "> could not be accessed!",
+                        "Ensure you are authorized for access or that the name is not incorrect.",
+                        "Type 'help stinger-rp' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param2 !== m26_rp1 || param2 !== m26_rp2) {
+                session.output.push({
+                    output: true, text: [
+                        "Report could not be read from <" + param1 + ">",
+                        "Ensure you are authorized for access or that the name is not incorrect.",
+                        "Type 'help stinger-rp' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param1 === m26_db && param2 === m26_rp1) {
+                session.output.push({output: true, text: vehicle_list, breakLine: true});
+                session.output.push({
+                    output: true, text: [
+                        "Dumping contents of report to>>> Archive Call #XXXXXX"
+                    ], breakLine: false
+                });
+                report_message();
+            }
+            else {
+                session.output.push({ output: true, text: [
+                    "<" + param2 + "> in <" + param1 + "> could not be accessed.",
+                    "Name is incorrect or you are not authorized.",
+                    "Type 'help stinger-rp' to get a hint."
+                ], breakLine: true });
+            }
+        };
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerReportCommandHandler());
+
+
     //===============================================================================================//
     //======= END OF HACKING TERMINAL COMMANDS CODE =================================================//
     //===============================================================================================//
