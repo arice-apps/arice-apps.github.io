@@ -592,7 +592,7 @@
             "Toyota Land Cruiser\t\t1423",
             "M35 Fenix\t\t\t433",
             "M-35/A2 Reo\t\t\t545",
-            "Chevrolet Kodiak 7A15",
+            "Chevrolet Kodiak 7A15\t\t622",
             "MAN 20.280D\t\t\t677",
             "Ural-4320\t\t\t254",
             "Ural-375D\t\t\t623",
