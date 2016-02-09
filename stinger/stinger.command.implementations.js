@@ -694,17 +694,17 @@
         var me = {};
         me.command = 'stinger-rp';
         me.description = ['Grants access to NITE 4 evidence and report database',
-            "Example: stinger-rp DatabaseID (access all entries in report database)",
+            "Example: stinger-rp DatabaseID (list all entries in report database)",
             "Example: stinger-rp DatabaseID ReportID (read a report from the database)"
         ];
 
         var m26_db = "combdb-" + 4*7 + "g"; // combdb-28g
         var m26_rp1 = "rep_sigilmal" + 4*23; // rep_sigilmal92
-        var m26_rp2 = "rep_pcapcrypt" + 4*14; // rep_pcapcrypt56
+        var m26_rp2 = "rep_crypt" + 4*14; // rep_crypt56
 
         var m26_db_list = [
-            "+ Report on the SIGIL malware: ID>>> " + m26_rp1,
-            "+ Encrypted traffic from SIGIL malware sample: ID>>> " + m26_rp2
+            m26_rp1 + "\tReport on the SIGIL malware sample",
+            m26_rp2 + "\t\tEncrypted traffic from SIGIL malware sample"
         ];
 
         me.handle = function (session, param1, param2) {
@@ -715,8 +715,8 @@
             // Function to print out file name location and access status
             var report_message = function(db_name, report_name) {
                 session.output.push({ output: true, text: [
-                    "\nAccessing NITE Team 4 report <" + report_name + "> from database <" + db_name + ">\n\n",
-                    "\nREADING...........",
+                    "\nAccessing NITE Team 4 report <" + report_name + "> from database <" + db_name + ">\n",
+                    "\nREADING.............",
                     "..................",
                     ".................!\n\n"
                 ], breakLine: false});
@@ -733,6 +733,14 @@
                 session.output.push({
                     output: true, text: m26_db_list, breakLine: true
                 });
+                session.output.push({
+                    output: true, text: [
+                        "\nNITE Team 4 Report & Evidence Database",
+                        "------------------------------------\n\n",
+                        "REPORT ID\t\tDESCRIPTION",
+                        "=========\t\t==========="
+                    ], breakLine: false
+                });
             } else if (param1 !== m26_db) {
                 session.output.push({
                     output: true, text: [
@@ -741,6 +749,20 @@
                         "Type 'help stinger-rp' to get a hint."
                     ], breakLine: true
                 });
+            } else if (param1 === m26_db && param2 === m26_rp1) {
+                session.output.push({
+                    output: true, text: [
+                        "Dumping contents of report to >>> Archive Call #NJ" + 7*6 + "KM" // NJ42KM
+                    ], breakLine: true
+                });
+                report_message(param1, param2);
+            } else if (param1 === m26_db && param2 === m26_rp2) {
+                session.output.push({
+                    output: true, text: [
+                        "Dumping contents of report to >>> Archive Call #JU" + 5*5 +"ZA" // JU25ZA
+                    ], breakLine: true
+                });
+                report_message(param1, param2);
             } else if (param2 !== m26_rp1 || param2 !== m26_rp2) {
                 session.output.push({
                     output: true, text: [
@@ -749,16 +771,8 @@
                         "Type 'help stinger-rp' to get a hint."
                     ], breakLine: true
                 });
-            } else if (param1 === m26_db && param2 === m26_rp1) {
-                session.output.push({output: true, text: vehicle_list, breakLine: true});
-                session.output.push({
-                    output: true, text: [
-                        "Dumping contents of report to>>> Archive Call #XXXXXX"
-                    ], breakLine: false
-                });
-                report_message();
-            }
-            else {
+                console.log(param2);
+            } else {
                 session.output.push({ output: true, text: [
                     "<" + param2 + "> in <" + param1 + "> could not be accessed.",
                     "Name is incorrect or you are not authorized.",
