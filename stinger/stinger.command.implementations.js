@@ -428,9 +428,6 @@
 
         // Exploit and malware list to display when hitting list commands
         var exploit_list = [
-            "\nSTINGER Exploit List",
-            "========================",
-            "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID",
             "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
             "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\tstg38371",
             "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
@@ -452,9 +449,6 @@
             "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
         ];
         var malware_list = [
-            "\nSTINGER Malware List",
-            "========================",
-            "MALWARE ID",
             "OSX.RSPlug.A",
             "OSX.HellRTS",
             "OSX.Backloader",
@@ -516,9 +510,23 @@
             }
             else if (param1 === "mals") {
                 session.output.push({ output: true, text: malware_list, breakLine: true });
+                session.output.push({
+                    output: true, text: [
+                        "\nSTINGER Malware List",
+                        "========================",
+                        "MALWARE ID"
+                    ], breakLine: false
+                });
             }
             else if (param1 === "exls") {
                 session.output.push({ output: true, text: exploit_list, breakLine: true });
+                session.output.push({
+                    output: true, text: [
+                        "\nSTINGER Exploit List",
+                        "========================",
+                        "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID"
+                    ], breakLine: false
+                });
             }
             else if (param1 === correct_exploit_id && param2 === "osx.wirelurker" && param3 === correct_target) {
                 var success_code = 43*29*46*2;
@@ -562,6 +570,102 @@
         return me;
     };
     commandBrokerProvider.appendCommandHandler(stingerExploitCommandHandler());
+
+
+    //==============================================================================//
+    // STINGER <Payload> Command //
+    //==============================================================================//
+//==============================================================================//
+    // STINGER <Read> Command //
+    //==============================================================================//
+
+    var stingerPayloadCommandHandler = function () {
+
+        var me = {};
+        me.command = 'stinger-pl';
+        me.description = ['Launches a NITE Team 4 payload against a target.',
+            "Example: stinger-pl target-1 PayloadID"];
+
+        var correct_payload = "honey-" + 9*59; //honey-531
+        var correct_db = "orchid-db1";
+
+        var vehicle_list = [
+            "Tiuna\t\t\t\tMWV\t\t\tLight utility vehicle",
+            "Pinzgauer\t\t\tMWV\t\t\tMultipurpose military vehicle",
+            "Toyota Land Cruiser\t\tMWV\t\t\tMultipurpose military vehicle",
+            "M35 Fenix\t\t\tTruck\t\t\t6x6 cargo truck",
+            "M-35/A2 Reo\t\t\tTruck\t\t\t6x6 cargo truck"
+        ];
+
+        me.handle = function (session, param1, param2) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+
+
+            // Function to print out file name location and access status
+            var payload_message = function() {
+                session.output.push({ output: true, text: [
+                    "\nSTINGER NITE Team 4 payload is currently launching:\n\n",
+                    "<< " + param2 + " receiving payload " + param1 + " >>",
+                    "\nEXECUTING...........",
+                    "..................",
+                    ".................!\n\n"
+                ], breakLine: false});
+            };
+
+            // Conditional messages returned based on filename given
+            if (param1 === "undefined") {
+                session.output.push({
+                    output: true, text: [
+                        "You need to provide a payload name, type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param2 === "undefined") {
+                session.output.push({
+                    output: true, text: [
+                        "You need to provide a target name, type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+            } else if (param1 !== correct_payload) {
+                session.output.push({
+                    output: true, text: [
+                        "Payload could not execute against target!",
+                        "Ensure you are using the proper payload or that the name is not incorrect.",
+                        "Type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+                payload_message();
+            } else if (param2 !== correct_db) {
+                session.output.push({
+                    output: true, text: [
+                        "Payload could not execute against target!",
+                        "Ensure you are authorized to attack target or that the name is not incorrect.",
+                        "Type 'help stinger-pl' to get a hint."
+                    ], breakLine: true
+                });
+                payload_message();
+            } else if (param1 === correct_payload && param2 === correct_db) {
+                session.output.push({output: true, text: vehicle_list, breakLine: true});
+                session.output.push({
+                    output: true, text: [
+                        "System was infected! Printing contents of database >>>\n\n",
+                        "VEHICLE NAME\t\t\tCATEGORY\t\tDESCRIPTION",
+                        "============\t\t\t========\t\t==========="
+                    ], breakLine: false
+                });
+                payload_message();
+            }
+            else {
+                session.output.push({ output: true, text: [
+                    "<" + param1 + "> could not be launched against <" + param2 + ">",
+                    "Target name is incorrect or you are not authorized.",
+                    "Type 'help stinger-pl' to get a hint."
+                ], breakLine: true });
+            }
+        };
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerPayloadCommandHandler());
 
 
     //===============================================================================================//
