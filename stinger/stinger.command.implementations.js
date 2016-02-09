@@ -428,9 +428,6 @@
 
         // Exploit and malware list to display when hitting list commands
         var exploit_list = [
-            "\nSTINGER Exploit List",
-            "========================",
-            "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID",
             "dos - MacOS X 10.11 FTS Deep Structure of the File System Buffer Overflow\tstg38535",
             "local - Mac OS X 10.9.5 / 10.10.5 - rsh/libmalloc Privilege Escalation\tstg38371",
             "local - Dropbox < 3.3.x - OSX FinderLoadBundle Local Root Exploit\t\tstg32234",
@@ -452,9 +449,6 @@
             "local - Mac OS X - 'Rootpipe' Privilege Escalation\t\t\t\tstg35284"
         ];
         var malware_list = [
-            "\nSTINGER Malware List",
-            "========================",
-            "MALWARE ID",
             "OSX.RSPlug.A",
             "OSX.HellRTS",
             "OSX.Backloader",
@@ -516,9 +510,23 @@
             }
             else if (param1 === "mals") {
                 session.output.push({ output: true, text: malware_list, breakLine: true });
+                session.output.push({
+                    output: true, text: [
+                        "\nSTINGER Malware List",
+                        "========================",
+                        "MALWARE ID"
+                    ], breakLine: false
+                });
             }
             else if (param1 === "exls") {
                 session.output.push({ output: true, text: exploit_list, breakLine: true });
+                session.output.push({
+                    output: true, text: [
+                        "\nSTINGER Exploit List",
+                        "========================",
+                        "EXPLOIT TITLE\t\t\t\t\t\t\t\t\tID"
+                    ], breakLine: false
+                });
             }
             else if (param1 === correct_exploit_id && param2 === "osx.wirelurker" && param3 === correct_target) {
                 var success_code = 43*29*46*2;
