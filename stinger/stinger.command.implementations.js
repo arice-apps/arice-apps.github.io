@@ -653,7 +653,7 @@
             } else if (param2 !== correct_db) {
                 session.output.push({
                     output: true, text: [
-                        "Payload could not execute against target!",
+                        "Payload failed against target!",
                         "Ensure you are authorized to attack target or that the name is not incorrect.",
                         "Type 'help stinger-pl' to get a hint."
                     ], breakLine: true
