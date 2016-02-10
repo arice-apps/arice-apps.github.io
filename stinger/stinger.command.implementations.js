@@ -644,7 +644,7 @@
             } else if (param1 !== correct_payload) {
                 session.output.push({
                     output: true, text: [
-                        "Payload could not execute against target!",
+                        "Payload failed against target!",
                         "Ensure you are using the proper payload or that the name is not incorrect.",
                         "Type 'help stinger-pl' to get a hint."
                     ], breakLine: true
@@ -695,15 +695,19 @@
         me.command = 'stinger-rp';
         me.description = ['Grants access to NITE Team 4 evidence and report database',
             "Example: stinger-rp DatabaseID (list all entries in report database)",
-            "Example: stinger-rp DatabaseID ReportID (read a report from the database)"
+            "Example: stinger-rp DatabaseID ReportID (read a report from the database)",
+            "Example: stinger-rp open ReportID (Opens the Archive and goes to the report)"
         ];
 
         var m26_db = "combdb-" + 4*7; // combdb-28
-        var m26_rp1 = "rep_sigilmal" + 4*23; // rep_sigilmal92
-        var m26_rp2 = "rep_crypt" + 4*14; // rep_crypt56
+        var m26_rp1 = "sigilmal" + 4*23; // rep_sigilmal92
+        var m26_rp1_arch = "NJ" + 7*6 + "KM"; // NJ42KM
+        var m26_rp2 = "crypt" + 4*14; // rep_crypt56
+        var m26_rp2_arch = "JU" + 5*5 +"ZA"; // JU25ZA
+
 
         var m26_db_list = [
-            m26_rp1 + "\tReport on the SIGIL malware sample",
+            m26_rp1 + "\t\tReport on the SIGIL malware sample",
             m26_rp2 + "\t\tEncrypted traffic from SIGIL malware sample"
         ];
 
@@ -741,6 +745,10 @@
                         "=========\t\t==========="
                     ], breakLine: false
                 });
+            } else if (param1 === "open" && param2 === m26_rp1) {
+                window.open("http://archive.blackwatchmen.com/search/" + m26_rp1_arch);
+            } else if (param1 === "open" && param2 === m26_rp2) {
+                window.open("http://archive.blackwatchmen.com/search/" + m26_rp2_arch);
             } else if (param1 !== m26_db) {
                 session.output.push({
                     output: true, text: [
@@ -752,14 +760,14 @@
             } else if (param1 === m26_db && param2 === m26_rp1) {
                 session.output.push({
                     output: true, text: [
-                        "Dumping contents of report to >>> Archive Call #NJ" + 7*6 + "KM" // NJ42KM
+                        "Dumping contents of report to >>> Archive Call #" + m26_rp1_arch
                     ], breakLine: true
                 });
                 report_message(param1, param2);
             } else if (param1 === m26_db && param2 === m26_rp2) {
                 session.output.push({
                     output: true, text: [
-                        "Dumping contents of report to >>> Archive Call #JU" + 5*5 +"ZA" // JU25ZA
+                        "Dumping contents of report to >>> Archive Call #" + m26_rp2_arch // JU25ZA
                     ], breakLine: true
                 });
                 report_message(param1, param2);
