@@ -700,9 +700,9 @@
         ];
 
         var m26_db = "combdb-" + 4*7; // combdb-28
-        var m26_rp1 = "sigilmal" + 4*23; // rep_sigilmal92
+        var m26_rp1 = "sigilmal" + 4*23; // sigilmal92
         var m26_rp1_arch = "NJ" + 7*6 + "KM"; // NJ42KM
-        var m26_rp2 = "crypt" + 4*14; // rep_crypt56
+        var m26_rp2 = "crypt" + 4*14; // crypt56
         var m26_rp2_arch = "JU" + 5*5 +"ZA"; // JU25ZA
 
 
