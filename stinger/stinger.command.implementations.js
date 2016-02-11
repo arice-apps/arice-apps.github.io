@@ -819,6 +819,9 @@
                 flag = true;
                 console.log(flag);
                 console.log("The timer ended!");
+                if (cam_list[selected_cam] !== 1) {
+                    cam_list[selected_cam] = 2;
+                }
             }, 64000);
         };
 
@@ -827,6 +830,10 @@
 
             switch(param1) {
                 case "list":
+                    // 0 flag means no action has been taken on the camera
+                    // 1 flag means that player succeeded in hacking the camera
+                    // 2 flag means that player failed in hacking the camera
+                    // 3 flag means that the player has begun a session on the camera
                     for (var key in cam_list) {
                         var value = cam_list[key];
                         var status_str = "";
@@ -834,7 +841,7 @@
                             status_str = "Locked out";
                         } else if (value === 1) {
                             status_str = "Hacked"
-                        } else if (value === 4) {
+                        } else if (value === 3) {
                             status_str = "Online (hacking in progress)"
                         } else {
                             status_str = "Online"
@@ -852,9 +859,14 @@
                         session.output.push({ output: true, text: [
                             "Time to access this camera has been exceeded!"
                         ], breakLine: true });
-                        // If it has, was it previously listed as locked out?
-                        if (cam_list[selected_cam] !== 2) {
-                            cam_list[selected_cam] = 2;
+                        // If it has, was it previously listed as hacked?
+                        if (cam_list[selected_cam] === 1) {
+                            session.output.push({
+                                output: true, text: [
+                                    "This camera has already been hacked!"
+                                ], breakLine: false
+                            });
+                            break;
                         }
                     } else if (flag === true && selected_cam === 2) {               // The user was locked out
                         session.output.push({ output: true, text: [
@@ -882,9 +894,14 @@
                             "You're locked out of this camera!"
                         ], breakLine: true });
                         break;
-                    } else if (cam_list[param2] === 4) {
+                    } else if (cam_list[param2] === 3) {
                         session.output.push({ output: true, text: [
                             "ANTENNA session for camera has already started!"
+                        ], breakLine: true });
+                        break;
+                    } else if (cam_list[param2] === 1) {
+                        session.output.push({ output: true, text: [
+                            "This camera has already been hacked!"
                         ], breakLine: true });
                         break;
                     }
@@ -937,7 +954,7 @@
                     console.log(password_list[passid]);
                     passTimer();
                     // We set this camera as having begun a session
-                    cam_list[selected_cam] = 4;
+                    cam_list[selected_cam] = 3;
                     break;
                 default:
                     session.output.push({ output: true, text: [
