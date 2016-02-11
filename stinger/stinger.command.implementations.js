@@ -793,6 +793,53 @@
     commandBrokerProvider.appendCommandHandler(stingerReportCommandHandler());
 
 
+    //==============================================================================//
+    // STINGER <Camera> Command //
+    //==============================================================================//
+
+    var stingerCameraCommandHandler = function () {
+        var flag = false;
+
+        var me = {};
+        me.command = 'stinger-cm';
+        me.description = ['Shuts down cameras in an infected facility.'
+        ];
+
+        me.handle = function (session, param1) {
+            param1 = makeLower(param1);
+
+            switch(param1) {
+                case "shutdown":
+                    if (flag === true) {
+                        session.output.push({ output: true, text: [
+                            "The guard caught you!"
+                        ], breakLine: true });
+                        console.log(flag);
+                    } else {
+                        session.output.push({ output: true, text: [
+                            "The camera was shut down!"
+                        ], breakLine: true });
+                        console.log(flag);
+                    }
+                    break;
+                case "start":
+                    setTimeout(function() {
+                        console.log("The timer ended!");
+                        flag = true;
+                        console.log(flag);
+                    }, 10000);
+                    break;
+                default:
+                    session.output.push({ output: true, text: [
+                        "I don't know what command that is!"
+                    ], breakLine: true });
+                    break;
+            }
+        };
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerCameraCommandHandler());
+
     //===============================================================================================//
     //======= END OF HACKING TERMINAL COMMANDS CODE =================================================//
     //===============================================================================================//
