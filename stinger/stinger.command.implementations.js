@@ -834,6 +834,8 @@
                             status_str = "Locked out";
                         } else if (value === 1) {
                             status_str = "Hacked"
+                        } else if (value === 4) {
+                            status_str = "Online (hacking in progress)"
                         } else {
                             status_str = "Online"
                         }
@@ -878,6 +880,11 @@
                     if (cam_list[param2] === 2) {
                         session.output.push({ output: true, text: [
                             "You're locked out of this camera!"
+                        ], breakLine: true });
+                        break;
+                    } else if (cam_list[param2] === 4) {
+                        session.output.push({ output: true, text: [
+                            "ANTENNA session for camera has already started!"
                         ], breakLine: true });
                         break;
                     }
@@ -929,6 +936,8 @@
                     ], breakLine: true });
                     console.log(password_list[passid]);
                     passTimer();
+                    // We set this camera as having begun a session
+                    cam_list[selected_cam] = 4;
                     break;
                 default:
                     session.output.push({ output: true, text: [
