@@ -810,6 +810,15 @@
         var passid = Math.floor((Math.random() * password_list.length) + 1);
         console.log(password_list[passid]);
 
+        var passTimer = function() {
+            flag = false;
+            setTimeout(function() {
+                flag = true;
+                console.log(flag);
+                console.log("The timer ended!");
+            }, 30000);
+        };
+
         me.handle = function (session, param1, param2) {
             param1 = makeLower(param1);
 
@@ -867,11 +876,7 @@
                         "You have 30 seconds remaining to enter the correct password."
                     ], breakLine: true });
                     console.log(password_list[passid]);
-                    setTimeout(function() {
-                        flag = true;
-                        console.log(flag);
-                        console.log("The timer ended!");
-                    }, 30000);
+                    passTimer();
                     break;
                 default:
                     session.output.push({ output: true, text: [
