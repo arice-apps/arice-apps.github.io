@@ -956,6 +956,24 @@
                     // We set this camera as having begun a session
                     cam_list[selected_cam] = 3;
                     break;
+                case "op_complete":
+                    var success_cnt = 0;
+                    for (var key in cam_list) {
+                        if (cam_list[key] === 1) {
+                            success_cnt++;
+                        }
+                    }
+                    if (success_cnt === 3) {
+                        session.output.push({ output: true, text: [
+                            "All cameras were hacked! Success code is XXXX"
+                        ], breakLine: true });
+                        break;
+                    } else {
+                        session.output.push({ output: true, text: [
+                            "Not all cameras were hacked! Unable to generate success code."
+                        ], breakLine: true });
+                        break;
+                    }
                 default:
                     session.output.push({ output: true, text: [
                         "Command could not execute! Make sure this camera has been selected in an ANTENNA session."
