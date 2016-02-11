@@ -830,7 +830,7 @@
             param1 = makeLower(param1);
 
             switch(param1) {
-                case "list":
+                case "status-ls":
                     // 0 flag means no action has been taken on the camera
                     // 1 flag means that player succeeded in hacking the camera
                     // 2 flag means that player failed in hacking the camera
