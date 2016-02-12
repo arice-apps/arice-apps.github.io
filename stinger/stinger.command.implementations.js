@@ -963,7 +963,7 @@
                     // We set this camera as having begun a session
                     cam_list[selected_cam] = 3;
                     break;
-                case "op_complete":
+                case "op-complete":
                     var success_cnt = 0;
                     for (var key in cam_list) {
                         if (cam_list[key] === 1) {
