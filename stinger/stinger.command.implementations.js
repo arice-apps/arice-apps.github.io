@@ -953,10 +953,6 @@
                         "...................",
                         "...................",
                         "...................",
-                        "...................",
-                        "...................",
-                        "...................",
-                        "...................",
                         "................!!!",
                         "\nA password was entered! ANTENNA caught the following keys:\n",
                         "\n>>>[ " + password_list[passid].slice(0,password_list[passid].length-2) + "## ]<<<\n\n",
@@ -974,7 +970,7 @@
                             success_cnt++;
                         }
                     }
-                    if (success_cnt === 2) {
+                    if (success_cnt >= 2) {
                         session.output.push({ output: true, text: [
                             "Operation completed successfully! Success code is " + success_code
                         ], breakLine: true });
