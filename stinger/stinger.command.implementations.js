@@ -700,14 +700,14 @@
         ];
 
         var m26_db = "combdb-" + 4*7; // combdb-28
-        var m26_rp1 = "sigilmal" + 4*23; // sigilmal92
+        var m26_rp1 = "sigilmalware" + 4*23; // sigilmal92
         var m26_rp1_arch = "NJ" + 7*6 + "KM"; // NJ42KM
         var m26_rp2 = "crypt" + 4*14; // crypt56
         var m26_rp2_arch = "JU" + 5*5 +"ZA"; // JU25ZA
 
 
         var m26_db_list = [
-            m26_rp1 + "\t\tReport on the SIGIL malware sample",
+            m26_rp1 + "\tReport on the SIGIL malware sample",
             m26_rp2 + "\t\tEncrypted traffic from SIGIL malware sample"
         ];
 
