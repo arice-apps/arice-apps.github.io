@@ -812,7 +812,6 @@
         var passid = null;
         var success_code = "AJ" + 5*7 + "KM";      // AJ35KM
         var timer = null;
-        console.log(password_list[passid]);
 
         var passTimer = function() {
             console.log("The timer has started!");
@@ -876,6 +875,7 @@
                         ], breakLine: true });
                     } else if(param2 === password_list[passid]) {    // The user guessed right
                         session.output.push({ output: true, text: [
+                            "Accessing system................ Success!\n",
                             "The camera was hacked!"
                         ], breakLine: true });
                         cam_list[selected_cam] = 1;                  // The user tried to guess on a cam not listed
@@ -931,6 +931,7 @@
                     flag = false;
                     // Select a random password for the camera
                     passid = Math.floor((Math.random() * password_list.length) + 1);
+                    var cam_password = password_list[passid];
                     session.output.push({ output: true, text: [
                         "Entering computer for <" + selected_cam + ">",
                         "Listening to microphone...",
@@ -955,10 +956,31 @@
                         "...................",
                         "................!!!",
                         "\nA password was entered! ANTENNA caught the following keys:\n",
-                        "\n>>>[ " + password_list[passid].slice(0,password_list[passid].length-2) + "## ]<<<\n\n",
+                        "\n>>>[ " +  cam_password.slice(0,password_list[passid].length-2) + "## ]<<<\n\n",
                         "You have 1 minute remaining to enter the correct password for <" + selected_cam + ">"
                     ], breakLine: true });
-                    console.log(password_list[passid]);
+                    console.log(cam_password);
+                    var random_letter_num1 = Math.floor((Math.random() * cam_password.length) + 1);
+                    var random_letter_num2 = Math.floor((Math.random() * cam_password.length) + 1);
+                    var random_letter_1 =  cam_password[random_letter_num1];
+                    var random_letter_2 = cam_password[random_letter_num2];
+                    if (random_letter_num1 === random_letter_num2) {
+                        while (random_letter_num1 === random_letter_num2) {
+                            random_letter_num2 = Math.floor((Math.random() * cam_password.length) + 1);
+                            random_letter_2 = cam_password[random_letter_num2];
+                        }
+                    } else if (random_letter_1 === undefined) {
+                        while (random_letter_1 === undefined) {
+                            random_letter_num1 = Math.floor((Math.random() * cam_password.length) + 1);
+                            random_letter_1 = cam_password[random_letter_num1];
+                        }
+                    } else if (random_letter_2 === undefined) {
+                        while (random_letter_2 === undefined) {
+                            random_letter_num2 = Math.floor((Math.random() * cam_password.length) + 1);
+                            random_letter_2 = cam_password[random_letter_num2];
+                        }
+                    }
+                    console.log(cam_password.replace(random_letter_1, "#").replace(random_letter_2, "#"));
                     passTimer();
                     // We set this camera as having begun a session
                     cam_list[selected_cam] = 3;
