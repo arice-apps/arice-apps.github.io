@@ -1017,6 +1017,70 @@
     };
     commandBrokerProvider.appendCommandHandler(stingerCameraCommandHandler());
 
+
+    //==============================================================================//
+    // STINGER <Raid> Command //
+    //==============================================================================//
+
+    var stingerRaidCommandHandler = function () {
+
+        var me = {};
+        me.command = 'stinger-strike';
+        me.description = ['Raid a facility!',
+            "Example: stinger-strike room list (Gives the status of all rooms in facility)",
+            "Example: stinger-strike room raid RoomID (Begin a raid on a specific room)",
+            "Example: stinger-strike room-id door-on/door-off, motion-on/motion-off",
+            "Example: stinger-strike action alert-on/alert-off, download-on/download-off, fscan-on/fscan-off"
+        ];
+
+        // Enter variables here
+        var room_obj = {
+            room_2: {"name": "Lab 2", "door_status": true, "motion_status": false, "finger_status": false},
+            room_1: {"name": "Lab 1", "door_status": true, "motion_status": true, "finger_status": true}
+        };
+
+        //Specify params here
+        me.handle = function (session, param1, param2, param3, param4, param5) {
+            param1 = makeLower(param1);
+            param2 = makeLower(param2);
+            param3 = makeLower(param3);
+            param4 = makeLower(param4);
+            param5 = makeLower(param5);
+
+            // Print out status of all rooms
+            var room_list_print = function() {
+                for (var room in room_obj) {
+                    session.output.push({ output: true, text: [
+                        "Room name: " + room_obj[room].name
+                    ], breakLine: true});
+                }
+                session.output.push({ output: true, text: [
+                    "\nAccessing Theta Facility security room status...",
+                    "\nREADING.............",
+                    "..................",
+                    ".................!\n\n"
+                ], breakLine: false});
+            };
+
+            // Conditional cases and responses
+            switch (param1) {
+                case "list":
+                    room_list_print();
+                    break;
+                case "raid":
+                    session.output.push({ output: true, text: [
+                        "Room name: " + room_obj[param2].name,
+                        "Access control status: " + room_obj[param2].door_status,
+                        "Motion sensor status: " + room_obj[param2].motion_status,
+                        "Database fingerprint auth: " + room_obj[param2].finger_status + "\n"
+                    ], breakLine: true});
+            }
+
+        };
+        return me;
+    };
+    commandBrokerProvider.appendCommandHandler(stingerRaidCommandHandler());
+
     //===============================================================================================//
     //======= END OF HACKING TERMINAL COMMANDS CODE =================================================//
     //===============================================================================================//
