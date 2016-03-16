@@ -1145,8 +1145,7 @@
         function checkExit(obj) {
             // Exit success condition Room 1
             if (
-                obj.door_status === true &&
-                obj.motion_status === true &&
+                obj.door_status === false &&
                 obj.downloader === true &&
                 obj.finger_scanner === true
             ) {
@@ -1214,7 +1213,8 @@
                                     setDeath(true);
                                     session.output.push({
                                         output: true,
-                                        text: ["\nThe motion detectors turned on while your team was in the room, they were killed!"],
+                                        text: ["\nThe motion detectors turned on while your team was in the room.",
+                                            "\nThey were killed!"],
                                         breakLine: true
                                     });
                                 }
@@ -1274,7 +1274,6 @@
                 case "entry":
                     if (death_status === false) {
                         if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                            console.log(death_status);
                             checkEntry(selected_room);
                             if (selected_room.entry_success === true) {
                                 session.output.push({
@@ -1308,15 +1307,14 @@
                     } else {
                         session.output.push({
                             output: true,
-                            text: ["\nYour team is dead!"],
+                            text: ["\nYour team is dead! Oh the humanity!"],
                             breakLine: true
                         });
                     }
                     break;
                 case "exit":
                     if (death_status === false) {
-                        if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3" && death_status === false) {
-                            console.log(selected_room);
+                        if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
                             checkExit(selected_room);
                             if (selected_room.exit_success === true) {
                                 session.output.push({
@@ -1334,25 +1332,19 @@
                             session.output.push({ output: true, text: [
                                 "\nExiting room..."
                             ], breakLine: true});
-                        } else if (death_status === true) {
-                            session.output.push({
-                                output: true,
-                                text: ["\nYour team is dead!"],
-                                breakLine: true
-                            });
                         } else {
                             console.log("Problem!");
                         }
                     } else {
                         session.output.push({
                             output: true,
-                            text: ["\nYour team is dead!"],
+                            text: ["\nYour team is dead! Oh the humanity!"],
                             breakLine: true
                         });
                     }
                     break;
                 default:
-                    console.log("OOOPS!");
+                    console.log("OOPS!");
             }
 
         };
