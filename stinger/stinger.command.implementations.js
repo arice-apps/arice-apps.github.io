@@ -1260,13 +1260,20 @@
                             console.log(room_obj[param2]);
                             checkEntry(room_obj[param2]);
                             if (room_obj[param2].entry_success === true) {
-                                session.output.push({ output: true, text: [room_obj[param2].name + " entry was a success!"], breakLine: true});
-                            }  else {
-                                session.output.push({ output: true, text: [room_obj[param2].name + " entry was a failure!"], breakLine: true});
+                                session.output.push({
+                                    output: true,
+                                    text: [room_obj[param2].name + " entry was a success!"],
+                                    breakLine: true});
+                            } else {
+                                session.output.push({
+                                    output: true,
+                                    text: [room_obj[param2].name + " entry was a failure!"],
+                                    breakLine: true});
                             }
-                            session.output.push({ output: true, text: [
-                                "\nEntering room..."
-                            ], breakLine: true});
+                            session.output.push({
+                                output: true,
+                                text: ["\nEntering room..."],
+                                breakLine: true});
                         }
                     break;
                 case "raid-exit":
@@ -1274,9 +1281,17 @@
                         console.log(room_obj[param2]);
                         checkExit(room_obj[param2]);
                         if (room_obj[param2].exit_success === true) {
-                            session.output.push({ output: true, text: [room_obj[param2].name + " exit was a success!"], breakLine: true});
+                            session.output.push({
+                                output: true,
+                                text: [room_obj[param2].name + " exit was a success!"],
+                                breakLine: true
+                            });
                         }  else {
-                            session.output.push({ output: true, text: [room_obj[param2].name + " exit was a failure!"], breakLine: true});
+                            session.output.push({
+                                output: true,
+                                text: [room_obj[param2].name + " exit was a failure!"],
+                                breakLine: true
+                            });
                         }
                         session.output.push({ output: true, text: [
                             "\nExiting room..."
