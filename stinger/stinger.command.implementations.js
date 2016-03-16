@@ -1027,25 +1027,146 @@
         var me = {};
         me.command = 'stinger-strike';
         me.description = ['Raid a facility!',
-            "Example: stinger-strike room list (Gives the status of all rooms in facility)",
-            "Example: stinger-strike room raid RoomID (Begin a raid on a specific room)",
-            "Example: stinger-strike room-id door-on/door-off, motion-on/motion-off",
-            "Example: stinger-strike action alert-on/alert-off, download-on/download-off, fscan-on/fscan-off"
+            "Example: stinger-strike status RoomID (Gives the status of all rooms in facility)",
+            "Example: stinger-strike hack RoomID command status (Begin a raid on a specific room)"
         ];
 
         // Enter variables here
         var room_obj = {
-            room_2: {"name": "Lab 2", "door_status": true, "motion_status": false, "finger_status": false},
-            room_1: {"name": "Lab 1", "door_status": true, "motion_status": true, "finger_status": true}
+            room_3: {
+                "name": "[Lab 3 - Bioweapons]",
+                "door_status": true,
+                "motion_status": false,
+                "finger_status": true,
+                "distraction": false,
+                "finger_scanner": false,
+                "downloader": false,
+                "entry_success": false,
+                "exit_success": false,
+                "room_success": false
+            },
+            room_2: {
+                "name": "[Lab 2 - Rift Creature Containment]",
+                "door_status": true,
+                "motion_status": false,
+                "finger_status": false,
+                "distraction": false,
+                "finger_scanner": false,
+                "downloader": false,
+                "entry_success": false,
+                "exit_success": false,
+                "room_success": false
+            },
+            room_1: {
+                "name": "[Lab 1 - Teleportation Particle Lab]",
+                "door_status": true,
+                "motion_status": true,
+                "finger_status": true,
+                "distraction": false,
+                "finger_scanner": false,
+                "downloader": false,
+                "entry_success": false,
+                "exit_success": false,
+                "room_success": false
+            }
         };
 
+        function setDoor(obj, status) {
+            obj.door_status = status;
+            if (status === true) {
+                return "\nDoor access control has been turned ON";
+            } else {
+                return "\nDoor access control has been turned OFF";
+            }
+        }
+        function setMotion(obj, status) {
+            obj.motion_status = status;
+            if (status === true) {
+                return "\nMotion sensors have been turned ON";
+            } else {
+                return "\nMotion sensors have been turned OFF";
+            }
+        }
+        function setDistract(obj, status) {
+            obj.distraction = status;
+            if (status === true) {
+               return "\nDistraction has been turned ON";
+            } else {
+                return "\nDistraction has been turned OFF";
+            }
+        }
+        function setScan(obj, status) {
+            obj.finger_scanner = status;
+            if (status === true) {
+                return "\nFingerprint scanner has been turned ON";
+            } else {
+                return "\nFingerprint scanner has been turned OFF";
+            }
+        }
+        function setDownload(obj, status) {
+            obj.downloader = status;
+            if (status === true) {
+                return "\nDownloader has been turned ON";
+            } else {
+                return "\nDownloader scanner has been turned OFF";
+            }
+        }
+        function setEntry(obj, status) {
+            obj.entry_success = status;
+        }
+        function setExit(obj, status) {
+            obj.exit_success = status;
+        }
+        function setRoom(obj, status) {
+            obj.room_success = status;
+        }
+
+        function checkEntry(obj) {
+            // Entry success condition for Room 1
+            if (
+                obj.door_status === false &&
+                obj.motion_status === false
+            ) {
+                setEntry(obj, true);
+            } else {
+                setEntry(obj, false);
+            }
+            return obj.entry_success;
+        }
+        function checkExit(obj) {
+            // Exit success condition Room 1
+            if (
+                obj.door_status === true &&
+                obj.motion_status === true &&
+                obj.downloader === true &&
+                obj.finger_scanner === true
+            ) {
+                setExit(obj, true);
+            } else {
+                setExit(obj, false);
+            }
+            return obj.exit_success;
+        }
+        function checkRoom(obj) {
+            // Room success condition Room 1
+            if (
+                obj.entry_success === true &&
+                obj.exit_success === true
+
+            ) {
+                setRoom(obj, true);
+            } else {
+                setRoom(obj, false);
+            }
+            return obj.room_success;
+        }
+
         //Specify params here
-        me.handle = function (session, param1, param2, param3, param4, param5) {
+        me.handle = function (session, param1, param2, param3, param4) {
             param1 = makeLower(param1);
             param2 = makeLower(param2);
             param3 = makeLower(param3);
             param4 = makeLower(param4);
-            param5 = makeLower(param5);
 
             // Print out status of all rooms
             var room_list_print = function() {
@@ -1067,13 +1188,103 @@
                 case "list":
                     room_list_print();
                     break;
-                case "raid":
-                    session.output.push({ output: true, text: [
-                        "Room name: " + room_obj[param2].name,
-                        "Access control status: " + room_obj[param2].door_status,
-                        "Motion sensor status: " + room_obj[param2].motion_status,
-                        "Database fingerprint auth: " + room_obj[param2].finger_status + "\n"
-                    ], breakLine: true});
+                case "hack":
+                    switch(param3) {
+                        case "door":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setDoor(room_obj[param2], true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setDoor(room_obj[param2], false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                        case "motion":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setMotion(room_obj[param2], true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setMotion(room_obj[param2], false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                        case "distract":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setDistract(room_obj[param2], true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setDistract(room_obj[param2], false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                        case "scanner":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setScan(room_obj[param2], true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setScan(room_obj[param2], false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                        case "downloader":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setDownload(room_obj[param2], true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setDownload(room_obj[param2], false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                    }
+                    break;
+                case "status":
+                    if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
+                        checkRoom(room_obj[param2]);
+                        session.output.push({ output: true, text: [
+                            "Room name: " + room_obj[param2].name,
+                            "Access control status: " + room_obj[param2].door_status,
+                            "Motion sensor status: " + room_obj[param2].motion_status,
+                            "Database fingerprint auth: " + room_obj[param2].finger_status + "\n",
+                            "Room cleared: " + room_obj[param2].room_success
+                        ], breakLine: true});
+                        session.output.push({ output: true, text: ["\n"], breakLine: false});
+                    }
+                    break;
+                case "raid-entry":
+                        if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
+                            console.log(room_obj[param2]);
+                            checkEntry(room_obj[param2]);
+                            if (room_obj[param2].entry_success === true) {
+                                session.output.push({ output: true, text: [room_obj[param2].name + " entry was a success!"], breakLine: true});
+                            }  else {
+                                session.output.push({ output: true, text: [room_obj[param2].name + " entry was a failure!"], breakLine: true});
+                            }
+                            session.output.push({ output: true, text: [
+                                "\nEntering room..."
+                            ], breakLine: true});
+                        }
+                    break;
+                case "raid-exit":
+                    if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
+                        console.log(room_obj[param2]);
+                        checkExit(room_obj[param2]);
+                        if (room_obj[param2].exit_success === true) {
+                            session.output.push({ output: true, text: [room_obj[param2].name + " exit was a success!"], breakLine: true});
+                        }  else {
+                            session.output.push({ output: true, text: [room_obj[param2].name + " exit was a failure!"], breakLine: true});
+                        }
+                        session.output.push({ output: true, text: [
+                            "\nExiting room..."
+                        ], breakLine: true});
+                    }
+                    break;
+                default:
+                    console.log("OOOPS!");
             }
 
         };
