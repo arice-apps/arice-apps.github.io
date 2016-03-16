@@ -1025,11 +1025,12 @@
     var stingerRaidCommandHandler = function () {
 
         var me = {};
-        me.command = 'stinger-strike';
+        me.command = 'stinger-raid';
         me.description = ['Raid a facility!',
             "Example: stinger-strike status RoomID (Gives the status of all rooms in facility)",
             "Example: stinger-strike hack RoomID command status (Begin a raid on a specific room)"
         ];
+        var death_status = false;
 
         // Enter variables here
         var room_obj = {
@@ -1041,6 +1042,7 @@
                 "distraction": false,
                 "finger_scanner": false,
                 "downloader": false,
+                "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false
@@ -1053,6 +1055,7 @@
                 "distraction": false,
                 "finger_scanner": false,
                 "downloader": false,
+                "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false
@@ -1065,6 +1068,7 @@
                 "distraction": false,
                 "finger_scanner": false,
                 "downloader": false,
+                "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false
@@ -1111,6 +1115,9 @@
                 return "\nDownloader scanner has been turned OFF";
             }
         }
+        function setRaid(obj, status) {
+            obj.raid_ongoing = status;
+        }
         function setEntry(obj, status) {
             obj.entry_success = status;
         }
@@ -1120,6 +1127,9 @@
         function setRoom(obj, status) {
             obj.room_success = status;
         }
+        function setDeath(status) {
+            death_status = status;
+        }
 
         function checkEntry(obj) {
             // Entry success condition for Room 1
@@ -1128,8 +1138,7 @@
                 obj.motion_status === false
             ) {
                 setEntry(obj, true);
-            } else {
-                setEntry(obj, false);
+                setRaid(obj, true);
             }
             return obj.entry_success;
         }
@@ -1142,8 +1151,7 @@
                 obj.finger_scanner === true
             ) {
                 setExit(obj, true);
-            } else {
-                setExit(obj, false);
+                setRaid(obj, false);
             }
             return obj.exit_success;
         }
@@ -1155,8 +1163,6 @@
 
             ) {
                 setRoom(obj, true);
-            } else {
-                setRoom(obj, false);
             }
             return obj.room_success;
         }
@@ -1167,6 +1173,7 @@
             param2 = makeLower(param2);
             param3 = makeLower(param3);
             param4 = makeLower(param4);
+            var selected_room = room_obj[param2];
 
             // Print out status of all rooms
             var room_list_print = function() {
@@ -1192,50 +1199,59 @@
                     switch(param3) {
                         case "door":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setDoor(room_obj[param2], true)], breakLine: true});
+                                session.output.push({ output: true, text: [setDoor(selected_room, true)], breakLine: true});
                             }
                             else if (param4 === "off") {
-                                session.output.push({ output: true, text: [setDoor(room_obj[param2], false)], breakLine: true});
+                                session.output.push({ output: true, text: [setDoor(selected_room, false)], breakLine: true});
                             } else {
                                 console.log("Could not do!");
                             }
                             break;
                         case "motion":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setMotion(room_obj[param2], true)], breakLine: true});
+                                setMotion(selected_room, true);
+                                if (selected_room.raid_ongoing === true) {
+                                    setDeath(true);
+                                    session.output.push({
+                                        output: true,
+                                        text: ["\nThe motion detectors turned on while your team was in the room, they were killed!"],
+                                        breakLine: true
+                                    });
+                                }
+                                session.output.push({ output: true, text: [setMotion(selected_room, true)], breakLine: true});
                             }
                             else if (param4 === "off") {
-                                session.output.push({ output: true, text: [setMotion(room_obj[param2], false)], breakLine: true});
+                                session.output.push({ output: true, text: [setMotion(selected_room, false)], breakLine: true});
                             } else {
                                 console.log("Could not do!");
                             }
                             break;
                         case "distract":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setDistract(room_obj[param2], true)], breakLine: true});
+                                session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
                             }
                             else if (param4 === "off") {
-                                session.output.push({ output: true, text: [setDistract(room_obj[param2], false)], breakLine: true});
+                                session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
                             } else {
                                 console.log("Could not do!");
                             }
                             break;
                         case "scanner":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setScan(room_obj[param2], true)], breakLine: true});
+                                session.output.push({ output: true, text: [setScan(selected_room, true)], breakLine: true});
                             }
                             else if (param4 === "off") {
-                                session.output.push({ output: true, text: [setScan(room_obj[param2], false)], breakLine: true});
+                                session.output.push({ output: true, text: [setScan(selected_room, false)], breakLine: true});
                             } else {
                                 console.log("Could not do!");
                             }
                             break;
                         case "downloader":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setDownload(room_obj[param2], true)], breakLine: true});
+                                session.output.push({ output: true, text: [setDownload(selected_room, true)], breakLine: true});
                             }
                             else if (param4 === "off") {
-                                session.output.push({ output: true, text: [setDownload(room_obj[param2], false)], breakLine: true});
+                                session.output.push({ output: true, text: [setDownload(selected_room, false)], breakLine: true});
                             } else {
                                 console.log("Could not do!");
                             }
@@ -1244,58 +1260,95 @@
                     break;
                 case "status":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                        checkRoom(room_obj[param2]);
+                        checkRoom(selected_room);
                         session.output.push({ output: true, text: [
-                            "Room name: " + room_obj[param2].name,
-                            "Access control status: " + room_obj[param2].door_status,
-                            "Motion sensor status: " + room_obj[param2].motion_status,
-                            "Database fingerprint auth: " + room_obj[param2].finger_status + "\n",
-                            "Room cleared: " + room_obj[param2].room_success
+                            "Room name: " + selected_room.name,
+                            "Access control status: " + selected_room.door_status,
+                            "Motion sensor status: " + selected_room.motion_status,
+                            "Database fingerprint auth: " + selected_room.finger_status + "\n",
+                            "Room cleared: " + selected_room.room_success
                         ], breakLine: true});
                         session.output.push({ output: true, text: ["\n"], breakLine: false});
                     }
                     break;
-                case "raid-entry":
+                case "entry":
+                    if (death_status === false) {
                         if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                            console.log(room_obj[param2]);
-                            checkEntry(room_obj[param2]);
-                            if (room_obj[param2].entry_success === true) {
+                            console.log(death_status);
+                            checkEntry(selected_room);
+                            if (selected_room.entry_success === true) {
                                 session.output.push({
                                     output: true,
-                                    text: [room_obj[param2].name + " entry was a success!"],
-                                    breakLine: true});
+                                    text: [selected_room.name + " entry was a success!"],
+                                    breakLine: true
+                                });
+                            } else if (selected_room.motion_status === true) {
+                                setDeath(true);
+                                console.log(death_status);
+                                session.output.push({
+                                    output: true,
+                                    text: ["Your team entered while the motion detectors were on and they were killed!"],
+                                    breakLine: true
+                                });
                             } else {
                                 session.output.push({
                                     output: true,
-                                    text: [room_obj[param2].name + " entry was a failure!"],
-                                    breakLine: true});
+                                    text: [selected_room.name + " entry was a failure!"],
+                                    breakLine: true
+                                });
                             }
                             session.output.push({
                                 output: true,
                                 text: ["\nEntering room..."],
-                                breakLine: true});
+                                breakLine: true
+                            });
+                        } else {
+                            console.log("Problem!");
                         }
+                    } else {
+                        session.output.push({
+                            output: true,
+                            text: ["\nYour team is dead!"],
+                            breakLine: true
+                        });
+                    }
                     break;
-                case "raid-exit":
-                    if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                        console.log(room_obj[param2]);
-                        checkExit(room_obj[param2]);
-                        if (room_obj[param2].exit_success === true) {
+                case "exit":
+                    if (death_status === false) {
+                        if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3" && death_status === false) {
+                            console.log(selected_room);
+                            checkExit(selected_room);
+                            if (selected_room.exit_success === true) {
+                                session.output.push({
+                                    output: true,
+                                    text: [selected_room.name + " exit was a success!"],
+                                    breakLine: true
+                                });
+                            }  else {
+                                session.output.push({
+                                    output: true,
+                                    text: [selected_room.name + " exit was a failure!"],
+                                    breakLine: true
+                                });
+                            }
+                            session.output.push({ output: true, text: [
+                                "\nExiting room..."
+                            ], breakLine: true});
+                        } else if (death_status === true) {
                             session.output.push({
                                 output: true,
-                                text: [room_obj[param2].name + " exit was a success!"],
+                                text: ["\nYour team is dead!"],
                                 breakLine: true
                             });
-                        }  else {
-                            session.output.push({
-                                output: true,
-                                text: [room_obj[param2].name + " exit was a failure!"],
-                                breakLine: true
-                            });
+                        } else {
+                            console.log("Problem!");
                         }
-                        session.output.push({ output: true, text: [
-                            "\nExiting room..."
-                        ], breakLine: true});
+                    } else {
+                        session.output.push({
+                            output: true,
+                            text: ["\nYour team is dead!"],
+                            breakLine: true
+                        });
                     }
                     break;
                 default:
