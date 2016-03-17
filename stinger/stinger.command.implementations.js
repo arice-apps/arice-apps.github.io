@@ -793,10 +793,6 @@
     commandBrokerProvider.appendCommandHandler(stingerReportCommandHandler());
 
 
-    //==============================================================================//
-    // STINGER <Camera> Command //
-    //==============================================================================//
-
     var stingerCameraCommandHandler = function () {
         var flag = false;
 
@@ -819,33 +815,33 @@
         };
         var selected_cam = null;
         var password_list = [
-                "thesun",
-                "beyond",
-                "themountains",
-                "glows",
-                "theyellow",
-                "riverseawards",
-                "flowsyou",
-                "canenjoy",
-                "agrander",
-                "sightby",
-                "climbingto",
-                "agreater",
-                "height"
-            ];
+            "thesun",
+            "beyond",
+            "themountains",
+            "glows",
+            "theyellow",
+            "riverseawards",
+            "flowsyou",
+            "canenjoy",
+            "agrander",
+            "sightby",
+            "climbingto",
+            "agreater",
+            "height"
+        ];
         var master_password = "wangzhihuan";
         var master_correct = false;
         var passid = null;
-        var success_code = "AJ" + 5*7 + "KM";      // AJ35KM
+        var success_code = "VN" + 2*7 + "ZX";      // VN14ZX
         var timer = null;
 
         var passTimer = function() {
-            console.log("The timer has started!");
+            console.log("Timer has started!");
             flag = false;
             timer = window.setTimeout(function() {
                 flag = true;
                 console.log(flag);
-                console.log("The timer ended!");
+                console.log("Timer ended!");
                 if (cam_list[selected_cam] !== 1) {
                     cam_list[selected_cam] = 2;
                 }
@@ -948,13 +944,18 @@
                     } else if (cam_list[selected_cam] === 0) {
                         window.clearTimeout(timer);
                         console.log("Timer was cleared!");
+                    } else {
+                        session.output.push({ output: true, text: [
+                            "This camera does not exist!",
+                            "Enter 'stinger-cm status' to see full list of cameras."
+                        ], breakLine: true });
+                        break;
                     }
 
                     // Reset the timed out flag
                     flag = false;
                     // Remove the selected password if one was picked last round.
                     if (passid !== null) {
-                        console.log(password_list[passid] + " has been deleted!");
                         delete password_list[passid];
                     }
                     // Select a random password for the camera
@@ -966,7 +967,6 @@
                             cam_password = password_list[passid];
                         }
                     }
-                    console.log(cam_password);
                     var random_letter_num1 = Math.floor((Math.random() * cam_password.length) + 1);
                     var random_letter_num2 = Math.floor((Math.random() * cam_password.length) + 1);
                     var random_letter_1 =  cam_password[random_letter_num1];
@@ -1016,12 +1016,11 @@
                         "\n>>>[ " +  hashed_password + " ]<<<\n\n",
                         "You have 1 minute remaining to enter the correct password for <" + selected_cam + ">"
                     ], breakLine: true });
-                    console.log(cam_password);
                     passTimer();
                     // We set this camera as having begun a session
                     cam_list[selected_cam] = 3;
                     break;
-                case "master-pass":
+                case "admin":
                     if (param2 === master_password) {
                         setMaster(true);
                         session.output.push({ output: true, text: [
@@ -1033,9 +1032,10 @@
                         ], breakLine: true });
                     }
                     session.output.push({ output: true, text: [
-                        "THETA Security Camera Admin Login",
-                        "Please enter admin password to obtain access..."
-                    ], breakLine: true });
+                        "\n",
+                        "Security Camera Admin Login",
+                        "==========================="
+                    ], breakLine: false });
                     break;
                 case "op-complete":
                     var success_cnt = 0;
