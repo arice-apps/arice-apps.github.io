@@ -792,6 +792,9 @@
     };
     commandBrokerProvider.appendCommandHandler(stingerReportCommandHandler());
 
+    //==============================================================================//
+    // STINGER <Camera> Command //
+    //==============================================================================//
 
     var stingerCameraCommandHandler = function () {
         var flag = false;
