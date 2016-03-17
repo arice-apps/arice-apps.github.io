@@ -860,7 +860,7 @@
             param1 = makeLower(param1);
 
             switch(param1) {
-                case "status-ls":
+                case "status":
                     // 0 flag means no action has been taken on the camera
                     // 1 flag means that player succeeded in hacking the camera
                     // 2 flag means that player failed in hacking the camera
@@ -880,8 +880,9 @@
                         session.output.push({output: true, text: [key + ": " + status_str], breakLine: true});
                     }
                     session.output.push({ output: true, text: [
-                        "\nList of security cams and status:",
-                        "===============================\n"
+                        "\n",
+                        "List of security cams and status:",
+                        "=================================\n"
                     ], breakLine: true });
                     break;
                 case selected_cam:
@@ -948,14 +949,6 @@
                         window.clearTimeout(timer);
                         console.log("Timer was cleared!");
                     }
-
-                    // Do a check to see if the supplied camera name is in the list
-                    //if ((Object.keys(cam_list).indexOf(selected_cam) > -1) === false) {
-                    //    session.output.push({ output: true, text: [
-                    //        "This camera does not exist!"
-                    //    ], breakLine: true });
-                    //    break;
-                    //}
 
                     // Reset the timed out flag
                     flag = false;
@@ -1064,8 +1057,7 @@
                     }
                 default:
                     session.output.push({ output: true, text: [
-                        "Command could not execute!",
-                        "Camera has already been hacked, is locked out or has not been selected for a session."
+                        "Command could not execute!"
                     ], breakLine: true });
                     break;
             }
