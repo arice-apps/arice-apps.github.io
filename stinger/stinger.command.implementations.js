@@ -795,6 +795,13 @@
 
     var stingerCameraCommandHandler = function () {
         var flag = false;
+        var timer_started = false;
+        function setFlag(status) {
+            flag = status;
+        }
+        function setTimerStarted(status) {
+            timer_started = status;
+        }
 
         var me = {};
         me.command = 'stinger-cm';
@@ -823,10 +830,10 @@
             "riverseawards",
             "flowsyou",
             "canenjoy",
-            "agrander",
+            "grander",
             "sightby",
             "climbingto",
-            "agreater",
+            "greater",
             "height"
         ];
         var master_password = "wangzhihuan";
@@ -837,10 +844,13 @@
 
         var passTimer = function() {
             console.log("Timer has started!");
-            flag = false;
+            setTimerStarted(true);
+            console.log(timer_started);
+            setFlag(false);
             timer = window.setTimeout(function() {
-                flag = true;
-                console.log(flag);
+                setFlag(true);
+                setTimerStarted(false);
+                console.log(timer_started);
                 console.log("Timer ended!");
                 if (cam_list[selected_cam] !== 1) {
                     cam_list[selected_cam] = 2;
@@ -848,8 +858,8 @@
             }, 64000);
         };
 
-        function setMaster(flag) {
-            master_correct = flag;
+        function setMaster(status) {
+            master_correct = status;
         }
 
         me.handle = function (session, param1, param2) {
@@ -905,7 +915,9 @@
                             "Accessing system................ Success!\n",
                             "The camera was hacked!"
                         ], breakLine: true });
-                        cam_list[selected_cam] = 1;                  // The user tried to guess on a cam not listed
+                        cam_list[selected_cam] = 1;
+                        setFlag(true);
+                        setTimerStarted(false);
                     } else if (cam_list[selected_cam] === 1) {
                         session.output.push({ output: true, text: [
                             "The camera has already been hacked!"
@@ -922,6 +934,16 @@
                     }
                     break;
                 case "select":
+                    console.log(timer_started);
+                    if (timer_started === true) {
+                        session.output.push({ output: true, text: [
+                            "An ANTENNA session is still running for a camera!",
+                            "Complete the hack for that camera or wait until timer ends."
+                        ], breakLine: true });
+                        console.log(timer_started);
+                        break;
+                    }
+
                     // Set selected cam to the user supplied camera
                     selected_cam = param2;
 
@@ -953,7 +975,7 @@
                     }
 
                     // Reset the timed out flag
-                    flag = false;
+                    setFlag(false);
                     // Remove the selected password if one was picked last round.
                     if (passid !== null) {
                         delete password_list[passid];
