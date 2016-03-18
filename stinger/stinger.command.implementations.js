@@ -1160,7 +1160,7 @@
         var bonus_total = 0;
         var current_risk = 10 + risk_total;
 
-        function calculateRisk(decision) {
+        function increaseRisk(decision) {
             if (current_risk > 1) {
                 risk_total += decision.risk;
             }
@@ -1220,7 +1220,7 @@
 
         var calculateGamble = function (decision) {
             if (decision.fail === false && decision.win === false) {
-                calculateRisk(decision);
+                increaseRisk(decision);
                 var gambleOutcome = Math.floor(Math.random() * 10) + 1;
                 if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
                     decision.win = true;
