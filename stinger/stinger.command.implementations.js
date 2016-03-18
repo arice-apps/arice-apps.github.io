@@ -1115,17 +1115,8 @@
 
         var info_points = 0;
 
-        function addInfoPoints(infoObj) {
+        function calculateInfoPoints(infoObj) {
             info_points += infoObj.points;
-        }
-
-        var risk_total = 0;
-        var current_risk = 10 + risk_total;
-
-        function addRiskPoints(decisionObj) {
-            if (current_risk > 1) {
-                risk_total += decisionObj.risk;
-            }
         }
 
         // Enter variables here
@@ -1165,38 +1156,64 @@
             }
         };
 
+        var risk_total = 0;
+        var bonus_total = 0;
+        var current_risk = 10 + risk_total;
+
+        function calculateRisk(decision) {
+            if (current_risk > 1) {
+                risk_total += decision.risk;
+            }
+        }
+        function calculateBonus(decision) {
+            bonus_total += decision.bonus;
+            return bonus_total;
+        }
+
         var decision_obj = {
             decision_1: {
                 "name": "Reception Office",
-                "bonus": 0,
+                "bonus": 3,
+                "points": 5,
                 "decision_success": false,
                 "risk": -2
             },
             decision_2: {
                 "name": "Mystery Closet",
-                "bonus": 0,
+                "bonus": 3,
+                "points": 5,
                 "decision_success": false,
                 "risk": -2
             },
             decision_3: {
                 "name": "Executive Terminal",
-                "bonus": 0,
+                "bonus": 3,
+                "points": 5,
                 "decision_success": false,
                 "risk": -2
             }
         };
 
-        var gamble = function (decision) {
-            addRiskPoints(decision);
+        var calculateGamble = function (decision) {
+            calculateRisk(decision);
             var gambleOutcome = Math.floor(Math.random() * 10) + 1;
             if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
-                console.log("you win!");
+                console.log("You win!");
                 console.log("You rolled a " + gambleOutcome);
                 console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                decision.points += calculateBonus(decision);
+                calculateInfoPoints(decision);
+                console.log("The total decision points + bonus is " + decision.points);
+                console.log("The total bonus earned is : " + bonus_total);
+                console.log("The total info points are: " + info_points);
             } else {
-                console.log("you lose!");
+                console.log("You lose!");
                 console.log("You rolled a " + gambleOutcome);
                 console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                calculateInfoPoints(decision);
+                console.log("The total decision points + bonus is " + decision.points);
+                console.log("The total bonus earned is : " + bonus_total);
+                console.log("The total info points are: " + info_points);
             }
         };
 
@@ -1255,7 +1272,7 @@
             ) {
                 setExit(obj, true);
                 setRaid(obj, false);
-                addInfoPoints(obj);
+                calculateInfoPoints(obj);
             }
             return obj.exit_success;
         }
@@ -1414,7 +1431,7 @@
                         text: ["A wild " + selected_decision.name + " appeared!"],
                         breakLine: true
                     });
-                    gamble(selected_decision);
+                    calculateGamble(selected_decision);
                     break;
                 default:
                     console.log("OOPS!");
