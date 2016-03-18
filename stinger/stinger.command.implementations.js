@@ -867,6 +867,7 @@
 
         me.handle = function (session, param1, param2) {
             param1 = makeLower(param1);
+            param2 = makeLower(param2);
 
             switch(param1) {
                 case "status":
