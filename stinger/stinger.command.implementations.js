@@ -1189,6 +1189,7 @@
             decision_2: {
                 "name": "Mystery Closet",
                 "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
                 "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
                 "conservative": false,
@@ -1203,6 +1204,7 @@
             decision_3: {
                 "name": "Executive Terminal",
                 "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
                 "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
                 "conservative": false,
@@ -1325,6 +1327,17 @@
             param2 = makeLower(param2);
             param3 = makeLower(param3);
             param4 = makeLower(param4);
+
+            function printTotal() {
+                session.output.push({
+                    output: true,
+                    text: [
+                        "Your current information score is now: " + info_points
+                    ],
+                    breakLine: true
+                });
+            }
+
             var selected_room = room_obj[param2];
 
             // Print out status of all rooms
@@ -1499,6 +1512,9 @@
                             });
                         }
                     }
+                    break;
+                case "total":
+                    printTotal();
                     break;
                 default:
                     console.log("OOPS!");
