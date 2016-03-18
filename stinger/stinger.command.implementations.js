@@ -1115,8 +1115,9 @@
 
         var info_points = 0;
 
-        function calculateInfoPoints(infoObj) {
-            info_points += infoObj;
+        function addInfoPoints(info) {
+            info_points += info;
+            return info_points;
         }
 
         // Enter variables here
@@ -1225,7 +1226,7 @@
                 if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
                     decision.win = true;
                     decision.points += calculateBonus(decision);
-                    calculateInfoPoints(decision.points);
+                    addInfoPoints(decision.points);
                     console.log("You win!");
                     console.log("You rolled a " + gambleOutcome);
                     console.log("You needed to get a number between 1 and " + (10 + risk_total));
@@ -1305,7 +1306,7 @@
             ) {
                 setExit(obj, true);
                 setRaid(obj, false);
-                calculateInfoPoints(obj.points);
+                addInfoPoints(obj.points);
             }
             return obj.exit_success;
         }
@@ -1398,7 +1399,7 @@
                     if (selected_room.entry_success === true) {
                         session.output.push({ output: true, text: [setDownload(selected_room, true)], breakLine: true});
                     } else {
-                        session.output.push({ output: true, text: ["You are not in a room! Can't download anything..."], breakLine: true});
+                        session.output.push({ output: true, text: ["You are not in a room! You can't download anything..."], breakLine: true});
                     }
                     break;
                 case "status":
@@ -1452,7 +1453,7 @@
                                 text: [selected_room.name + " exit was a success!"],
                                 breakLine: true
                             });
-                            console.log("Cleared room successfully (+2). Total info points are now: " + info_points);
+                            console.log("Cleared room successfully (+2). You now have a total of " + info_points + " points.");
                         }  else {
                             session.output.push({
                                 output: true,
@@ -1477,17 +1478,18 @@
                                     output: true,
                                     text: [
                                         selected_decision.yes_msg,
-                                        calculateGamble(selected_decision)
+                                        calculateGamble(selected_decision),
+                                        "\n***You made a risky decision and now have a total of " + info_points + " points."
                                     ],
                                     breakLine: true
                                 });
                             } else if (param3 === "n") {
                                 selected_decision.conservative = true;
-                                calculateInfoPoints(selected_decision.points);
                                 session.output.push({
                                     output: true,
                                     text: [
-                                        selected_decision.no_msg
+                                        selected_decision.no_msg,
+                                        "\n***You made a conservative decision and now have a total of " + addInfoPoints(selected_decision.points) + " points."
                                     ],
                                     breakLine: true
                                 });
