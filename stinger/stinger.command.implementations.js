@@ -1173,13 +1173,13 @@
         var decision_obj = {
             decision_1: {
                 "name": "Reception Office",
-                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (y/n)",
                 "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
-                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk! +5",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
+                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled! +",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us! +0",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1188,13 +1188,13 @@
             },
             decision_2: {
                 "name": "Mystery Closet",
-                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message": "MSG FROM SQUAD_LEADER: We see a mystery closet, should we go inside? (y/n)",
                 "message_shown": false,
-                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
-                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "yes_msg": "MSG FROM SQUAD_LEADER: I'm opening the closet...",
+                "no_msg": "MSG FROM SQUAD_LEADER: Let's not look inside! Onwards! +5",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
+                "win_msg": "MSG FROM SQUAD_LEADER: There was secret intel in the closet! Yeah! +",
+                "fail_msg": "MSG FROM SQUAD_LEADER: There's nothing here... We wasted precious time... +0",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1203,13 +1203,13 @@
             },
             decision_3: {
                 "name": "Executive Terminal",
-                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message": "MSG FROM SQUAD_LEADER: Hmm... An executive terminal, should we try to login? (y/n)",
                 "message_shown": false,
-                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
-                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "yes_msg": "MSG FROM SQUAD_LEADER: Trying to login now...",
+                "no_msg": "MSG FROM SQUAD_LEADER: Yeah, let's not risk it. Off we go! +5",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
+                "win_msg": "MSG FROM SQUAD_LEADER: We got access! There are tons of passwords! +",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Ooops, it set off an alarm... Better go! +0",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1232,7 +1232,7 @@
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return decision.win_msg;
+                    return decision.win_msg + decision.points;
                 } else {
                     decision.fail = true;
                     console.log("You lose!");
@@ -1472,16 +1472,6 @@
                     var selected_decision = decision_obj[param2];
                     if (param2 === "decision_1" || param2 === "decision_2" || param2 === "decision_3") {
                         if (selected_decision.fail === false && selected_decision.win === false && selected_decision.conservative === false) {
-                            if (selected_decision.message_shown === false) {
-                                session.output.push({
-                                    output: true,
-                                    text: [
-                                        selected_decision.message
-                                    ],
-                                    breakLine: true
-                                });
-                                selected_decision.message_shown = true;
-                            }
                             if (param3 === "y") {
                                 session.output.push({
                                     output: true,
@@ -1501,6 +1491,16 @@
                                     ],
                                     breakLine: true
                                 });
+                            }
+                            if (selected_decision.message_shown === false) {
+                                session.output.push({
+                                    output: true,
+                                    text: [
+                                        selected_decision.message
+                                    ],
+                                    breakLine: true
+                                });
+                                selected_decision.message_shown = true;
                             }
                         } else {
                             session.output.push({
