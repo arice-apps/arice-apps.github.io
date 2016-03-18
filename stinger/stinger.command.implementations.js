@@ -1116,7 +1116,7 @@
         var info_points = 0;
 
         function calculateInfoPoints(infoObj) {
-            info_points += infoObj.points;
+            info_points += infoObj;
         }
 
         // Enter variables here
@@ -1173,6 +1173,13 @@
         var decision_obj = {
             decision_1: {
                 "name": "Reception Office",
+                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "message_shown": false,
+                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
+                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "conservative": false,
+                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1181,6 +1188,12 @@
             },
             decision_2: {
                 "name": "Mystery Closet",
+                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
+                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "conservative": false,
+                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1189,6 +1202,12 @@
             },
             decision_3: {
                 "name": "Executive Terminal",
+                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (Y/N)",
+                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
+                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk!",
+                "conservative": false,
+                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled!",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us!",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1204,14 +1223,14 @@
                 if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
                     decision.win = true;
                     decision.points += calculateBonus(decision);
-                    calculateInfoPoints(decision);
+                    calculateInfoPoints(decision.points);
                     console.log("You win!");
                     console.log("You rolled a " + gambleOutcome);
                     console.log("You needed to get a number between 1 and " + (10 + risk_total));
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return "You won!";
+                    return decision.win_msg;
                 } else {
                     decision.fail = true;
                     console.log("You lose!");
@@ -1220,7 +1239,7 @@
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return "You lost!";
+                    return decision.fail_msg;
                 }
             } else if (decision.win === true) {
                 return "You already won this decision!";
@@ -1284,7 +1303,7 @@
             ) {
                 setExit(obj, true);
                 setRaid(obj, false);
-                calculateInfoPoints(obj);
+                calculateInfoPoints(obj.points);
             }
             return obj.exit_success;
         }
@@ -1438,14 +1457,48 @@
                     break;
                 case "gamble":
                     var selected_decision = decision_obj[param2];
-                    session.output.push({
-                        output: true,
-                        text: [
-                            "A wild " + selected_decision.name + " appeared!",
-                            calculateGamble(selected_decision)
-                        ],
-                        breakLine: true
-                    });
+                    if (param2 === "decision_1" || param2 === "decision_2" || param2 === "decision_3") {
+                        if (selected_decision.fail === false && selected_decision.win === false && selected_decision.conservative === false) {
+                            if (selected_decision.message_shown === false) {
+                                session.output.push({
+                                    output: true,
+                                    text: [
+                                        selected_decision.message
+                                    ],
+                                    breakLine: true
+                                });
+                                selected_decision.message_shown = true;
+                            }
+                            if (param3 === "y") {
+                                session.output.push({
+                                    output: true,
+                                    text: [
+                                        selected_decision.yes_msg,
+                                        calculateGamble(selected_decision)
+                                    ],
+                                    breakLine: true
+                                });
+                            } else if (param3 === "n") {
+                                selected_decision.conservative = true;
+                                calculateInfoPoints(selected_decision.points);
+                                session.output.push({
+                                    output: true,
+                                    text: [
+                                        selected_decision.no_msg
+                                    ],
+                                    breakLine: true
+                                });
+                            }
+                        } else {
+                            session.output.push({
+                                output: true,
+                                text: [
+                                    "You already made this decision!"
+                                ],
+                                breakLine: true
+                            });
+                        }
+                    }
                     break;
                 default:
                     console.log("OOPS!");
