@@ -1120,9 +1120,12 @@
         }
 
         var risk_total = 0;
+        var current_risk = 10 + risk_total;
 
         function addRiskPoints(decisionObj) {
-            risk_total += decisionObj.risk;
+            if (current_risk > 1) {
+                risk_total += decisionObj.risk;
+            }
         }
 
         // Enter variables here
@@ -1167,31 +1170,33 @@
                 "name": "Reception Office",
                 "bonus": 0,
                 "decision_success": false,
-                "risk": -3
+                "risk": -2
             },
             decision_2: {
                 "name": "Mystery Closet",
                 "bonus": 0,
                 "decision_success": false,
-                "risk": -3
+                "risk": -2
             },
             decision_3: {
                 "name": "Executive Terminal",
                 "bonus": 0,
                 "decision_success": false,
-                "risk": -3
+                "risk": -2
             }
         };
 
         var gamble = function (decision) {
             addRiskPoints(decision);
-            var gambleOutcome = Math.floor(Math.random() * 10) - risk_total;
-            if (gambleOutcome >= (10 - risk_total)) {
+            var gambleOutcome = Math.floor(Math.random() * 10) + 1;
+            if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
                 console.log("you win!");
-                console.log(gambleOutcome);
+                console.log("You rolled a " + gambleOutcome);
+                console.log("You needed to get a number between 1 and " + (10 + risk_total));
             } else {
                 console.log("you lose!");
-                consol.log(gambleOutcome);
+                console.log("You rolled a " + gambleOutcome);
+                console.log("You needed to get a number between 1 and " + (10 + risk_total));
             }
         };
 
@@ -1401,6 +1406,15 @@
                         console.log("Problem!");
                     }
                     roomClear(selected_room);
+                    break;
+                case "gamble":
+                    var selected_decision = decision_obj[param2];
+                    session.output.push({
+                        output: true,
+                        text: ["A wild " + selected_decision.name + " appeared!"],
+                        breakLine: true
+                    });
+                    gamble(selected_decision);
                     break;
                 default:
                     console.log("OOPS!");
