@@ -1175,45 +1175,57 @@
                 "name": "Reception Office",
                 "bonus": 3,
                 "points": 5,
-                "decision_success": false,
+                "fail": false,
+                "win": false,
                 "risk": -2
             },
             decision_2: {
                 "name": "Mystery Closet",
                 "bonus": 3,
                 "points": 5,
-                "decision_success": false,
+                "fail": false,
+                "win": false,
                 "risk": -2
             },
             decision_3: {
                 "name": "Executive Terminal",
                 "bonus": 3,
                 "points": 5,
-                "decision_success": false,
+                "fail": false,
+                "win": false,
                 "risk": -2
             }
         };
 
         var calculateGamble = function (decision) {
-            calculateRisk(decision);
-            var gambleOutcome = Math.floor(Math.random() * 10) + 1;
-            if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
-                console.log("You win!");
-                console.log("You rolled a " + gambleOutcome);
-                console.log("You needed to get a number between 1 and " + (10 + risk_total));
-                decision.points += calculateBonus(decision);
-                calculateInfoPoints(decision);
-                console.log("The total decision points + bonus is " + decision.points);
-                console.log("The total bonus earned is : " + bonus_total);
-                console.log("The total info points are: " + info_points);
+            if (decision.fail === false && decision.win === false) {
+                calculateRisk(decision);
+                var gambleOutcome = Math.floor(Math.random() * 10) + 1;
+                if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
+                    decision.win = true;
+                    decision.points += calculateBonus(decision);
+                    calculateInfoPoints(decision);
+                    console.log("You win!");
+                    console.log("You rolled a " + gambleOutcome);
+                    console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                    console.log("The total decision points + bonus is " + decision.points);
+                    console.log("The total bonus earned is : " + bonus_total);
+                    console.log("The total info points are: " + info_points);
+                    return "You won!";
+                } else {
+                    decision.fail = true;
+                    console.log("You lose!");
+                    console.log("You rolled a " + gambleOutcome);
+                    console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                    console.log("The total decision points + bonus is " + decision.points);
+                    console.log("The total bonus earned is : " + bonus_total);
+                    console.log("The total info points are: " + info_points);
+                    return "You lost!";
+                }
+            } else if (decision.win === true) {
+                return "You already won this decision!";
             } else {
-                console.log("You lose!");
-                console.log("You rolled a " + gambleOutcome);
-                console.log("You needed to get a number between 1 and " + (10 + risk_total));
-                calculateInfoPoints(decision);
-                console.log("The total decision points + bonus is " + decision.points);
-                console.log("The total bonus earned is : " + bonus_total);
-                console.log("The total info points are: " + info_points);
+                return "You failed this decision! You get nothing!";
             }
         };
 
@@ -1408,7 +1420,7 @@
                                 text: [selected_room.name + " exit was a success!"],
                                 breakLine: true
                             });
-                            console.log("Total info points are: " + info_points);
+                            console.log("Cleared room successfully (+2). Total info points are now: " + info_points);
                         }  else {
                             session.output.push({
                                 output: true,
@@ -1428,10 +1440,12 @@
                     var selected_decision = decision_obj[param2];
                     session.output.push({
                         output: true,
-                        text: ["A wild " + selected_decision.name + " appeared!"],
+                        text: [
+                            "A wild " + selected_decision.name + " appeared!",
+                            calculateGamble(selected_decision)
+                        ],
                         breakLine: true
                     });
-                    calculateGamble(selected_decision);
                     break;
                 default:
                     console.log("OOPS!");
