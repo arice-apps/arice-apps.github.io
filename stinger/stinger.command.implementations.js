@@ -1124,6 +1124,7 @@
         var room_obj = {
             room_3: {
                 "name": "[Lab 3 - Bioweapons]",
+                "id": "room_3",
                 "door_status": true,
                 "motion_status": false,
                 "downloader": false,
@@ -1135,6 +1136,7 @@
             },
             room_2: {
                 "name": "[Lab 2 - Rift Creature Containment]",
+                "id": "room_2",
                 "door_status": true,
                 "motion_status": false,
                 "downloader": false,
@@ -1146,6 +1148,7 @@
             },
             room_1: {
                 "name": "[Lab 1 - Teleportation Particle Lab]",
+                "id": "room_1",
                 "door_status": true,
                 "motion_status": true,
                 "downloader": false,
@@ -1296,7 +1299,7 @@
                     "========================================",
                     "========================================",
                     "===================================100%]",
-                    "\nDownload complete! " + Math.floor(Math.random() * 10000) + " GB of data stolen!"];
+                    "\nDownload complete! " + Math.floor(Math.random() * 1000) + " TB of data stolen! [+2 info points]"];
             }
         }
         function setRaid(obj, status) {
@@ -1330,7 +1333,6 @@
             ) {
                 setExit(obj, true);
                 setRaid(obj, false);
-                addInfoPoints(obj.points);
             }
             return obj.exit_success;
         }
@@ -1370,6 +1372,7 @@
                 for (var room in room_obj) {
                     session.output.push({ output: true, text: [
                         "Room name: " + room_obj[room].name,
+                        "Room ID: " + room_obj[room].id,
                         "Room cleared? : " + room_obj[room].room_success
                     ], breakLine: true});
                 }
@@ -1420,19 +1423,25 @@
                     }
                     break;
                 case "istealer":
-                    if (selected_room.entry_success === true) {
+                    if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false) {
+                        addInfoPoints(selected_room.points);
+                        printTotal();
                         session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
+                    } else if (selected_room.downloader === false && selected_room.room_success === false) {
+                        session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> You are not in this room."], breakLine: true});
+                    } else if (selected_room.downloader === true) {
+                        session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Data has already been downloaded from this room."], breakLine: true});
                     } else {
-                        session.output.push({ output: true, text: ["You are not in a room! You can't download anything..."], breakLine: true});
+                        session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Verify your inputs."], breakLine: true});
                     }
                     break;
                 case "status":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
                         session.output.push({ output: true, text: [
                             "Room name: " + selected_room.name,
-                            "Access control status: " + selected_room.door_status,
-                            "Motion sensor status: " + selected_room.motion_status,
-                            "Room cleared: " + selected_room.room_success
+                            "Room ID: " + selected_room.id,
+                            "Access control status [ID: door]: " + selected_room.door_status,
+                            "Motion sensor status [ID: motion]: " + selected_room.motion_status
                         ], breakLine: true});
                         session.output.push({ output: true, text: ["\n"], breakLine: false});
                     }
@@ -1477,7 +1486,6 @@
                                 text: [selected_room.name + " exit was a success!"],
                                 breakLine: true
                             });
-                            console.log("Cleared room successfully (+2). You now have a total of " + info_points + " points.");
                         }  else {
                             session.output.push({
                                 output: true,
