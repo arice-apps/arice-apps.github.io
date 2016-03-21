@@ -1120,7 +1120,7 @@
             return info_points;
         }
 
-        // Enter variables here
+        // Enter room variables here
         var room_obj = {
             room_3: {
                 "name": "[Lab 3 - Bioweapons]",
@@ -1270,9 +1270,24 @@
         function setDownload(obj, status) {
             obj.downloader = status;
             if (status === true) {
-                return "\nDownloader has been turned ON [0%==================================100%]\nDownload complete!";
-            } else {
-                return "\nDownloader scanner has been turned OFF";
+                return ["\niStealer has been turned activated ",
+                    "[0%=====================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================",
+                    "========================================100%]",
+                    "\nDownload complete! " + Math.floor(Math.random() * 10000) + "GB stolen!"];
             }
         }
         function setRaid(obj, status) {
@@ -1362,7 +1377,7 @@
                 case "list":
                     room_list_print();
                     break;
-                case "hack":
+                case "access":
                     switch(param3) {
                         case "door":
                             if (param4 === "on") {
@@ -1395,9 +1410,9 @@
                             break;
                     }
                     break;
-                case "download":
+                case "istealer":
                     if (selected_room.entry_success === true) {
-                        session.output.push({ output: true, text: [setDownload(selected_room, true)], breakLine: true});
+                        session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
                     } else {
                         session.output.push({ output: true, text: ["You are not in a room! You can't download anything..."], breakLine: true});
                     }
@@ -1413,7 +1428,7 @@
                         session.output.push({ output: true, text: ["\n"], breakLine: false});
                     }
                     break;
-                case "entry":
+                case "enter":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
                         checkEntry(selected_room);
                         if (selected_room.entry_success === true) {
