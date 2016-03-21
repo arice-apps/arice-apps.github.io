@@ -1515,16 +1515,22 @@
                                 text: [selected_room.name + " exit was a success!"],
                                 breakLine: true
                             });
+                            session.output.push({ output: true, text: [
+                                "\nExiting room..."
+                            ], breakLine: true});
+                        } else if (selected_room.downloader === false) {
+                            session.output.push({
+                                output: true,
+                                text: ["\n", selected_room.name + " exit was a failure!","\nYou need to download the room files using iStealer!"],
+                                breakLine: true
+                            });
                         } else {
                             session.output.push({
                                 output: true,
-                                text: [selected_room.name + " exit was a failure!"],
+                                text: ["Could not exit the room, check inputs and status of room then try again."],
                                 breakLine: true
                             });
                         }
-                        session.output.push({ output: true, text: [
-                            "\nExiting room..."
-                        ], breakLine: true});
                     } else {
                         console.log("Problem!");
                     }
