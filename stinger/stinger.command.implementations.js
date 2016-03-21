@@ -1334,8 +1334,6 @@
                     ongoingRooms = true;
                 }
             }
-            console.log(obj.id + " has an ongoing raid status of " + obj.raid_ongoing);
-            console.log("The ongoing raids status is currently " + ongoingRooms);
             return obj.entry_success;
         }
         function checkExit(obj) {
@@ -1347,8 +1345,6 @@
                 setRaid(obj, false);
                 ongoingRooms = false;
             }
-            console.log(obj.id + " has an ongoing raid status of " + obj.raid_ongoing);
-            console.log("The ongoing raids status is currently " + ongoingRooms);
             return obj.exit_success;
         }
         function roomClear(obj) {
