@@ -1180,10 +1180,10 @@
                 "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (y/n)",
                 "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
-                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk! +5",
+                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk! [+5 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled! +",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us! +0",
+                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled! [+",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us! [+0 points]",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1195,10 +1195,10 @@
                 "message": "MSG FROM SQUAD_LEADER: We see a mystery closet, should we go inside? (y/n)",
                 "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: I'm opening the closet...",
-                "no_msg": "MSG FROM SQUAD_LEADER: Let's not look inside! Onwards! +5",
+                "no_msg": "MSG FROM SQUAD_LEADER: Let's not look inside! Onwards! [+5 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: There was secret intel in the closet! Yeah! +",
-                "fail_msg": "MSG FROM SQUAD_LEADER: There's nothing here... We wasted precious time... +0",
+                "win_msg": "MSG FROM SQUAD_LEADER: There was secret intel in the closet! Yeah! [+",
+                "fail_msg": "MSG FROM SQUAD_LEADER: There's nothing here... We wasted precious time... [+0 points]",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1210,10 +1210,10 @@
                 "message": "MSG FROM SQUAD_LEADER: Hmm... An executive terminal, should we try to login? (y/n)",
                 "message_shown": false,
                 "yes_msg": "MSG FROM SQUAD_LEADER: Trying to login now...",
-                "no_msg": "MSG FROM SQUAD_LEADER: Yeah, let's not risk it. Off we go! +5",
+                "no_msg": "MSG FROM SQUAD_LEADER: Yeah, let's not risk it. Off we go! [+5 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got access! There are tons of passwords! +",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Ooops, it set off an alarm... Better go! +0",
+                "win_msg": "MSG FROM SQUAD_LEADER: We got access! There are tons of passwords! [+",
+                "fail_msg": "MSG FROM SQUAD_LEADER: Ooops, it set off an alarm... Better go! [+0 points]",
                 "bonus": 3,
                 "points": 5,
                 "fail": false,
@@ -1236,7 +1236,7 @@
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return decision.win_msg + decision.points;
+                    return decision.win_msg + decision.points + " points]";
                 } else {
                     decision.fail = true;
                     console.log("You lose!");
@@ -1359,7 +1359,7 @@
                 session.output.push({
                     output: true,
                     text: [
-                        "Your current information score is now: " + info_points
+                        "Your current information score is now: " + info_points + " points."
                     ],
                     breakLine: true
                 });
