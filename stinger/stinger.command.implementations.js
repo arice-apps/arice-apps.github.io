@@ -1299,7 +1299,7 @@
                     "========================================",
                     "========================================",
                     "===================================100%]",
-                    "\nDownload complete! " + Math.floor(Math.random() * 1000) + " TB of data stolen! [+2 info points]"];
+                    "\nDownload complete! " + Math.floor(Math.random() * 1000) + " TB of data stolen! [+2 points]"];
             }
         }
         function setRaid(obj, status) {
