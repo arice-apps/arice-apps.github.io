@@ -1344,7 +1344,6 @@
                 obj.downloader === true
             ) {
                 setExit(obj, true);
-                roomClear(obj);
                 setRaid(obj, false);
                 ongoingRooms = false;
             }
@@ -1508,8 +1507,16 @@
                     break;
                 case "exit":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
+                        if (selected_room.room_success === true) {
+                            session.output.push({
+                                output: true,
+                                text: ["\n", "You already left " + selected_room.id],
+                                breakLine: true
+                            });
+                            break;
+                        }
                         checkExit(selected_room);
-                        if (selected_room.exit_success === true) {
+                        if (selected_room.exit_success === true && selected_room.raid_ongoing === false) {
                             session.output.push({
                                 output: true,
                                 text: [selected_room.name + " exit was a success!"],
@@ -1518,10 +1525,17 @@
                             session.output.push({ output: true, text: [
                                 "\nExiting room..."
                             ], breakLine: true});
-                        } else if (selected_room.downloader === false) {
+                            roomClear(selected_room);
+                        } else if (selected_room.raid_ongoing === true && selected_room.downloader === false) {
                             session.output.push({
                                 output: true,
                                 text: ["\n", selected_room.name + " exit was a failure!","\nYou need to download the room files using iStealer!"],
+                                breakLine: true
+                            });
+                        } else if (selected_room.raid_ongoing === false) {
+                            session.output.push({
+                                output: true,
+                                text: ["\n", "You are not inside " + selected_room.id + ".", "You can't exit a room you aren't in!"],
                                 breakLine: true
                             });
                         } else {
@@ -1534,7 +1548,6 @@
                     } else {
                         console.log("Problem!");
                     }
-                    roomClear(selected_room);
                     break;
                 case "gamble":
                     var selected_decision = decision_obj[param2];
