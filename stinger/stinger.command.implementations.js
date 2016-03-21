@@ -1114,6 +1114,8 @@
         ];
 
         var info_points = 0;
+        var ongoingRooms = false;
+        var ongoingID = "";
 
         function addInfoPoints(info) {
             info_points += info;
@@ -1319,11 +1321,21 @@
             // Entry success condition
             if (
                 obj.door_status === false &&
-                obj.motion_status === false
+                obj.motion_status === false &&
+                obj.room_success === false &&
+                ongoingRooms === false
             ) {
                 setEntry(obj, true);
                 setRaid(obj, true);
             }
+            for (var room in room_obj) {
+                if (room_obj[room].raid_ongoing === true) {
+                    ongoingID = room_obj[room].id;
+                    ongoingRooms = true;
+                }
+            }
+            console.log(obj.id + " has an ongoing raid status of " + obj.raid_ongoing);
+            console.log("The ongoing raids status is currently " + ongoingRooms);
             return obj.entry_success;
         }
         function checkExit(obj) {
@@ -1332,8 +1344,12 @@
                 obj.downloader === true
             ) {
                 setExit(obj, true);
+                roomClear(obj);
                 setRaid(obj, false);
+                ongoingRooms = false;
             }
+            console.log(obj.id + " has an ongoing raid status of " + obj.raid_ongoing);
+            console.log("The ongoing raids status is currently " + ongoingRooms);
             return obj.exit_success;
         }
         function roomClear(obj) {
@@ -1359,7 +1375,7 @@
                 session.output.push({
                     output: true,
                     text: [
-                        "Your current information score is now: " + info_points + " points."
+                        "Your current information score is now: [" + info_points + " points]"
                     ],
                     breakLine: true
                 });
@@ -1449,16 +1465,34 @@
                 case "enter":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
                         checkEntry(selected_room);
-                        if (selected_room.entry_success === true) {
+                        if (selected_room.entry_success === true && selected_room.raid_ongoing === true) {
                             session.output.push({
                                 output: true,
                                 text: [selected_room.name + " entry was a success!"],
+                                breakLine: true
+                            });
+                            session.output.push({
+                                output: true,
+                                text: ["\nEntering room..."],
                                 breakLine: true
                             });
                         } else if (selected_room.motion_status === true) {
                             session.output.push({
                                 output: true,
                                 text: ["Your team entered while the motion detectors were on and they were killed!"],
+                                breakLine: true
+                            });
+                        } else if (ongoingRooms === true) {
+                            session.output.push({
+                                output: true,
+                                text: ["Your team is still inside " + ongoingID,
+                                "Exit the room you are in before asking them to enter a new room."],
+                                breakLine: true
+                            });
+                        } else if (selected_room.room_success === true) {
+                            session.output.push({
+                                output: true,
+                                text: [selected_room.id + " has already been cleared! There's no need to go back."],
                                 breakLine: true
                             });
                         } else {
@@ -1468,11 +1502,6 @@
                                 breakLine: true
                             });
                         }
-                        session.output.push({
-                            output: true,
-                            text: ["\nEntering room..."],
-                            breakLine: true
-                        });
                     } else {
                         console.log("Problem!");
                     }
@@ -1486,7 +1515,7 @@
                                 text: [selected_room.name + " exit was a success!"],
                                 breakLine: true
                             });
-                        }  else {
+                        } else {
                             session.output.push({
                                 output: true,
                                 text: [selected_room.name + " exit was a failure!"],
@@ -1511,7 +1540,7 @@
                                     text: [
                                         selected_decision.yes_msg,
                                         calculateGamble(selected_decision),
-                                        "\n***You made a risky decision and now have a total of " + info_points + " points."
+                                        "\n***You made a risky decision and now have a total of [" + info_points + " points]"
                                     ],
                                     breakLine: true
                                 });
@@ -1521,7 +1550,7 @@
                                     output: true,
                                     text: [
                                         selected_decision.no_msg,
-                                        "\n***You made a conservative decision and now have a total of " + addInfoPoints(selected_decision.points) + " points."
+                                        "\n***You made a conservative decision and now have a total of [" + addInfoPoints(selected_decision.points) + " points]"
                                     ],
                                     breakLine: true
                                 });
