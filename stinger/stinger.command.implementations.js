@@ -1405,17 +1405,13 @@
                 if (room_obj[room].distraction === true) {
                     room_occupants = roomObj.id;
                     roomObj.room_occupied = true;
-                    console.log(roomObj.id + " has an occupied status of " + roomObj.room_occupied);
                     distraction_room_found = true;
-                } else {
-                    console.log("No distraction in room was found, room occupant status is not being changed...");
                 }
             }
             for (var room in room_obj) {
                 if (distraction_room_found === true && room_obj[room].room_occupied === true && room_obj[room].id !== roomObj.id) {
                     room_obj[room].room_occupied = false;
-                    console.log("A room that was occupied with a distraction active was found! Change it to empty...");
-                    console.log(room_obj[room].id + " has an occupied status of " + room_obj[room].room_occupied);
+                    return "Employees from " + room_obj[room].id + " left their room to investigate."
                 }
             }
         }
@@ -1435,12 +1431,11 @@
         function resetDistraction() {
             for (var room in room_obj) {
                 room_obj[room].room_occupied = room_truth_obj[room_obj[room].id].room_occupied;
-                console.log()
             }
-            console.log("Alarm was turned off in " + room_occupants);
+            session.output.push({ output: true, text: ["Alarm was turned off in " + room_occupants], breakLine: true});
             for (var room in room_obj) {
                 if (room_obj[room].room_occupied === true) {
-                    console.log("Employees returned to room " + room_obj[room].id);
+                    session.output.push({ output: true, text: ["Employees returned to room " + room_obj[room].id], breakLine: true});
                 }
             }
             room_occupants = null;
@@ -1489,7 +1484,7 @@
                     case "list":
                         room_list_print();
                         break;
-                    case "access":
+                    case "set":
                         switch(param3) {
                             case "door":
                                 if (param4 === "on") {
@@ -1545,8 +1540,7 @@
                                             }
                                         }
                                         if (distract_success === true) {
-                                            session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
-                                            checkDistraction(selected_room);
+                                            session.output.push({ output: true, text: [setDistract(selected_room, true),"\n",checkDistraction(selected_room)], breakLine: true});
                                         }
                                     } else if (selected_room.distraction === true) {
                                         session.output.push({ output: true, text: ["A distraction has already been turned on in this room!"], breakLine: true});
@@ -1622,6 +1616,18 @@
                                     text: [selected_room.id + " has already been cleared! There's no need to go back."],
                                     breakLine: true
                                 });
+                            } else if (selected_room.door_status === false && selected_room.room_occupied === true) {
+                                session.output.push({ output: true, text: ["You entered a room that was occupied! You were spotted and killed!"], breakLine: true});
+                                death_flag = true;
+                                break;
+                            } else if (selected_room.door_status === false && selected_room.motion_status === true) {
+                                session.output.push({ output: true, text: ["You entered a room while the motion detector was on! You were spotted and killed!"], breakLine: true});
+                                death_flag = true;
+                                break;
+                            } else if (selected_room.door_status === false && selected_room.door_status === false && selected_room.biometric_auth === true) {
+                                session.output.push({ output: true, text: ["This room has biometrics enabled, you can't get inside!"], breakLine: true});
+                            } else if (selected_room.door_status === true) {
+                                session.output.push({ output: true, text: ["The door is locked... You can't get inside."], breakLine: true});
                             } else {
                                 session.output.push({
                                     output: true,
