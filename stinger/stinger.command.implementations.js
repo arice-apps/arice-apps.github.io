@@ -1555,6 +1555,10 @@
                                 }
                             }
                             else if (param4 === "off") {
+                                if (selected_room.distraction === false) {
+                                    session.output.push({ output: true, text: ["There is no distraction turned on for this room!"], breakLine: true});
+                                    break;
+                                }
                                 session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
                                 resetDistraction();
                             } else {
