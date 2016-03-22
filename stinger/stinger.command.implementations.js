@@ -1116,11 +1116,38 @@
         var info_points = 0;
         var ongoingRooms = false;
         var ongoingID = "";
+        var room_occupants = null;
+        var distractionRoomFound = false;
 
         function addInfoPoints(info) {
             info_points += info;
             return info_points;
         }
+
+        // Enter room truth variables here
+        var room_truth_obj = {
+            room_3: {
+                "name": "[Lab 3 - Bioweapons]",
+                "id": "room_3",
+                "door_status": true,
+                "motion_status": false,
+                "biometric_auth": false
+            },
+            room_2: {
+                "name": "[Lab 2 - Rift Creature Containment]",
+                "id": "room_2",
+                "door_status": true,
+                "motion_status": false,
+                "biometric_auth": true
+            },
+            room_1: {
+                "name": "[Lab 1 - Teleportation Particle Lab]",
+                "id": "room_1",
+                "door_status": true,
+                "motion_status": true,
+                "biometric_auth": false
+            }
+        };
 
         // Enter room variables here
         var room_obj = {
@@ -1129,36 +1156,45 @@
                 "id": "room_3",
                 "door_status": true,
                 "motion_status": false,
+                "biometric_auth": false,
+                "room_occupied": false,
                 "downloader": false,
                 "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false,
-                "points": 2
+                "points": 2,
+                "distraction": false
             },
             room_2: {
                 "name": "[Lab 2 - Rift Creature Containment]",
                 "id": "room_2",
                 "door_status": true,
                 "motion_status": false,
+                "biometric_auth": true,
+                "room_occupied": true,
                 "downloader": false,
                 "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false,
-                "points": 2
+                "points": 2,
+                "distraction": false
             },
             room_1: {
                 "name": "[Lab 1 - Teleportation Particle Lab]",
                 "id": "room_1",
                 "door_status": true,
                 "motion_status": true,
+                "biometric_auth": false,
+                "room_occupied": false,
                 "downloader": false,
                 "raid_ongoing": false,
                 "entry_success": false,
                 "exit_success": false,
                 "room_success": false,
-                "points": 2
+                "points": 2,
+                "distraction": false
             }
         };
 
@@ -1272,14 +1308,29 @@
                 return "\nMotion sensors have been turned OFF";
             }
         }
+        function setBioauth(obj, status) {
+            obj.biometric_auth = status;
+            if (status === true) {
+                return "\nBiometrics Auth on workstations has been turned ON";
+            } else {
+                return "\nBiometrics Auth on workstations has been turned OFF";
+            }
+        }
+        function setDistract(obj, status) {
+            obj.distraction = status;
+            if (status === true) {
+                return "\nRoom alarm has been turned ON. It attracted the attention of nearby employees.";
+            } else {
+                return "\nRoom alarm has been turned OFF";
+            }
+        }
+
         function setDownload(obj, status) {
             obj.downloader = status;
             if (status === true) {
                 return ["\niStealer has been activated... Devices found!\n\n",
                     "Info stealing operations starting, please wait...\n\n",
                     "[0%=====================================",
-                    "========================================",
-                    "========================================",
                     "========================================",
                     "========================================",
                     "========================================",
@@ -1319,10 +1370,14 @@
 
         function checkEntry(obj) {
             // Entry success condition
+            checkDistraction(obj);
             if (
                 obj.door_status === false &&
                 obj.motion_status === false &&
                 obj.room_success === false &&
+                obj.biometric_auth === false &&
+                obj.room_occupied === false &&
+                obj.distraction === false &&
                 ongoingRooms === false
             ) {
                 setEntry(obj, true);
@@ -1347,6 +1402,22 @@
             }
             return obj.exit_success;
         }
+        function checkDistraction(roomObj) {
+            // Check if a room has a distraction, if it does, move the occupants to that room
+            for (var room in room_obj) {
+                if (room_obj[room].distraction === true && room_obj[room].room_occupied === false) {
+                    room_occupants = room_obj[room].id;
+                    room_obj[room].room_occupied = true;
+                    roomObj.room_occupied = false;
+                    console.log("The room has an occupied status of " + roomObj.room_occupied
+                        + " and the occupied room is now " + room_obj[room].id + " with a status of " + room_obj[room].room_occupied);
+                    distractionRoomFound = true;
+                } else {
+                    console.log("No distractions in rooms were found, room occupant status is not being changed...");
+                }
+            }
+        }
+
         function roomClear(obj) {
             // Room success condition
             if (
@@ -1431,6 +1502,26 @@
                                 console.log("Could not do!");
                             }
                             break;
+                        case "bioauth":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setBioauth(selected_room, true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setBioauth(selected_room, false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
+                        case "distraction":
+                            if (param4 === "on") {
+                                session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
+                            }
+                            else if (param4 === "off") {
+                                session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
+                            } else {
+                                console.log("Could not do!");
+                            }
+                            break;
                     }
                     break;
                 case "istealer":
@@ -1451,8 +1542,12 @@
                         session.output.push({ output: true, text: [
                             "Room name: " + selected_room.name,
                             "Room ID: " + selected_room.id,
+                            "\n",
                             "Access control status [ID: door]: " + selected_room.door_status,
-                            "Motion sensor status [ID: motion]: " + selected_room.motion_status
+                            "Motion sensor status [ID: motion]: " + selected_room.motion_status,
+                            "Biometrics Auth status [ID: bioauth]: " + selected_room.biometric_auth,
+                            "Room alarm status [ID: distraction]: " + selected_room.distraction,
+                            "Room occupied status: " + selected_room.room_occupied
                         ], breakLine: true});
                         session.output.push({ output: true, text: ["\n"], breakLine: false});
                     }
