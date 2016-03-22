@@ -1429,13 +1429,13 @@
         }
 
         function resetDistraction() {
+            var room_return = null;
             for (var room in room_obj) {
                 room_obj[room].room_occupied = room_truth_obj[room_obj[room].id].room_occupied;
             }
-            session.output.push({ output: true, text: ["Alarm was turned off in " + room_occupants], breakLine: true});
             for (var room in room_obj) {
                 if (room_obj[room].room_occupied === true) {
-                    session.output.push({ output: true, text: ["Employees returned to room " + room_obj[room].id], breakLine: true});
+                    room_return = room_obj[room].id;
                 }
             }
             room_occupants = null;
