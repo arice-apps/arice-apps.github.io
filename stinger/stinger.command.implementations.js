@@ -1117,8 +1117,8 @@
         var ongoingRooms = false;
         var ongoingID = "";
         var room_occupants = null;
-        var distractionRoomFound = false;
-        var distractionRoomStatus = "Empty";
+        var distraction_room_found = false;
+        var death_flag = false;
 
         function addInfoPoints(info) {
             info_points += info;
@@ -1131,8 +1131,8 @@
                 "name": "[Lab 3 - Bioweapons]",
                 "id": "room_3",
                 "door_status": true,
-                "motion_status": false,
-                "biometric_auth": false,
+                "motion_status": true,
+                "biometric_auth": true,
                 "room_occupied": false
             },
             room_2: {
@@ -1159,8 +1159,8 @@
                 "name": "[Lab 3 - Bioweapons]",
                 "id": "room_3",
                 "door_status": true,
-                "motion_status": false,
-                "biometric_auth": false,
+                "motion_status": true,
+                "biometric_auth": true,
                 "room_occupied": false,
                 "downloader": false,
                 "raid_ongoing": false,
@@ -1347,15 +1347,6 @@
                     "========================================",
                     "========================================",
                     "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
-                    "========================================",
                     "===================================100%]",
                     "\nDownload complete! " + Math.floor(Math.random() * 1000) + " TB of data stolen! [+2 points]"];
             }
@@ -1415,13 +1406,13 @@
                     room_occupants = roomObj.id;
                     roomObj.room_occupied = true;
                     console.log(roomObj.id + " has an occupied status of " + roomObj.room_occupied);
-                    distractionRoomFound = true;
+                    distraction_room_found = true;
                 } else {
                     console.log("No distraction in room was found, room occupant status is not being changed...");
                 }
             }
             for (var room in room_obj) {
-                if (distractionRoomFound === true && room_obj[room].room_occupied === true && room_obj[room].id !== roomObj.id) {
+                if (distraction_room_found === true && room_obj[room].room_occupied === true && room_obj[room].id !== roomObj.id) {
                     room_obj[room].room_occupied = false;
                     console.log("A room that was occupied with a distraction active was found! Change it to empty...");
                     console.log(room_obj[room].id + " has an occupied status of " + room_obj[room].room_occupied);
@@ -1453,7 +1444,7 @@
                 }
             }
             room_occupants = null;
-            distractionRoomFound = false;
+            distraction_room_found = false;
         }
 
         //Specify params here
@@ -1519,6 +1510,7 @@
                                             "\nThey were killed!"],
                                         breakLine: true
                                     });
+                                    death_flag = true;
                                 }
                                 session.output.push({ output: true, text: [setMotion(selected_room, true)], breakLine: true});
                             }
@@ -1543,14 +1535,11 @@
                                 var distract_success = true;
                                 if (selected_room.distraction === false && room_occupants === null) {
                                     for (var value in room_truth_obj[selected_room.id]) {
-                                        console.log(selected_room[value]);
-                                        console.log(room_truth_obj[selected_room.id][value]);
-                                        console.log(value);
                                         if (selected_room[value] !== room_truth_obj[selected_room.id][value]) {
-                                                console.log("Oh no! You've been caught!!!!");
+                                                session.output.push({ output: true, text: ["Oh no! You've been caught! Employees found a misconfigured room."], breakLine: true});
                                                 distract_success = false;
-                                        } else {
-                                            console.log("You're fine...");
+                                                death_flag = true;
+                                                break;
                                         }
                                     }
                                     if (distract_success === true) {
@@ -1558,9 +1547,9 @@
                                         checkDistraction(selected_room);
                                     }
                                 } else if (selected_room.distraction === true) {
-                                    console.log("A distraction has already been turned on in this room!");
+                                    session.output.push({ output: true, text: ["A distraction has already been turned on in this room!"], breakLine: true});
                                 } else if (room_occupants !== null) {
-                                    console.log("Only one distraction can be on at a time!");
+                                    session.output.push({ output: true, text: ["Only one distraction can be on at a time!"], breakLine: true});
                                 }
                             }
                             else if (param4 === "off") {
@@ -1571,7 +1560,7 @@
                                 session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
                                 resetDistraction();
                             } else {
-                                console.log("Could not do!");
+                                session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
                             }
                             break;
                     }
@@ -1624,6 +1613,7 @@
                                 text: ["Your team entered while the motion detectors were on and they were killed!"],
                                 breakLine: true
                             });
+                            death_flag = true;
                         } else if (ongoingRooms === true) {
                             session.output.push({
                                 output: true,
@@ -1645,7 +1635,7 @@
                             });
                         }
                     } else {
-                        console.log("Problem!");
+                        session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
                     }
                     break;
                 case "exit":
@@ -1689,7 +1679,7 @@
                             });
                         }
                     } else {
-                        console.log("Problem!");
+                        session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
                     }
                     break;
                 case "gamble":
@@ -1742,7 +1732,7 @@
                     printTotal();
                     break;
                 default:
-                    console.log("OOPS!");
+                    session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
             }
 
         };
