@@ -1445,6 +1445,7 @@
                 }
             }
             room_occupants = null;
+            distractionRoomFound = false;
         }
 
         //Specify params here
@@ -1577,6 +1578,18 @@
                     break;
                 case "status":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
+                        var distractionRoomStatus = "Empty";
+                        checkDistraction(selected_room);
+                        if (distractionRoomFound === true && selected_room.distraction === false && room_truth_obj[selected_room.id].room_occupied === true) {
+                            distractionRoomStatus = "Left to view distraction";
+                        }
+                        else if (distractionRoomFound === true && selected_room.distraction === true) {
+                            distractionRoomStatus = "Employees entering to view the distraction";
+                            selected_room.room_occupied = true;
+                        }
+                        else if (distractionRoomFound === false && selected_room.room_occupied === true) {
+                            distractionRoomStatus = "Occupied";
+                        }
                         session.output.push({ output: true, text: [
                             "Room name: " + selected_room.name,
                             "Room ID: " + selected_room.id,
@@ -1585,7 +1598,7 @@
                             "Motion sensor status [ID: motion]: " + selected_room.motion_status,
                             "Biometrics Auth status [ID: bioauth]: " + selected_room.biometric_auth,
                             "Room alarm status [ID: distraction]: " + selected_room.distraction,
-                            "Room occupied status: " + selected_room.room_occupied
+                            "Room occupied status: " + distractionRoomStatus
                         ], breakLine: true});
                         session.output.push({ output: true, text: ["\n"], breakLine: false});
                     }
