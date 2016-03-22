@@ -1319,6 +1319,7 @@
         function setDistract(obj, status) {
             obj.distraction = status;
             if (status === true) {
+                room_occupants = obj.id;
                 return "\nRoom alarm has been turned ON. It attracted the attention of nearby employees.";
             } else {
                 return "\nRoom alarm has been turned OFF";
@@ -1430,6 +1431,19 @@
             return obj.room_success;
         }
 
+        function resetDistraction() {
+            for (var room in room_obj) {
+                room_obj[room].room_occupied = room_truth_obj[room_obj[room].id].room_occupied;
+            }
+            console.log("Alarm was turned off in " + room_occupants);
+            for (var room in room_obj) {
+                if (room_obj[room].room_occupied === true) {
+                    console.log("Employees returned to room " + room_obj[room].id);
+                }
+            }
+            room_occupants = null;
+        }
+
         //Specify params here
         me.handle = function (session, param1, param2, param3, param4) {
             param1 = makeLower(param1);
@@ -1514,10 +1528,27 @@
                             break;
                         case "distraction":
                             if (param4 === "on") {
-                                session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
+                                if (selected_room.distraction === false && room_occupants === null) {
+                                    session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
+                                    for (var value in room_truth_obj[selected_room.id]) {
+                                        console.log(selected_room[value]);
+                                        console.log(room_truth_obj[selected_room.id][value]);
+                                        console.log(value);
+                                        if (selected_room[value] !== room_truth_obj[selected_room.id][value]) {
+                                                console.log("Oh no! You've been caught!!!!");
+                                        } else {
+                                            console.log("You're fine...");
+                                        }
+                                    }
+                                } else if (selected_room.distraction === true) {
+                                    console.log("A distraction has already been turned on in this room!");
+                                } else if (room_occupants !== null) {
+                                    console.log("Only one distraction can be on at a time!");
+                                }
                             }
                             else if (param4 === "off") {
                                 session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
+                                resetDistraction();
                             } else {
                                 console.log("Could not do!");
                             }
@@ -1617,6 +1648,7 @@
                                 "\nExiting room..."
                             ], breakLine: true});
                             roomClear(selected_room);
+                            resetDistraction();
                         } else if (selected_room.raid_ongoing === true && selected_room.downloader === false) {
                             session.output.push({
                                 output: true,
