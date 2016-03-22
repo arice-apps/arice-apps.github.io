@@ -1131,21 +1131,24 @@
                 "id": "room_3",
                 "door_status": true,
                 "motion_status": false,
-                "biometric_auth": false
+                "biometric_auth": false,
+                "room_occupied": false
             },
             room_2: {
                 "name": "[Lab 2 - Rift Creature Containment]",
                 "id": "room_2",
                 "door_status": true,
                 "motion_status": false,
-                "biometric_auth": true
+                "biometric_auth": true,
+                "room_occupied": true
             },
             room_1: {
                 "name": "[Lab 1 - Teleportation Particle Lab]",
                 "id": "room_1",
                 "door_status": true,
                 "motion_status": true,
-                "biometric_auth": false
+                "biometric_auth": false,
+                "room_occupied": false
             }
         };
 
@@ -1528,17 +1531,21 @@
                             break;
                         case "distraction":
                             if (param4 === "on") {
+                                var distract_success = true;
                                 if (selected_room.distraction === false && room_occupants === null) {
-                                    session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
                                     for (var value in room_truth_obj[selected_room.id]) {
                                         console.log(selected_room[value]);
                                         console.log(room_truth_obj[selected_room.id][value]);
                                         console.log(value);
                                         if (selected_room[value] !== room_truth_obj[selected_room.id][value]) {
                                                 console.log("Oh no! You've been caught!!!!");
+                                                distract_success = false;
                                         } else {
                                             console.log("You're fine...");
                                         }
+                                    }
+                                    if (distract_success === true) {
+                                        session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
                                     }
                                 } else if (selected_room.distraction === true) {
                                     console.log("A distraction has already been turned on in this room!");
