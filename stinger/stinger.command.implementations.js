@@ -1595,39 +1595,39 @@
                             if (selected_room.entry_success === true && selected_room.raid_ongoing === true) {
                                 session.output.push({
                                     output: true,
-                                    text: [selected_room.name + " entry was a success!"],
+                                    text: ["\n",selected_room.name + " entry was a success!"],
                                     breakLine: true
                                 });
                                 session.output.push({
                                     output: true,
-                                    text: ["\nEntering room..."],
+                                    text: ["\n","Entering room..."],
                                     breakLine: true
                                 });
                             } else if (ongoingRooms === true) {
                                 session.output.push({
                                     output: true,
-                                    text: ["Your team is still inside " + ongoingID,
+                                    text: ["\n","Your team is still inside " + ongoingID,
                                         "Exit the room you are in before asking them to enter a new room."],
                                     breakLine: true
                                 });
                             } else if (selected_room.room_success === true) {
                                 session.output.push({
                                     output: true,
-                                    text: [selected_room.id + " has already been cleared! There's no need to go back."],
+                                    text: ["\n",selected_room.id + " has already been cleared! There's no need to go back."],
                                     breakLine: true
                                 });
                             } else if (selected_room.door_status === false && selected_room.room_occupied === true) {
-                                session.output.push({ output: true, text: ["You entered a room that was occupied! You were spotted and killed!"], breakLine: true});
+                                session.output.push({ output: true, text: ["\n","You entered a room that was occupied! You were spotted and killed!"], breakLine: true});
                                 death_flag = true;
                                 break;
                             } else if (selected_room.door_status === false && selected_room.motion_status === true) {
-                                session.output.push({ output: true, text: ["You entered a room while the motion detector was on! You were spotted and killed!"], breakLine: true});
+                                session.output.push({ output: true, text: ["\n","You entered a room while the motion detector was on! You were spotted and killed!"], breakLine: true});
                                 death_flag = true;
                                 break;
                             } else if (selected_room.door_status === false && selected_room.door_status === false && selected_room.biometric_auth === true) {
-                                session.output.push({ output: true, text: ["This room has biometrics enabled, you can't get inside!"], breakLine: true});
+                                session.output.push({ output: true, text: ["\n","This room has biometrics enabled, you can't get inside!"], breakLine: true});
                             } else if (selected_room.door_status === true) {
-                                session.output.push({ output: true, text: ["The door is locked... You can't get inside."], breakLine: true});
+                                session.output.push({ output: true, text: ["\n","The door is locked... You can't get inside."], breakLine: true});
                             } else {
                                 session.output.push({
                                     output: true,
