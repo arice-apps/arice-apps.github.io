@@ -1324,9 +1324,9 @@
             obj.distraction = status;
             if (status === true) {
                 room_occupants = obj.id;
-                return "\nRoom alarm has been turned ON. It attracted the attention of nearby employees.";
+                return "Room alarm has been turned ON. It attracted the attention of nearby employees.";
             } else {
-                return "\nRoom alarm has been turned OFF. Employees returned to their original rooms.";
+                return "Room alarm has been turned OFF. Employees returned to their original rooms.";
             }
         }
 
@@ -1540,7 +1540,7 @@
                                             }
                                         }
                                         if (distract_success === true) {
-                                            session.output.push({ output: true, text: [setDistract(selected_room, true),"\n",checkDistraction(selected_room)], breakLine: true});
+                                            session.output.push({ output: true, text: ["\n",setDistract(selected_room, true),"\n",checkDistraction(selected_room)], breakLine: true});
                                         }
                                     } else if (selected_room.distraction === true) {
                                         session.output.push({ output: true, text: ["A distraction has already been turned on in this room!"], breakLine: true});
@@ -1601,7 +1601,7 @@
                                 session.output.push({
                                     output: true,
                                     text: ["\n","Entering room..."],
-                                    breakLine: true
+                                    breakLine: false
                                 });
                             } else if (ongoingRooms === true) {
                                 session.output.push({
