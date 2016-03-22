@@ -1118,6 +1118,7 @@
         var ongoingID = "";
         var room_occupants = null;
         var distractionRoomFound = false;
+        var distractionRoomStatus = "Empty";
 
         function addInfoPoints(info) {
             info_points += info;
@@ -1371,10 +1372,32 @@
         function setRoom(obj, status) {
             obj.room_success = status;
         }
+        function checkRoomOccupancyStat(roomObj) {
+            if (distractionRoomFound === true && roomObj.distraction === false && room_truth_obj[roomObj.id].room_occupied === true) {
+                console.log(room_truth_obj[roomObj.id].room_occupied);
+                console.log(room_truth_obj[roomObj.id].id);
+                console.log(roomObj.id);
+                distractionRoomStatus = "Left to view distraction";
+                roomObj.room_occupied = false;
+            }
+            else if (distractionRoomFound === true && roomObj.distraction === true) {
+                distractionRoomStatus = "Employees entering to view the distraction";
+                roomObj.room_occupied = true;
+            }
+            else if (distractionRoomFound === false && roomObj.room_occupied === true) {
+                distractionRoomStatus = "Occupied";
+                roomObj.room_occupied = true;
+            } else {
+                console.log(room_truth_obj[roomObj.id].room_occupied);
+                console.log(room_truth_obj[roomObj.id].id);
+                console.log(roomObj.id);
+                roomObj.room_occupied = false;
+            }
+        }
 
         function checkEntry(obj) {
+            checkRoomOccupancyStat(obj);
             // Entry success condition
-            checkDistraction(obj);
             if (
                 obj.door_status === false &&
                 obj.motion_status === false &&
@@ -1403,18 +1426,17 @@
                 setExit(obj, true);
                 setRaid(obj, false);
                 ongoingRooms = false;
+                resetDistraction();
             }
             return obj.exit_success;
         }
         function checkDistraction(roomObj) {
             // Check if a room has a distraction, if it does, move the occupants to that room
             for (var room in room_obj) {
-                if (room_obj[room].distraction === true && room_obj[room].room_occupied === false) {
-                    room_occupants = room_obj[room].id;
-                    room_obj[room].room_occupied = true;
-                    roomObj.room_occupied = false;
-                    console.log("The room has an occupied status of " + roomObj.room_occupied
-                        + " and the occupied room is now " + room_obj[room].id + " with a status of " + room_obj[room].room_occupied);
+                if (room_obj[room].distraction === true) {
+                    room_occupants = roomObj.id;
+                    roomObj.room_occupied = true;
+                    console.log(roomObj.id + " has an occupied status of " + roomObj.room_occupied);
                     distractionRoomFound = true;
                 } else {
                     console.log("No distractions in rooms were found, room occupant status is not being changed...");
@@ -1437,6 +1459,7 @@
         function resetDistraction() {
             for (var room in room_obj) {
                 room_obj[room].room_occupied = room_truth_obj[room_obj[room].id].room_occupied;
+                console.log()
             }
             console.log("Alarm was turned off in " + room_occupants);
             for (var room in room_obj) {
@@ -1547,6 +1570,7 @@
                                     }
                                     if (distract_success === true) {
                                         session.output.push({ output: true, text: [setDistract(selected_room, true)], breakLine: true});
+                                        checkDistraction(selected_room);
                                     }
                                 } else if (selected_room.distraction === true) {
                                     console.log("A distraction has already been turned on in this room!");
@@ -1582,18 +1606,7 @@
                     break;
                 case "status":
                     if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                        var distractionRoomStatus = "Empty";
-                        checkDistraction(selected_room);
-                        if (distractionRoomFound === true && selected_room.distraction === false && room_truth_obj[selected_room.id].room_occupied === true) {
-                            distractionRoomStatus = "Left to view distraction";
-                        }
-                        else if (distractionRoomFound === true && selected_room.distraction === true) {
-                            distractionRoomStatus = "Employees entering to view the distraction";
-                            selected_room.room_occupied = true;
-                        }
-                        else if (distractionRoomFound === false && selected_room.room_occupied === true) {
-                            distractionRoomStatus = "Occupied";
-                        }
+                        checkRoomOccupancyStat(selected_room);
                         session.output.push({ output: true, text: [
                             "Room name: " + selected_room.name,
                             "Room ID: " + selected_room.id,
@@ -1672,7 +1685,6 @@
                                 "\nExiting room..."
                             ], breakLine: true});
                             roomClear(selected_room);
-                            resetDistraction();
                         } else if (selected_room.raid_ongoing === true && selected_room.downloader === false) {
                             session.output.push({
                                 output: true,
