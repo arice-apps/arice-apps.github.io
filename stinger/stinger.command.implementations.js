@@ -1190,7 +1190,7 @@
                 "points": 5,
                 "fail": false,
                 "win": false,
-                "risk": -2
+                "risk": -20
             },
             decision_2: {
                 "name": "Mystery Closet",
@@ -1205,7 +1205,7 @@
                 "points": 5,
                 "fail": false,
                 "win": false,
-                "risk": -2
+                "risk": -20
             },
             decision_3: {
                 "name": "Executive Terminal",
@@ -1220,21 +1220,21 @@
                 "points": 5,
                 "fail": false,
                 "win": false,
-                "risk": -2
+                "risk": -20
             }
         };
 
         var calculateGamble = function (decision) {
             if (decision.fail === false && decision.win === false) {
                 increaseRisk(decision);
-                var gambleOutcome = Math.floor(Math.random() * 10) + 1;
-                if (gambleOutcome >= 1 && gambleOutcome <= (10 + risk_total)) {
+                var gambleOutcome = Math.floor(Math.random() * 100) + 1;
+                if (gambleOutcome >= 1 && gambleOutcome <= (100 + risk_total)) {
                     decision.win = true;
                     decision.points += calculateBonus(decision);
                     addInfoPoints(decision.points);
                     console.log("You win!");
                     console.log("You rolled a " + gambleOutcome);
-                    console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                    console.log("You needed to get a number between 1 and " + (100 + risk_total));
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
@@ -1243,7 +1243,7 @@
                     decision.fail = true;
                     console.log("You lose!");
                     console.log("You rolled a " + gambleOutcome);
-                    console.log("You needed to get a number between 1 and " + (10 + risk_total));
+                    console.log("You needed to get a number between 1 and " + (100 + risk_total));
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
