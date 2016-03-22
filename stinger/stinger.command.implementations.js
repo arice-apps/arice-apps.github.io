@@ -1326,7 +1326,7 @@
                 room_occupants = obj.id;
                 return "\nRoom alarm has been turned ON. It attracted the attention of nearby employees.";
             } else {
-                return "\nRoom alarm has been turned OFF";
+                return "\nRoom alarm has been turned OFF. Employees returned to their original rooms.";
             }
         }
 
