@@ -1109,6 +1109,9 @@
         var me = {};
         me.command = 'stinger-str';
         me.description = ['Command a strike team through the STINGER interface.',
+            "\n",
+            "Example: stinger-str list",
+            "Example: stinger-str status [insert room_id]",
             "Example: stinger-str set [insert room_id] [insert feature id] [on/off]",
             "Example: stinger-str enter [insert room_id]",
             "Example: stinger-str istealer [insert room_id]",
