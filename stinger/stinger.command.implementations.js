@@ -1219,45 +1219,42 @@
         var decision_obj = {
             decision_1: {
                 "name": "Reception Office",
-                "message": "MSG FROM SQUAD_LEADER: Should we ask for an employee badge from reception? (y/n)",
                 "message_shown": false,
-                "yes_msg": "MSG FROM SQUAD_LEADER: We are approaching the desk...",
-                "no_msg": "MSG FROM SQUAD_LEADER: We're just gonna head straight past the desk! [+5 points]",
+                "yes_msg": "MSG FROM SQUAD LEADER: We are approaching the desk...",
+                "no_msg": "MSG FROM SQUAD LEADER: We're going to head straight past the desk. [+2 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got the badge! They got so fooled! [+",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Darn... saw right through us! [+0 points]",
+                "win_msg": "MSG FROM SQUAD LEADER: Our persuasion worked and we received details on systems in the facility! [+",
+                "fail_msg": "MSG FROM SQUAD LEADER: Receptionist was not convinced, we did not gain any info. [+0 points]",
                 "bonus": 3,
-                "points": 5,
+                "points": 2,
                 "fail": false,
                 "win": false,
                 "risk": -20
             },
             decision_2: {
                 "name": "Mystery Closet",
-                "message": "MSG FROM SQUAD_LEADER: We see a mystery closet, should we go inside? (y/n)",
                 "message_shown": false,
-                "yes_msg": "MSG FROM SQUAD_LEADER: I'm opening the closet...",
-                "no_msg": "MSG FROM SQUAD_LEADER: Let's not look inside! Onwards! [+5 points]",
+                "yes_msg": "MSG FROM SQUAD LEADER: I'm opening the closet...",
+                "no_msg": "MSG FROM SQUAD LEADER: Might be too risky to check, we will leave it closed. [+2 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: There was secret intel in the closet! Yeah! [+",
-                "fail_msg": "MSG FROM SQUAD_LEADER: There's nothing here... We wasted precious time... [+0 points]",
+                "win_msg": "MSG FROM SQUAD LEADER: We found some maintenance files on the facility layout! [+",
+                "fail_msg": "MSG FROM SQUAD LEADER: There's nothing here... Closet has been cleared. [+0 points]",
                 "bonus": 3,
-                "points": 5,
+                "points": 2,
                 "fail": false,
                 "win": false,
                 "risk": -20
             },
             decision_3: {
                 "name": "Executive Terminal",
-                "message": "MSG FROM SQUAD_LEADER: Hmm... An executive terminal, should we try to login? (y/n)",
                 "message_shown": false,
-                "yes_msg": "MSG FROM SQUAD_LEADER: Trying to login now...",
-                "no_msg": "MSG FROM SQUAD_LEADER: Yeah, let's not risk it. Off we go! [+5 points]",
+                "yes_msg": "MSG FROM SQUAD LEADER: Trying to login now...",
+                "no_msg": "MSG FROM SQUAD LEADER: Roger. Moving onwards... [+2 points]",
                 "conservative": false,
-                "win_msg": "MSG FROM SQUAD_LEADER: We got access! There are tons of passwords! [+",
-                "fail_msg": "MSG FROM SQUAD_LEADER: Ooops, it set off an alarm... Better go! [+0 points]",
+                "win_msg": "MSG FROM SQUAD LEADER: We got access! There are some executive files on here. [+",
+                "fail_msg": "MSG FROM SQUAD LEADER: Nothing of interest was found. [+0 points]",
                 "bonus": 3,
-                "points": 5,
+                "points": 2,
                 "fail": false,
                 "win": false,
                 "risk": -20
@@ -1290,9 +1287,9 @@
                     return decision.fail_msg;
                 }
             } else if (decision.win === true) {
-                return "You already won this decision!";
+                return "You already won this decision.";
             } else {
-                return "You failed this decision! You get nothing!";
+                return "You failed this decision.";
             }
         };
 
@@ -1326,7 +1323,7 @@
                 room_occupants = obj.id;
                 return "Room alarm has been turned ON. It attracted the attention of nearby employees.";
             } else {
-                return "Room alarm has been turned OFF. Employees returned to their original rooms.";
+                return "Room alarm has been turned OFF.";
             }
         }
 
@@ -1336,8 +1333,6 @@
                 return ["\niStealer has been activated... Devices found!\n\n",
                     "Info stealing operations starting, please wait...\n\n",
                     "[0%=====================================",
-                    "========================================",
-                    "========================================",
                     "========================================",
                     "========================================",
                     "========================================",
@@ -1459,16 +1454,15 @@
                     message_returns.push(decision.yes_msg);
                     message_returns.push(calculateGamble(decision));
                     message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " points]");
+                    return message_returns;
                 } else if (choice === "n") {
                     decision.conservative = true;
                     message_returns.push(decision.no_msg);
                     message_returns.push("\n***You made a conservative decision and now have a total of [" + addInfoPoints(decision.points) + " points]");
+                    return message_returns;
+                } else {
+                    return ["You did not enter a choice! Choose yes [y] or no [n]"];
                 }
-                if (decision.message_shown === false) {
-                    decision.message_shown = true;
-                    message_returns.push(decision.message);
-                }
-                return message_returns;
             } else {
                 return ["You already made this decision!"];
             }
@@ -1657,8 +1651,11 @@
                                 death_flag = true;
                                 break;
                             } else if (selected_room.door_status === false && selected_room.door_status === false && selected_room.biometric_auth === true) {
-                                session.output.push({ output: true, text: ["\n","This room has biometrics enabled, you can't get inside!"], breakLine: true});
-                            } else if (selected_room.door_status === true) {
+                                session.output.push({ output: true, text: ["\n","This room has biometrics enabled, you won't be able to get any data unless it is disabled."], breakLine: true});
+                            } else if (selected_room.distraction === true) {
+                                session.output.push({ output: true, text: ["\n","This room has a distraction that is active, turn it off before entering."], breakLine: true});
+                            }
+                            else if (selected_room.door_status === true) {
                                 session.output.push({ output: true, text: ["\n","The door is locked... You can't get inside unless the authorization is disabled."], breakLine: true});
                             } else {
                                 session.output.push({
@@ -1727,20 +1724,20 @@
                                 switch(countWinNum()) {
                                     case 1:
                                         session.output.push({ output: true, text: [
-                                            "1) Reception, possible intercept point [decision_1]"
+                                            "1) Reception: Should we ask for a badge? [log decision_1] [y/n]"
                                         ], breakLine: true});
                                         break;
                                     case 2:
                                         session.output.push({ output: true, text: [
-                                            "1) Reception, possible intercept point [decision_1]",
-                                            "2) Mystery closet, could have intel [decision_2]"
+                                            "1) Reception: Should we ask for a badge? [log decision_1] [y/n]",
+                                            "2) Mystery closet: Could have intel inside, should we open it? [log decision_2] [y/n]"
                                         ], breakLine: true});
                                         break;
                                     case 3:
                                         session.output.push({ output: true, text: [
-                                            "1) Reception, possible intercept point [decision_1]",
-                                            "2) Mystery closet, could have intel [decision_2]",
-                                            "3) Executive terminal, sensitive info may be available [decision_3]"
+                                            "1) Reception: Should we ask for a badge? [log decision_1] [y/n]",
+                                            "2) Mystery closet: Could have intel inside, should we open it? [log decision_2] [y/n]",
+                                            "3) Executive terminal: Found this terminal, might have sensitive info may be available [log decision_3] [y/n]"
                                         ], breakLine: true});
                                         break;
                                     default:
@@ -1750,7 +1747,7 @@
                                 break;
                             case "decision_1":
                                 console.log(countWinNum());
-                                if (countWinNum() === 1) {
+                                if (countWinNum() >= 1) {
                                     selected_decision = decision_obj[param2];
                                     session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
                                 } else {
@@ -1758,7 +1755,7 @@
                                 }
                                 break;
                             case "decision_2":
-                                if (countWinNum() === 2) {
+                                if (countWinNum() >= 2) {
                                     selected_decision = decision_obj[param2];
                                     session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
                                 } else {
@@ -1766,13 +1763,15 @@
                                 }
                                 break;
                             case "decision_3":
-                                if (countWinNum() === 3) {
+                                if (countWinNum() >= 3) {
                                     selected_decision = decision_obj[param2];
                                     session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
                                 } else {
                                     session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
                                 }
                                 break;
+                            default:
+                                session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
                         }
                         break;
                     case "total":
