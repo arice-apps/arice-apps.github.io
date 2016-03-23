@@ -1119,6 +1119,7 @@
         var room_occupants = null;
         var distraction_room_found = false;
         var death_flag = false;
+        var success_code = "PL" + 7*13 + "BW";
 
         function addInfoPoints(info) {
             info_points += info;
@@ -1275,7 +1276,7 @@
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return decision.win_msg + decision.points + " points]";
+                    return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.win_msg + decision.points + " points]"];
                 } else {
                     decision.fail = true;
                     console.log("You lose!");
@@ -1284,12 +1285,12 @@
                     console.log("The total decision points + bonus is " + decision.points);
                     console.log("The total bonus earned is : " + bonus_total);
                     console.log("The total info points are: " + info_points);
-                    return decision.fail_msg;
+                    return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.fail_msg];
                 }
             } else if (decision.win === true) {
-                return "You already won this decision.";
+                return ["You already won this decision."];
             } else {
-                return "You failed this decision.";
+                return ["You failed this decision."];
             }
         };
 
@@ -1453,7 +1454,7 @@
                 if (choice === "y") {
                     message_returns.push(decision.yes_msg);
                     message_returns.push(calculateGamble(decision));
-                    message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " points]");
+                    message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " info points]");
                     return message_returns;
                 } else if (choice === "n") {
                     decision.conservative = true;
@@ -1588,16 +1589,21 @@
                         }
                         break;
                     case "istealer":
-                        if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false && selected_room.raid_ongoing === true) {
-                            addInfoPoints(selected_room.points);
-                            printTotal();
-                            session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
-                        } else if (selected_room.downloader === false && selected_room.room_success === false) {
-                            session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> You are not in this room."], breakLine: true});
-                        } else if (selected_room.downloader === true) {
-                            session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Data has already been downloaded from this room."], breakLine: true});
-                        } else {
+                        try {
+                            if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false && selected_room.raid_ongoing === true) {
+                                addInfoPoints(selected_room.points);
+                                printTotal();
+                                session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
+                            } else if (selected_room.downloader === false && selected_room.room_success === false) {
+                                session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> You are not in this room."], breakLine: true});
+                            } else if (selected_room.downloader === true) {
+                                session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Data has already been downloaded from this room."], breakLine: true});
+                            } else {
+                                session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Verify your inputs."], breakLine: true});
+                            }
+                        } catch(err) {
                             session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Verify your inputs."], breakLine: true});
+                            break;
                         }
                         break;
                     case "status":
@@ -1776,6 +1782,15 @@
                         break;
                     case "total":
                         printTotal();
+                        break;
+                    case "op-complete":
+                        if (info_points >= 6 && countWinNum() === 3) {
+                            session.output.push({ output: true, text: ["\n","You obtained enough info points and cleared rooms to complete the mission!", "Success code ---> " + success_code], breakLine: true});
+                        } else {
+                            session.output.push({ output: true, text: ["\n","Your information score is not high enough or all rooms have not been cleared.",
+                                "\n","Your current information score is now: [" + info_points + " points]",
+                                "Number of cleared rooms is: [" + countWinNum() + " cleared room(s)]"], breakLine: true});
+                        }
                         break;
                     default:
                         session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
