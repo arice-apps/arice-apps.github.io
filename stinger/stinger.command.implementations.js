@@ -1364,7 +1364,6 @@
             obj.room_success = status;
         }
 
-
         function checkEntry(obj) {
             // Entry success condition
             if (
@@ -1441,6 +1440,39 @@
             room_occupants = null;
             distraction_room_found = false;
         }
+
+        function countWinNum() {
+            var room_win_count = 0;
+            for (var room in room_obj) {
+                if (room_obj[room].room_success === true) {
+                    room_win_count++
+                }
+                console.log(room_win_count);
+            }
+            return room_win_count;
+        }
+
+        var playerDecision = function(decision, choice) {
+            var message_returns = [];
+            if (decision.fail === false && decision.win === false && decision.conservative === false) {
+                if (choice === "y") {
+                    message_returns.push(decision.yes_msg);
+                    calculateGamble(decision);
+                    message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " points]");
+                } else if (choice === "n") {
+                    decision.conservative = true;
+                    message_returns.push(decision.no_msg);
+                    message_returns.push("\n***You made a conservative decision and now have a total of [" + addInfoPoints(decision.points) + " points]");
+                }
+                if (decision.message_shown === false) {
+                    decision.message_shown = true;
+                    message_returns.push(decision.message);
+                }
+                return message_returns;
+            } else {
+                return ["You already made this decision!"];
+            }
+        };
 
         //Specify params here
         me.handle = function (session, param1, param2, param3, param4) {
@@ -1562,7 +1594,7 @@
                         }
                         break;
                     case "istealer":
-                        if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false) {
+                        if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false && selected_room.raid_ongoing === true) {
                             addInfoPoints(selected_room.points);
                             printTotal();
                             session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
@@ -1627,7 +1659,7 @@
                             } else if (selected_room.door_status === false && selected_room.door_status === false && selected_room.biometric_auth === true) {
                                 session.output.push({ output: true, text: ["\n","This room has biometrics enabled, you can't get inside!"], breakLine: true});
                             } else if (selected_room.door_status === true) {
-                                session.output.push({ output: true, text: ["\n","The door is locked... You can't get inside."], breakLine: true});
+                                session.output.push({ output: true, text: ["\n","The door is locked... You can't get inside unless the authorization is disabled."], breakLine: true});
                             } else {
                                 session.output.push({
                                     output: true,
@@ -1651,6 +1683,11 @@
                             }
                             checkExit(selected_room);
                             if (selected_room.exit_success === true && selected_room.raid_ongoing === false) {
+                                session.output.push({
+                                    output: true,
+                                    text: ["The strike commander found something!We require your input.", "Check the log [stinger-raid log check]."],
+                                    breakLine: true
+                                });
                                 session.output.push({
                                     output: true,
                                     text: [selected_room.name + " exit was a success!"],
@@ -1683,50 +1720,59 @@
                             session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
                         }
                         break;
-                    case "gamble":
-                        var selected_decision = decision_obj[param2];
-                        if (param2 === "decision_1" || param2 === "decision_2" || param2 === "decision_3") {
-                            if (selected_decision.fail === false && selected_decision.win === false && selected_decision.conservative === false) {
-                                if (param3 === "y") {
-                                    session.output.push({
-                                        output: true,
-                                        text: [
-                                            selected_decision.yes_msg,
-                                            calculateGamble(selected_decision),
-                                            "\n***You made a risky decision and now have a total of [" + info_points + " points]"
-                                        ],
-                                        breakLine: true
-                                    });
-                                } else if (param3 === "n") {
-                                    selected_decision.conservative = true;
-                                    session.output.push({
-                                        output: true,
-                                        text: [
-                                            selected_decision.no_msg,
-                                            "\n***You made a conservative decision and now have a total of [" + addInfoPoints(selected_decision.points) + " points]"
-                                        ],
-                                        breakLine: true
-                                    });
+                    case "log":
+                        var selected_decision = null;
+                        switch(param2) {
+                            case "check":
+                                switch(countWinNum()) {
+                                    case 1:
+                                        session.output.push({ output: true, text: [
+                                            "1) Reception, possible intercept point [decision_1]"
+                                        ], breakLine: true});
+                                        break;
+                                    case 2:
+                                        session.output.push({ output: true, text: [
+                                            "1) Reception, possible intercept point [decision_1]",
+                                            "2) Mystery closet, could have intel [decision_2]"
+                                        ], breakLine: true});
+                                        break;
+                                    case 3:
+                                        session.output.push({ output: true, text: [
+                                            "1) Reception, possible intercept point [decision_1]",
+                                            "2) Mystery closet, could have intel [decision_2]",
+                                            "3) Executive terminal, sensitive info may be available [decision_3]"
+                                        ], breakLine: true});
+                                        break;
+                                    default:
+                                        session.output.push({ output: true, text: ["No events in the log at this time..."], breakLine: true});
+                                        break;
                                 }
-                                if (selected_decision.message_shown === false) {
-                                    session.output.push({
-                                        output: true,
-                                        text: [
-                                            selected_decision.message
-                                        ],
-                                        breakLine: true
-                                    });
-                                    selected_decision.message_shown = true;
+                                break;
+                            case "decision_1":
+                                console.log(countWinNum());
+                                if (countWinNum() === 1) {
+                                    selected_decision = decision_obj[param2];
+                                    session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
+                                } else {
+                                    session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
                                 }
-                            } else {
-                                session.output.push({
-                                    output: true,
-                                    text: [
-                                        "You already made this decision!"
-                                    ],
-                                    breakLine: true
-                                });
-                            }
+                                break;
+                            case "decision_2":
+                                if (countWinNum() === 2) {
+                                    selected_decision = decision_obj[param2];
+                                    session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
+                                } else {
+                                    session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
+                                }
+                                break;
+                            case "decision_3":
+                                if (countWinNum() === 3) {
+                                    selected_decision = decision_obj[param2];
+                                    session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
+                                } else {
+                                    session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
+                                }
+                                break;
                         }
                         break;
                     case "total":
