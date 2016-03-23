@@ -1046,7 +1046,9 @@
                         ], breakLine: true });
                     } else {
                         session.output.push({ output: true, text: [
-                            "Password incorrect! Please try again..."
+                            "Password incorrect!",
+                            "\n",
+                            "Did you forget your password? This is your hint: Chinese"
                         ], breakLine: true });
                     }
                     session.output.push({ output: true, text: [
