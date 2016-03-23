@@ -1104,13 +1104,18 @@
         + Add chance mechanic
      */
 
-    var stingerRaidCommandHandler = function () {
+    var stingerStrikeCommandHandler = function () {
 
         var me = {};
-        me.command = 'stinger-raid';
-        me.description = ['Raid a facility!',
-            "Example: stinger-strike status RoomID (Gives the status of all rooms in facility)",
-            "Example: stinger-strike hack RoomID command status (Begin a raid on a specific room)"
+        me.command = 'stinger-str';
+        me.description = ['Command a strike team through the STINGER interface.',
+            "Example: stinger-str set [insert room_id] [insert feature id] [on/off]",
+            "Example: stinger-str enter [insert room_id]",
+            "Example: stinger-str istealer [insert room_id]",
+            "Example: stinger-str exit [insert room_id]",
+            "Example: stinger-str log check",
+            "Example: stinger-str log [insert decision_id] [y/n]",
+            "Example: stinger-str op-complete"
         ];
 
         var info_points = 0;
@@ -1780,9 +1785,6 @@
                                 session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
                         }
                         break;
-                    case "total":
-                        printTotal();
-                        break;
                     case "op-complete":
                         if (info_points >= 6 && countWinNum() === 3) {
                             session.output.push({ output: true, text: ["\n","You obtained enough info points and cleared rooms to complete the mission!", "Success code ---> " + success_code], breakLine: true});
@@ -1802,7 +1804,7 @@
         };
         return me;
     };
-    commandBrokerProvider.appendCommandHandler(stingerRaidCommandHandler());
+    commandBrokerProvider.appendCommandHandler(stingerStrikeCommandHandler());
 
     //===============================================================================================//
     //======= END OF HACKING TERMINAL COMMANDS CODE =================================================//
