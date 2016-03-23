@@ -813,6 +813,7 @@
             "Example: stinger-cm status",
             "Example: stinger-cm select [insert camID]",
             "Example: stinger-cm [insert camID] [insert password guess]",
+            "Example: stinger-cm abort [insert camID]",
             "Example: stinger-cm admin [insert password guess]",
             "Example: stinger-cm op-complete"
         ];
