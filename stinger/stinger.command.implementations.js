@@ -1735,7 +1735,7 @@
                                         break;
                                     case 3:
                                         session.output.push({ output: true, text: [
-                                            "1) Reception: Should we ask for a badge? [log decision_1] [y/n]",
+                                            "1) Reception: Should we try to persuade the receptionist for info? [log decision_1] [y/n]",
                                             "2) Mystery closet: Could have intel inside, should we open it? [log decision_2] [y/n]",
                                             "3) Executive terminal: Found this terminal, might have sensitive info may be available [log decision_3] [y/n]"
                                         ], breakLine: true});
