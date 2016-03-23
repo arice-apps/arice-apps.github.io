@@ -808,7 +808,13 @@
         var me = {};
         me.command = 'stinger-cm';
         me.description = [
-            "Hacks cameras in an infected facility."
+            "Hacks cameras in an infected facility.",
+            "\n",
+            "Example: stinger-cm status",
+            "Example: stinger-cm select [insert camID]",
+            "Example: stinger-cm [insert camID] [insert password guess]",
+            "Example: stinger-cm admin [insert password guess]",
+            "Example: stinger-cm op-complete"
         ];
 
         var cam_list = {
