@@ -1685,7 +1685,7 @@
                             if (selected_room.exit_success === true && selected_room.raid_ongoing === false) {
                                 session.output.push({
                                     output: true,
-                                    text: ["The strike commander found something! We require your input.", "Check the log [stinger-raid log check]."],
+                                    text: ["The strike commander found something! We require your input.", "Check the log [stinger-str log check]."],
                                     breakLine: true
                                 });
                                 session.output.push({
