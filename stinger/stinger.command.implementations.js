@@ -933,7 +933,15 @@
                         session.output.push({ output: true, text: [
                             "An ANTENNA session for this camera was not started!"
                         ], breakLine: true });
-                    } else {
+                    } else if (param2 === "abort") {
+                        session.output.push({ output: true, text: [
+                            "Camera was aborted! You are now locked out of this camera."
+                        ], breakLine: true });
+                        cam_list[selected_cam] = 2;
+                        setFlag(true);
+                        setTimerStarted(false);
+                    }
+                    else {
                         session.output.push({ output: true, text: [
                             "The password was incorrect."
                         ], breakLine: true });
