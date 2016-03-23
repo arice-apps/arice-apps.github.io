@@ -779,7 +779,6 @@
                         "Type 'help stinger-rp' to get a hint."
                     ], breakLine: true
                 });
-                console.log(param2);
             } else {
                 session.output.push({ output: true, text: [
                     "<" + param2 + "> in <" + param1 + "> could not be accessed.",
@@ -846,15 +845,11 @@
         var timer = null;
 
         var passTimer = function() {
-            console.log("Timer has started!");
             setTimerStarted(true);
-            console.log(timer_started);
             setFlag(false);
             timer = window.setTimeout(function() {
                 setFlag(true);
                 setTimerStarted(false);
-                console.log(timer_started);
-                console.log("Timer ended!");
                 if (cam_list[selected_cam] !== 1) {
                     cam_list[selected_cam] = 2;
                 }
@@ -938,13 +933,11 @@
                     }
                     break;
                 case "select":
-                    console.log(timer_started);
                     if (timer_started === true) {
                         session.output.push({ output: true, text: [
                             "An ANTENNA session is still running for a camera!",
                             "Complete the hack for that camera or wait until timer ends."
                         ], breakLine: true });
-                        console.log(timer_started);
                         break;
                     }
 
@@ -969,7 +962,6 @@
                         break;
                     } else if (cam_list[selected_cam] === 0) {
                         window.clearTimeout(timer);
-                        console.log("Timer was cleared!");
                     } else {
                         session.output.push({ output: true, text: [
                             "This camera does not exist!",
@@ -1278,21 +1270,9 @@
                     decision.win = true;
                     decision.points += calculateBonus(decision);
                     addInfoPoints(decision.points);
-                    console.log("You win!");
-                    console.log("You rolled a " + gambleOutcome);
-                    console.log("You needed to get a number between 1 and " + (100 + risk_total));
-                    console.log("The total decision points + bonus is " + decision.points);
-                    console.log("The total bonus earned is : " + bonus_total);
-                    console.log("The total info points are: " + info_points);
                     return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.win_msg + decision.points + " points]"];
                 } else {
                     decision.fail = true;
-                    console.log("You lose!");
-                    console.log("You rolled a " + gambleOutcome);
-                    console.log("You needed to get a number between 1 and " + (100 + risk_total));
-                    console.log("The total decision points + bonus is " + decision.points);
-                    console.log("The total bonus earned is : " + bonus_total);
-                    console.log("The total info points are: " + info_points);
                     return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.fail_msg];
                 }
             } else if (decision.win === true) {
@@ -1451,7 +1431,6 @@
                 if (room_obj[room].room_success === true) {
                     room_win_count++
                 }
-                console.log(room_win_count);
             }
             return room_win_count;
         }
@@ -1528,7 +1507,7 @@
                                 else if (param4 === "off") {
                                     session.output.push({ output: true, text: [setDoor(selected_room, false)], breakLine: true});
                                 } else {
-                                    console.log("Could not do!");
+                                    session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
                                 }
                                 break;
                             case "motion":
@@ -1549,7 +1528,7 @@
                                 else if (param4 === "off") {
                                     session.output.push({ output: true, text: [setMotion(selected_room, false)], breakLine: true});
                                 } else {
-                                    console.log("Could not do!");
+                                    session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
                                 }
                                 break;
                             case "bioauth":
@@ -1559,7 +1538,7 @@
                                 else if (param4 === "off") {
                                     session.output.push({ output: true, text: [setBioauth(selected_room, false)], breakLine: true});
                                 } else {
-                                    console.log("Could not do!");
+                                    session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
                                 }
                                 break;
                             case "distraction":
@@ -1760,7 +1739,6 @@
                                 }
                                 break;
                             case "decision_1":
-                                console.log(countWinNum());
                                 if (countWinNum() >= 1) {
                                     selected_decision = decision_obj[param2];
                                     session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
