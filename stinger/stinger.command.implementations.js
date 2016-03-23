@@ -3422,9 +3422,11 @@
                                         session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
                                         resetDistraction();
                                     } else {
-                                        session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
+                                        session.output.push({ output: true, text: ["System could not interpret this command. Check your inputs for errors."], breakLine: true});
                                     }
                                     break;
+                                default:
+                                    session.output.push({ output: true, text: ["System could not interpret this command. Check your inputs for errors."], breakLine: true});
                             }
                             break;
                         case "istealer":
@@ -3458,6 +3460,8 @@
                                     "Room occupied status: " + selected_room.room_occupied
                                 ], breakLine: true});
                                 session.output.push({ output: true, text: ["\n"], breakLine: false});
+                            } else {
+                                session.output.push({ output: true, text: ["You did not input a room or there was another error in your input."], breakLine: true});
                             }
                             break;
                         case "enter":
