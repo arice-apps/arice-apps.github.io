@@ -1098,13 +1098,6 @@
     // STINGER <Raid> Command //
     //==============================================================================//
 
-    // To Do
-    /*
-    + Add point system
-    + Add decision points
-        + Add chance mechanic
-     */
-
     var stingerStrikeCommandHandler = function () {
 
         var me = {};
