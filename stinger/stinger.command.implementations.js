@@ -1457,7 +1457,7 @@
             if (decision.fail === false && decision.win === false && decision.conservative === false) {
                 if (choice === "y") {
                     message_returns.push(decision.yes_msg);
-                    calculateGamble(decision);
+                    message_returns.push(calculateGamble(decision));
                     message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " points]");
                 } else if (choice === "n") {
                     decision.conservative = true;
