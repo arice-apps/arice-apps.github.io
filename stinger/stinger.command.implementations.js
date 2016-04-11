@@ -1117,53 +1117,157 @@
 
         var room_1 = {
             "door": 1,
-            "motion": 1,
-            "bioauth": 0,
-            "distraction": 0,
-            "occupied": 0,
             "setDoor": function(status) {
                 room_1.door = status;
-            },
-            "setMotion": function(status) {
-                room_1.motion = status;
-            },
-            "setBioauth": function(status) {
-                room_1.bioauth = status;
-            },
-            "setDistraction": function(status) {
-                room_1.distraction = status;
-            },
-            "setOccupied": function(status) {
-                room_1.occupied = status;
             },
             "getDoor": function() {
                 return room_1.door;
             },
+            "motion": 1,
+            "setMotion": function(status) {
+                room_1.motion = status;
+            },
             "getMotion": function() {
                 return room_1.motion;
+            },
+            "bioauth": 0,
+            "setBioauth": function(status) {
+                room_1.bioauth = status;
             },
             "getBioauth": function() {
                 return room_1.bioauth;
             },
+            "distraction": 0,
+            "setDistraction": function(status) {
+                room_1.distraction = status;
+            },
             "getDistraction": function() {
                 return room_1.distraction;
             },
+            "occupied": 0,
+            "setOccupied": function(status) {
+                room_1.occupied = status;
+            },
             "getOccupied": function() {
                 return room_1.occupied;
+            },
+            "entered": 0,
+            "setEntered": function(status) {
+                room_1.entered = status;
+            },
+            "getEntered": function() {
+                return room_1.entered;
+            },
+            "exited": 0,
+            "setExited": function(status) {
+                room_1.exited = status;
+            },
+            "getExited": function() {
+                return room_1.exited;
+            },
+            "data_stolen": 0,
+            "setDataStolen": function(status) {
+                room_1.data_stolen = status;
+            },
+            "getDataStolen": function() {
+                return room_1.data_stolen;
+            },
+            "room_clear": 0,
+            "setRoomClear": function(status) {
+                room_1.room_clear = status;
+            },
+            "getRoomClear": function() {
+                return room_1.room_clear;
             }
         };
 
-        var room_status = [];
+        var room_2 = {
+            "door": 1,
+            "setDoor": function(status) {
+                room_2.door = status;
+            },
+            "getDoor": function() {
+                return room_2.door;
+            },
+            "motion": 0,
+            "setMotion": function(status) {
+                room_2.motion = status;
+            },
+            "getMotion": function() {
+                return room_2.motion;
+            },
+            "bioauth": 1,
+            "setBioauth": function(status) {
+                room_2.bioauth = status;
+            },
+            "getBioauth": function() {
+                return room_2.bioauth;
+            },
+            "distraction": 0,
+            "setDistraction": function(status) {
+                room_2.distraction = status;
+            },
+            "getDistraction": function() {
+                return room_2.distraction;
+            },
+            "occupied": 1,
+            "setOccupied": function(status) {
+                room_2.occupied = status;
+            },
+            "getOccupied": function() {
+                return room_2.occupied;
+            },
+            "entered": 0,
+            "setEntered": function(status) {
+                room_2.entered = status;
+            },
+            "getEntered": function() {
+                return room_2.entered;
+            },
+            "exited": 0,
+            "setExited": function(status) {
+                room_2.exited = status;
+            },
+            "getExited": function() {
+                return room_2.exited;
+            },
+            "data_stolen": 0,
+            "setDataStolen": function(status) {
+                room_2.data_stolen = status;
+            },
+            "getDataStolen": function() {
+                return room_2.data_stolen;
+            },
+            "room_clear": 0,
+            "setRoomClear": function(status) {
+                room_2.room_clear = status;
+            },
+            "getRoomClear": function() {
+                return room_2.room_clear;
+            }
+        };
 
-        var checkSuccess = function (room_id) {
-            if (room_id.getBioauth() === 0 &&
+        var all_rooms = [room_1, room_2];
+
+        var room_security_status = [];
+
+        var checkRoomSuccess = function (room_id) {
+            return (room_id.getBioauth() === 0 &&
                 room_id.getDoor() === 0 &&
                 room_id.getDistraction() === 0 &&
-                room_id.getOccupied() === 0 &
-                room_id.getMotion() === 0) {
-                return true;
-            } else {
-                return false;
+                room_id.getOccupied() === 0 &&
+                room_id.getMotion() === 0);
+        };
+
+        var checkGlobalSuccess = function() {
+            if (room_1.getRoomClear() === 1 && room_2.getRoomClear() === 1) {
+                console.log("Rooms are clear.");
+            }
+        };
+
+        var roomClear = function(room_id) {
+            if (room_id.getEntered() === 1 && room_id.getExited() === 1) {
+                room_id.setRoomClear(1);
             }
         };
 
@@ -1218,7 +1322,7 @@
             return status_list;
         };
 
-        var createRoomConfig = function(room_user_input, room_id) {
+        var createRoomConfig = function(room_id, room_user_input) {
             var room_user_config = room_user_input.toString().split("-");
             var room_user_config_int = [0, 0, 0];
             for (var i = 0; i < room_user_config.length; i++) {
@@ -1230,13 +1334,29 @@
             return room_user_config_int;
         };
 
+        var createDistraction = function() {
+            var distraction_active = false;
+            for (var i = 0; i < all_rooms.length; i++) {
+                if (all_rooms[i].getDistraction() === 1) {
+                    distraction_active = true;
+                    all_rooms[i].setOccupied(1);
+                }
+            }
+            if (distraction_active) {
+                for (var i = 0; i < all_rooms.length; i++) {
+                    if (all_rooms[i].getDistraction() === 0) {
+                        all_rooms[i].setOccupied(0);
+                    }
+                }
+            }
+        };
+
         me.handle = function (session, param1, param2, param3) {
             switch(param1) {
                 case "set":
                     switch(param2) {
                         case "room_1":
-                            room_status = createRoomConfig(param3, room_1);
-                            checkSuccess(room_status);
+                            room_security_status = createRoomConfig(room_1, param3);
                             session.output.push({output: true, text: printRoomSecurityStatus(room_1), breakLine: true});
                             break;
                         default:
@@ -1245,6 +1365,8 @@
                     }
                     break;
                 case "status":
+                    session.output.push({output: true, text: printRoomGlobalStatus(room_2), breakLine: true});
+                    session.output.push({output: true, text: ["\nRoom #2 Status:\n====================\n"], breakLine: false});
                     session.output.push({output: true, text: printRoomGlobalStatus(room_1), breakLine: true});
                     session.output.push({output: true, text: ["\nRoom #1 Status:\n====================\n"], breakLine: false});
                     break;
@@ -1253,6 +1375,7 @@
                         case "room_1":
                             if (param3 === "on") {
                                 room_1.setDistraction(1);
+                                createDistraction();
                             } else if (param3 === "off") {
                                 room_1.setDistraction(0);
                             }
@@ -1261,6 +1384,56 @@
                             console.log("Error");
                             break;
                     }
+                    break;
+                case "istealer":
+                    switch(param2) {
+                        case "room_1":
+                            if (room_1.getEntered() === 1 && room_1.getExited() === 0) {
+                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
+                                room_1.setDataStolen(1);
+                            } else {
+                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
+                            }
+                            break;
+                        default:
+                            console.log("Error");
+                            break;
+                    }
+                    break;
+                case "enter":
+                    switch(param2) {
+                        case "room_1":
+                            if (checkRoomSuccess(room_1) === true) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_1.setEntered(1);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "exit":
+                    switch(param2) {
+                        case "room_1":
+                            if (checkRoomSuccess(room_1) === true && room_1.getDataStolen() === 1) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_1.setExited(1);
+                                roomClear(room_1);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "check-local":
+                    console.log(checkRoomSuccess(room_1));
+                    break;
+                case "check-global":
+                    checkGlobalSuccess();
                     break;
                 default:
                     console.log("Error with room!");
