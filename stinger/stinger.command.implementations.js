@@ -2965,679 +2965,116 @@
                 "Example: stinger-str op-complete"
             ];
 
-            var info_points = 0;
-            var ongoingRooms = false;
-            var ongoingID = "";
-            var room_occupants = null;
-            var distraction_room_found = false;
-            var death_flag = false;
-            var success_code = "PL" + 7*13 + "BW";
-
-            function addInfoPoints(info) {
-                info_points += info;
-                return info_points;
-            }
-
-            // Enter room truth variables here
-            var room_truth_obj = {
-                room_3: {
-                    "name": "[Lab 3 - Bioweapons]",
-                    "id": "room_3",
-                    "door_status": true,
-                    "motion_status": true,
-                    "biometric_auth": true,
-                    "room_occupied": false
+            var room_1 = {
+                "door": 0,
+                "motion": 0,
+                "bioauth": 0,
+                "distraction": 0,
+                "occupied": 0,
+                "setDoor": function(status) {
+                    room_1.door = status;
                 },
-                room_2: {
-                    "name": "[Lab 2 - Rift Creature Containment]",
-                    "id": "room_2",
-                    "door_status": true,
-                    "motion_status": false,
-                    "biometric_auth": true,
-                    "room_occupied": true
+                "setMotion": function(status) {
+                    room_1.motion = status;
                 },
-                room_1: {
-                    "name": "[Lab 1 - Teleportation Particle Lab]",
-                    "id": "room_1",
-                    "door_status": true,
-                    "motion_status": true,
-                    "biometric_auth": false,
-                    "room_occupied": false
+                "setBioauth": function(status) {
+                    room_1.bioauth = status;
+                },
+                "setDistraction": function(status) {
+                    room_1.distraction = status;
+                },
+                "setOccupied": function(status) {
+                    room_1.occupied = status;
+                },
+                "getDoor": function() {
+                    return room_1.door;
+                },
+                "getMotion": function() {
+                    return room_1.motion;
+                },
+                "getBioauth": function() {
+                    return room_1.bioauth;
+                },
+                "getDistraction": function() {
+                    return room_1.distraction;
+                },
+                "getOccupied": function() {
+                    return room_1.occupied;
                 }
             };
 
-            // Enter room variables here
-            var room_obj = {
-                room_3: {
-                    "name": "[Lab 3 - Bioweapons]",
-                    "id": "room_3",
-                    "door_status": true,
-                    "motion_status": true,
-                    "biometric_auth": true,
-                    "room_occupied": false,
-                    "downloader": false,
-                    "raid_ongoing": false,
-                    "entry_success": false,
-                    "exit_success": false,
-                    "room_success": false,
-                    "points": 2,
-                    "distraction": false
-                },
-                room_2: {
-                    "name": "[Lab 2 - Rift Creature Containment]",
-                    "id": "room_2",
-                    "door_status": true,
-                    "motion_status": false,
-                    "biometric_auth": true,
-                    "room_occupied": true,
-                    "downloader": false,
-                    "raid_ongoing": false,
-                    "entry_success": false,
-                    "exit_success": false,
-                    "room_success": false,
-                    "points": 2,
-                    "distraction": false
-                },
-                room_1: {
-                    "name": "[Lab 1 - Teleportation Particle Lab]",
-                    "id": "room_1",
-                    "door_status": true,
-                    "motion_status": true,
-                    "biometric_auth": false,
-                    "room_occupied": false,
-                    "downloader": false,
-                    "raid_ongoing": false,
-                    "entry_success": false,
-                    "exit_success": false,
-                    "room_success": false,
-                    "points": 2,
-                    "distraction": false
+            var room_success = [0, 0, 0];
+            var room_status = [];
+
+            var checkSuccess = function (room_stats) {
+                if (room_stats.toString() !== room_success.toString()) {
+                    console.log("Room did not succeed");
+                } else if (room_stats.toString() === room_success.toString()) {
+                    console.log("Room succeeded!");
                 }
             };
 
-            var risk_total = 0;
-            var bonus_total = 0;
-            var current_risk = 10 + risk_total;
-
-            function increaseRisk(decision) {
-                if (current_risk > 1) {
-                    risk_total += decision.risk;
+            var printRoomStatus = function (room_id) {
+                var status_list = [];
+                if (room_id.getDoor() === 0) {
+                    status_list[0] = "# Door off";
+                } else if (room_id.getDoor() === 1) {
+                    status_list[0] = "# Door on";
                 }
-            }
-            function calculateBonus(decision) {
-                bonus_total += decision.bonus;
-                return bonus_total;
-            }
-
-            var decision_obj = {
-                decision_1: {
-                    "name": "Reception Office",
-                    "message_shown": false,
-                    "yes_msg": "MSG FROM SQUAD LEADER: We are approaching the desk...",
-                    "no_msg": "MSG FROM SQUAD LEADER: We're going to head straight past the desk. [+2 points]",
-                    "conservative": false,
-                    "win_msg": "MSG FROM SQUAD LEADER: Our persuasion worked and we received details on systems in the facility! [+",
-                    "fail_msg": "MSG FROM SQUAD LEADER: Receptionist was not convinced, we did not gain any info. [+0 points]",
-                    "bonus": 3,
-                    "points": 2,
-                    "fail": false,
-                    "win": false,
-                    "risk": -20
-                },
-                decision_2: {
-                    "name": "Mystery Closet",
-                    "message_shown": false,
-                    "yes_msg": "MSG FROM SQUAD LEADER: I'm opening the closet...",
-                    "no_msg": "MSG FROM SQUAD LEADER: Might be too risky to check, we will leave it closed. [+2 points]",
-                    "conservative": false,
-                    "win_msg": "MSG FROM SQUAD LEADER: We found some maintenance files on the facility layout! [+",
-                    "fail_msg": "MSG FROM SQUAD LEADER: There's nothing here... Closet has been cleared. [+0 points]",
-                    "bonus": 3,
-                    "points": 2,
-                    "fail": false,
-                    "win": false,
-                    "risk": -20
-                },
-                decision_3: {
-                    "name": "Executive Terminal",
-                    "message_shown": false,
-                    "yes_msg": "MSG FROM SQUAD LEADER: Trying to login now...",
-                    "no_msg": "MSG FROM SQUAD LEADER: Roger. Moving onwards... [+2 points]",
-                    "conservative": false,
-                    "win_msg": "MSG FROM SQUAD LEADER: We got access! There are some executive files on here. [+",
-                    "fail_msg": "MSG FROM SQUAD LEADER: Nothing of interest was found. [+0 points]",
-                    "bonus": 3,
-                    "points": 2,
-                    "fail": false,
-                    "win": false,
-                    "risk": -20
+                if (room_id.getMotion() === 0) {
+                    status_list[1] = "# Motion detection off";
+                } else if (room_id.getMotion() === 1) {
+                    status_list[1] = "# Motion detection on";
                 }
+                if (room_id.getBioauth() === 0) {
+                    status_list[2] = "# Bioauthentication off";
+                } else if (room_id.getBioauth() === 1) {
+                    status_list[2] = "# Bioauthentication on";
+                }
+                console.log(status_list);
+                return status_list;
             };
 
-            var calculateGamble = function (decision) {
-                if (decision.fail === false && decision.win === false) {
-                    increaseRisk(decision);
-                    var gambleOutcome = Math.floor(Math.random() * 100) + 1;
-                    if (gambleOutcome >= 1 && gambleOutcome <= (100 + risk_total)) {
-                        decision.win = true;
-                        decision.points += calculateBonus(decision);
-                        addInfoPoints(decision.points);
-                        return ["Your stealth level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.win_msg + decision.points + " points]"];
-                    } else {
-                        decision.fail = true;
-                        return ["Your stealth level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.fail_msg];
-                    }
-                } else if (decision.win === true) {
-                    return ["You already won this decision."];
-                } else {
-                    return ["You failed this decision."];
+            var createRoomConfig = function(room_user_input, room_id) {
+                var room_user_config = room_user_input.toString().split("-");
+                var room_user_config_int = [0, 0, 0];
+                for (var i = 0; i < room_user_config.length; i++) {
+                    room_user_config_int[i] = parseInt(room_user_config[i]);
                 }
+                room_id.setDoor(room_user_config_int[0]);
+                room_id.setMotion(room_user_config_int[1]);
+                room_id.setBioauth(room_user_config_int[2]);
+                console.log(room_id);
+                console.log(room_user_config_int);
+                return room_user_config_int;
             };
 
-            function setDoor(obj, status) {
-                obj.door_status = status;
-                if (status === true) {
-                    return "\nDoor access control has been turned ON";
-                } else {
-                    return "\nDoor access control has been turned OFF";
-                }
-            }
-            function setMotion(obj, status) {
-                obj.motion_status = status;
-                if (status === true) {
-                    return "\nMotion sensors have been turned ON";
-                } else {
-                    return "\nMotion sensors have been turned OFF";
-                }
-            }
-            function setBioauth(obj, status) {
-                obj.biometric_auth = status;
-                if (status === true) {
-                    return "\nBiometrics Auth on workstations has been turned ON";
-                } else {
-                    return "\nBiometrics Auth on workstations has been turned OFF";
-                }
-            }
-            function setDistract(obj, status) {
-                obj.distraction = status;
-                if (status === true) {
-                    room_occupants = obj.id;
-                    return "Room alarm has been turned ON. It attracted the attention of nearby employees.";
-                } else {
-                    return "Room alarm has been turned OFF.";
-                }
-            }
-
-            function setDownload(obj, status) {
-                obj.downloader = status;
-                if (status === true) {
-                    return ["\niStealer has been activated... Devices found!\n\n",
-                        "Info stealing operations starting, please wait...\n\n",
-                        "[0%=====================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "========================================",
-                        "===================================100%]",
-                        "\nDownload complete! " + Math.floor(Math.random() * 1000) + " TB of data stolen! [+2 points]"];
-                }
-            }
-            function setRaid(obj, status) {
-                obj.raid_ongoing = status;
-            }
-            function setEntry(obj, status) {
-                obj.entry_success = status;
-            }
-            function setExit(obj, status) {
-                obj.exit_success = status;
-            }
-            function setRoom(obj, status) {
-                obj.room_success = status;
-            }
-
-            function checkEntry(obj) {
-                // Entry success condition
-                if (
-                    obj.door_status === false &&
-                    obj.motion_status === false &&
-                    obj.room_success === false &&
-                    obj.biometric_auth === false &&
-                    obj.room_occupied === false &&
-                    obj.distraction === false &&
-                    ongoingRooms === false
-                ) {
-                    setEntry(obj, true);
-                    setRaid(obj, true);
-                }
-                for (var room in room_obj) {
-                    if (room_obj[room].raid_ongoing === true) {
-                        ongoingID = room_obj[room].id;
-                        ongoingRooms = true;
-                    }
-                }
-                return obj.entry_success;
-            }
-            function checkExit(obj) {
-                // Exit success condition
-                if (
-                    obj.downloader === true
-                ) {
-                    setExit(obj, true);
-                    setRaid(obj, false);
-                    ongoingRooms = false;
-                    resetDistraction();
-                }
-                return obj.exit_success;
-            }
-            function checkDistraction(roomObj) {
-                // Check if a room has a distraction, if it does, move the occupants to that room
-                for (var room in room_obj) {
-                    if (room_obj[room].distraction === true) {
-                        room_occupants = roomObj.id;
-                        roomObj.room_occupied = true;
-                        distraction_room_found = true;
-                    }
-                }
-                for (var room in room_obj) {
-                    if (distraction_room_found === true && room_obj[room].room_occupied === true && room_obj[room].id !== roomObj.id) {
-                        room_obj[room].room_occupied = false;
-                        return "Employees from " + room_obj[room].id + " left their room to investigate."
-                    }
-                }
-            }
-
-            function roomClear(obj) {
-                // Room success condition
-                if (
-                    obj.entry_success === true &&
-                    obj.exit_success === true
-
-                ) {
-                    setRoom(obj, true);
-                }
-                return obj.room_success;
-            }
-
-            function resetDistraction() {
-                var room_return = null;
-                for (var room in room_obj) {
-                    room_obj[room].room_occupied = room_truth_obj[room_obj[room].id].room_occupied;
-                }
-                for (var room in room_obj) {
-                    if (room_obj[room].room_occupied === true) {
-                        room_return = room_obj[room].id;
-                    }
-                }
-                room_occupants = null;
-                distraction_room_found = false;
-            }
-
-            function countWinNum() {
-                var room_win_count = 0;
-                for (var room in room_obj) {
-                    if (room_obj[room].room_success === true) {
-                        room_win_count++
-                    }
-                }
-                return room_win_count;
-            }
-
-            var playerDecision = function(decision, choice) {
-                var message_returns = [];
-                if (decision.fail === false && decision.win === false && decision.conservative === false) {
-                    if (choice === "y") {
-                        message_returns.push(decision.yes_msg);
-                        message_returns.push(calculateGamble(decision));
-                        message_returns.push("\n***You made a risky decision and now have a total of [" + info_points + " info points]");
-                        return message_returns;
-                    } else if (choice === "n") {
-                        decision.conservative = true;
-                        message_returns.push(decision.no_msg);
-                        message_returns.push("\n***You made a conservative decision and now have a total of [" + addInfoPoints(decision.points) + " points]");
-                        return message_returns;
-                    } else {
-                        return ["You did not enter a choice! Choose yes [y] or no [n]"];
-                    }
-                } else {
-                    return ["You already made this decision!"];
-                }
-            };
-
-            //Specify params here
-            me.handle = function (session, param1, param2, param3, param4) {
-                param1 = makeLower(param1);
-                param2 = makeLower(param2);
-                param3 = makeLower(param3);
-                param4 = makeLower(param4);
-
-                function printTotal() {
-                    session.output.push({
-                        output: true,
-                        text: [
-                            "Your current information score is now: [" + info_points + " points]"
-                        ],
-                        breakLine: true
-                    });
-                }
-
-                var selected_room = room_obj[param2];
-
-                // Print out status of all rooms
-                var room_list_print = function() {
-                    for (var room in room_obj) {
-                        session.output.push({ output: true, text: [
-                            "Room name: " + room_obj[room].name,
-                            "Room ID: " + room_obj[room].id,
-                            "Room cleared? : " + room_obj[room].room_success
-                        ], breakLine: true});
-                    }
-                    session.output.push({ output: true, text: [
-                        "\nAccessing Theta Facility security room status...",
-                        "\nREADING.............",
-                        "..................",
-                        ".................!\n\n"
-                    ], breakLine: false});
-                };
-
-                // Conditional cases and responses
-                if (death_flag === false) {
-                    switch (param1) {
-                        case "list":
-                            room_list_print();
-                            break;
-                        case "set":
-                            switch(param3) {
-                                case "door":
-                                    if (param4 === "on") {
-                                        session.output.push({ output: true, text: [setDoor(selected_room, true)], breakLine: true});
-                                    }
-                                    else if (param4 === "off") {
-                                        session.output.push({ output: true, text: [setDoor(selected_room, false)], breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
-                                    }
-                                    break;
-                                case "motion":
-                                    if (param4 === "on") {
-                                        setMotion(selected_room, true);
-                                        if (selected_room.raid_ongoing === true) {
-                                            session.output.push({
-                                                output: true,
-                                                text: ["\nThe motion detectors turned on while your team was in the room.",
-                                                    "\nThey were killed!"],
-                                                breakLine: true
-                                            });
-                                            death_flag = true;
-                                            break;
-                                        }
-                                        session.output.push({ output: true, text: [setMotion(selected_room, true)], breakLine: true});
-                                    }
-                                    else if (param4 === "off") {
-                                        session.output.push({ output: true, text: [setMotion(selected_room, false)], breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
-                                    }
-                                    break;
-                                case "bioauth":
-                                    if (param4 === "on") {
-                                        session.output.push({ output: true, text: [setBioauth(selected_room, true)], breakLine: true});
-                                    }
-                                    else if (param4 === "off") {
-                                        session.output.push({ output: true, text: [setBioauth(selected_room, false)], breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["An error occurred! Terminal could not interpret command."], breakLine: true});
-                                    }
-                                    break;
-                                case "distraction":
-                                    if (param4 === "on") {
-                                        var distract_success = true;
-                                        if (selected_room.distraction === false && room_occupants === null) {
-                                            for (var value in room_truth_obj[selected_room.id]) {
-                                                if (selected_room[value] !== room_truth_obj[selected_room.id][value]) {
-                                                    session.output.push({ output: true, text: ["Oh no! You've been caught! Employees found a misconfigured room."], breakLine: true});
-                                                    distract_success = false;
-                                                    death_flag = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (distract_success === true) {
-                                                session.output.push({ output: true, text: ["\n",setDistract(selected_room, true),"\n",checkDistraction(selected_room)], breakLine: true});
-                                            }
-                                        } else if (selected_room.distraction === true) {
-                                            session.output.push({ output: true, text: ["A distraction has already been turned on in this room!"], breakLine: true});
-                                        } else if (room_occupants !== null) {
-                                            session.output.push({ output: true, text: ["Only one distraction can be on at a time!"], breakLine: true});
-                                        }
-                                    }
-                                    else if (param4 === "off") {
-                                        if (selected_room.distraction === false) {
-                                            session.output.push({ output: true, text: ["There is no distraction turned on for this room!"], breakLine: true});
-                                            break;
-                                        }
-                                        session.output.push({ output: true, text: [setDistract(selected_room, false)], breakLine: true});
-                                        resetDistraction();
-                                    } else {
-                                        session.output.push({ output: true, text: ["System could not interpret this command. Check your inputs for errors."], breakLine: true});
-                                    }
-                                    break;
-                                default:
-                                    session.output.push({ output: true, text: ["System could not interpret this command. Check your inputs for errors."], breakLine: true});
-                            }
-                            break;
-                        case "istealer":
-                            try {
-                                if (selected_room.entry_success === true && selected_room.downloader === false && selected_room.room_success === false && selected_room.raid_ongoing === true) {
-                                    addInfoPoints(selected_room.points);
-                                    printTotal();
-                                    session.output.push({ output: true, text: setDownload(selected_room, true), breakLine: true});
-                                } else if (selected_room.downloader === false && selected_room.room_success === false) {
-                                    session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> You are not in this room."], breakLine: true});
-                                } else if (selected_room.downloader === true) {
-                                    session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Data has already been downloaded from this room."], breakLine: true});
-                                } else {
-                                    session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Verify your inputs."], breakLine: true});
-                                }
-                            } catch(err) {
-                                session.output.push({ output: true, text: ["\n","iStealer encountered an error! --> Verify your inputs."], breakLine: true});
+            me.handle = function (session, param1, param2) {
+                switch(param1) {
+                    case "room_1":
+                        room_status = createRoomConfig(param2, room_1);
+                        checkSuccess(room_status);
+                        session.output.push({output: true, text: printRoomStatus(room_1), breakLine: true});
+                        break;
+                    case "status":
+                        session.output.push({output: true, text: printRoomStatus(room_1), breakLine: true});
+                        session.output.push({output: true, text: ["\nRoom #1 Status:\n====================\n"], breakLine: false});
+                        break;
+                    case "distraction":
+                        switch(param2) {
+                            case "room_1":
+                                room_1.setDistraction(1);
+                                console.log(room_1.getDistraction());git
                                 break;
-                            }
-                            break;
-                        case "status":
-                            if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                                session.output.push({ output: true, text: [
-                                    "Room name: " + selected_room.name,
-                                    "Room ID: " + selected_room.id,
-                                    "\n",
-                                    "Access control status [ID: door]: " + selected_room.door_status,
-                                    "Motion sensor status [ID: motion]: " + selected_room.motion_status,
-                                    "Biometrics Auth status [ID: bioauth]: " + selected_room.biometric_auth,
-                                    "Room alarm status [ID: distraction]: " + selected_room.distraction,
-                                    "Room occupied status: " + selected_room.room_occupied
-                                ], breakLine: true});
-                                session.output.push({ output: true, text: ["\n"], breakLine: false});
-                            } else {
-                                session.output.push({ output: true, text: ["You did not input a room or there was another error in your input."], breakLine: true});
-                            }
-                            break;
-                        case "enter":
-                            if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                                checkEntry(selected_room);
-                                if (selected_room.entry_success === true && selected_room.raid_ongoing === true) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n",selected_room.name + " entry was a success!"],
-                                        breakLine: true
-                                    });
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n","Entering room..."],
-                                        breakLine: false
-                                    });
-                                } else if (ongoingRooms === true) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n","Your team is still inside " + ongoingID,
-                                            "Exit the room you are in before asking them to enter a new room."],
-                                        breakLine: true
-                                    });
-                                } else if (selected_room.room_success === true) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n",selected_room.id + " has already been cleared! There's no need to go back."],
-                                        breakLine: true
-                                    });
-                                } else if (selected_room.door_status === false && selected_room.room_occupied === true) {
-                                    session.output.push({ output: true, text: ["\n","You entered a room that was occupied! You were spotted and killed!"], breakLine: true});
-                                    death_flag = true;
-                                    break;
-                                } else if (selected_room.door_status === false && selected_room.motion_status === true) {
-                                    session.output.push({ output: true, text: ["\n","You entered a room while the motion detector was on! You were spotted and killed!"], breakLine: true});
-                                    death_flag = true;
-                                    break;
-                                } else if (selected_room.door_status === false && selected_room.door_status === false && selected_room.biometric_auth === true) {
-                                    session.output.push({ output: true, text: ["\n","This room has biometrics enabled, you won't be able to get any data unless it is disabled."], breakLine: true});
-                                } else if (selected_room.distraction === true) {
-                                    session.output.push({ output: true, text: ["\n","This room has a distraction that is active, turn it off before entering."], breakLine: true});
-                                }
-                                else if (selected_room.door_status === true) {
-                                    session.output.push({ output: true, text: ["\n","The door is locked... You can't get inside unless the authorization is disabled."], breakLine: true});
-                                } else {
-                                    session.output.push({
-                                        output: true,
-                                        text: [selected_room.name + " entry was a failure!"],
-                                        breakLine: true
-                                    });
-                                }
-                            } else {
-                                session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
-                            }
-                            break;
-                        case "exit":
-                            if (param2 === "room_1" || param2 === "room_2" || param2 === "room_3") {
-                                if (selected_room.room_success === true) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n", "You already left " + selected_room.id],
-                                        breakLine: true
-                                    });
-                                    break;
-                                }
-                                checkExit(selected_room);
-                                if (selected_room.exit_success === true && selected_room.raid_ongoing === false) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["The strike commander found something! We require your input.", "Check the log [stinger-str log check]."],
-                                        breakLine: true
-                                    });
-                                    session.output.push({
-                                        output: true,
-                                        text: [selected_room.name + " exit was a success!"],
-                                        breakLine: true
-                                    });
-                                    session.output.push({ output: true, text: [
-                                        "\nExiting room..."
-                                    ], breakLine: true});
-                                    roomClear(selected_room);
-                                } else if (selected_room.raid_ongoing === true && selected_room.downloader === false) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n", selected_room.name + " exit was a failure!","\nYou need to download the room files using iStealer!"],
-                                        breakLine: true
-                                    });
-                                } else if (selected_room.raid_ongoing === false) {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["\n", "You are not inside " + selected_room.id + ".", "You can't exit a room you aren't in!"],
-                                        breakLine: true
-                                    });
-                                } else {
-                                    session.output.push({
-                                        output: true,
-                                        text: ["Could not exit the room, check inputs and status of room then try again."],
-                                        breakLine: true
-                                    });
-                                }
-                            } else {
-                                session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
-                            }
-                            break;
-                        case "log":
-                            var selected_decision = null;
-                            switch(param2) {
-                                case "check":
-                                    switch(countWinNum()) {
-                                        case 1:
-                                            session.output.push({ output: true, text: [
-                                                "1) Reception: Should we try to persuade the receptionist for info? [log decision_1] [y/n]"
-                                            ], breakLine: true});
-                                            break;
-                                        case 2:
-                                            session.output.push({ output: true, text: [
-                                                "1) Reception: Should we try to persuade the receptionist for info? [log decision_1] [y/n]",
-                                                "2) Mystery closet: Could have intel inside, should we open it? [log decision_2] [y/n]"
-                                            ], breakLine: true});
-                                            break;
-                                        case 3:
-                                            session.output.push({ output: true, text: [
-                                                "1) Reception: Should we try to persuade the receptionist for info? [log decision_1] [y/n]",
-                                                "2) Mystery closet: Could have intel inside, should we open it? [log decision_2] [y/n]",
-                                                "3) Executive terminal: Found this terminal, might have sensitive info may be available [log decision_3] [y/n]"
-                                            ], breakLine: true});
-                                            break;
-                                        default:
-                                            session.output.push({ output: true, text: ["No events in the log at this time..."], breakLine: true});
-                                            break;
-                                    }
-                                    break;
-                                case "decision_1":
-                                    if (countWinNum() >= 1) {
-                                        selected_decision = decision_obj[param2];
-                                        session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
-                                    }
-                                    break;
-                                case "decision_2":
-                                    if (countWinNum() >= 2) {
-                                        selected_decision = decision_obj[param2];
-                                        session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
-                                    }
-                                    break;
-                                case "decision_3":
-                                    if (countWinNum() >= 3) {
-                                        selected_decision = decision_obj[param2];
-                                        session.output.push({ output: true, text: playerDecision(selected_decision, param3), breakLine: true});
-                                    } else {
-                                        session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
-                                    }
-                                    break;
-                                default:
-                                    session.output.push({ output: true, text: ["This decision is not available..."], breakLine: true});
-                            }
-                            break;
-                        case "op-complete":
-                            if (info_points >= 6 && countWinNum() === 3) {
-                                session.output.push({ output: true, text: ["\n","You obtained enough info points and cleared rooms to complete the mission!", "Success code ---> " + success_code], breakLine: true});
-                            } else {
-                                session.output.push({ output: true, text: ["\n","Your information score is not high enough or all rooms have not been cleared.",
-                                    "\n","Your current information score is now: [" + info_points + " points]",
-                                    "Number of cleared rooms is: [" + countWinNum() + " cleared room(s)]"], breakLine: true});
-                            }
-                            break;
-                        default:
-                            session.output.push({ output: true, text: ["System could not interpret this command."], breakLine: true});
-                    }
-                } else {
-                    session.output.push({ output: true, text: ["\n","Your team is dead..."], breakLine: true});
+                            default:
+                                console.log("Error");
+                                break;
+                        }
+                        break;
+                    default:
+                        console.log("Error with room!");
+                        break;
                 }
-
             };
             return me;
         };
