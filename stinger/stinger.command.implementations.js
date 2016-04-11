@@ -2652,7 +2652,7 @@
             me.description = [
                 "Hacks cameras in an infected facility.",
                 "\n",
-                "Example: stinger-cm status",
+                "Example: stinger-cm list",
                 "Example: stinger-cm select [insert camID]",
                 "Example: stinger-cm [insert camID] [insert password guess]",
                 "Example: stinger-cm abort [insert camID]",
@@ -2714,7 +2714,7 @@
                 param2 = makeLower(param2);
 
                 switch(param1) {
-                    case "status":
+                    case "list":
                         // 0 flag means no action has been taken on the camera
                         // 1 flag means that player succeeded in hacking the camera
                         // 2 flag means that player failed in hacking the camera
@@ -2945,7 +2945,7 @@
 
 
         //==============================================================================//
-        // STINGER <Raid> Command //
+        // STINGER <Strike> Command //
         //==============================================================================//
 
         var stingerStrikeCommandHandler = function () {
@@ -3122,10 +3122,10 @@
                         decision.win = true;
                         decision.points += calculateBonus(decision);
                         addInfoPoints(decision.points);
-                        return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.win_msg + decision.points + " points]"];
+                        return ["Your stealth level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.win_msg + decision.points + " points]"];
                     } else {
                         decision.fail = true;
-                        return ["Your risk level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.fail_msg];
+                        return ["Your stealth level is now at: [" + risk_total + "%] and have " + (100 + risk_total) + "% chance of succeeding.\n\n", decision.fail_msg];
                     }
                 } else if (decision.win === true) {
                     return ["You already won this decision."];
