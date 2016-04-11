@@ -3064,7 +3064,7 @@
                         switch(param2) {
                             case "room_1":
                                 room_1.setDistraction(1);
-                                console.log(room_1.getDistraction());git
+                                console.log(room_1.getDistraction());
                                 break;
                             default:
                                 console.log("Error");
