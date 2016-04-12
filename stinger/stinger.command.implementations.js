@@ -1437,6 +1437,12 @@
             }
         };
 
+        var checkRoomExit = function (room_id) {
+            if (checkRoomSuccess(room_id) === true && room_id.getDataStolen() === 1) {
+                return true;
+            }
+        };
+
         me.handle = function (session, param1, param2, param3) {
 
             switch(param1) {
@@ -1559,30 +1565,39 @@
                 case "exit":
                     switch(param2) {
                         case "room_1":
-                            if (checkRoomSuccess(room_1) === true && room_1.getDataStolen() === 1) {
+                            if (checkRoomExit(room_1)) {
                                 session.output.push({output: true, text: ["Success!"], breakLine: true});
                                 room_1.setExited(1);
                                 roomClear(room_1);
                             } else {
                                 session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                                if (room_1.getDataStolen() === 0) {
+                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
+                                }
                             }
                             break;
                         case "room_2":
-                            if (checkRoomSuccess(room_2) === true && room_2.getDataStolen() === 1) {
+                            if (checkRoomExit(room_2)) {
                                 session.output.push({output: true, text: ["Success!"], breakLine: true});
                                 room_2.setExited(1);
                                 roomClear(room_2);
                             } else {
                                 session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                                if (room_2.getDataStolen() === 0) {
+                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
+                                }
                             }
                             break;
                         case "room_3":
-                            if (checkRoomSuccess(room_3) === true && room_3.getDataStolen() === 1) {
+                            if (checkRoomExit(room_3)) {
                                 session.output.push({output: true, text: ["Success!"], breakLine: true});
                                 room_3.setExited(1);
                                 roomClear(room_3);
                             } else {
                                 session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                                if (room_3.getDataStolen() === 0) {
+                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
+                                }
                             }
                             break;
                         default:
