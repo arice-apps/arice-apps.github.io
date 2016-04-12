@@ -1247,21 +1247,106 @@
             }
         };
 
-        var all_rooms = [room_1, room_2];
+        var room_3 = {
+            "door": 1,
+            "setDoor": function(status) {
+                room_3.door = status;
+            },
+            "getDoor": function() {
+                return room_3.door;
+            },
+            "motion": 1,
+            "setMotion": function(status) {
+                room_3.motion = status;
+            },
+            "getMotion": function() {
+                return room_3.motion;
+            },
+            "bioauth": 1,
+            "setBioauth": function(status) {
+                room_3.bioauth = status;
+            },
+            "getBioauth": function() {
+                return room_3.bioauth;
+            },
+            "distraction": 0,
+            "setDistraction": function(status) {
+                room_3.distraction = status;
+            },
+            "getDistraction": function() {
+                return room_3.distraction;
+            },
+            "occupied": 1,
+            "setOccupied": function(status) {
+                room_3.occupied = status;
+            },
+            "getOccupied": function() {
+                return room_3.occupied;
+            },
+            "entered": 0,
+            "setEntered": function(status) {
+                room_3.entered = status;
+            },
+            "getEntered": function() {
+                return room_3.entered;
+            },
+            "exited": 0,
+            "setExited": function(status) {
+                room_3.exited = status;
+            },
+            "getExited": function() {
+                return room_3.exited;
+            },
+            "data_stolen": 0,
+            "setDataStolen": function(status) {
+                room_3.data_stolen = status;
+            },
+            "getDataStolen": function() {
+                return room_3.data_stolen;
+            },
+            "room_clear": 0,
+            "setRoomClear": function(status) {
+                room_3.room_clear = status;
+            },
+            "getRoomClear": function() {
+                return room_3.room_clear;
+            }
+        };
+
+        var all_rooms = [room_1, room_2, room_3];
+        var room_1_truth = {
+            "door": 1,
+            "motion": 1,
+            "bioauth": 0
+        };
+        var room_2_truth = {
+            "door": 1,
+            "motion": 0,
+            "bioauth": 1
+        };
+        var room_3_truth = {
+            "door": 1,
+            "motion": 1,
+            "bioauth": 1
+        };
+        var all_rooms_truth = [room_1_truth, room_2_truth, room_3_truth];
+
+        var death_flag = 0;
 
         var room_security_status = [];
 
         var checkRoomSuccess = function (room_id) {
             return (room_id.getBioauth() === 0 &&
-                room_id.getDoor() === 0 &&
-                room_id.getDistraction() === 0 &&
-                room_id.getOccupied() === 0 &&
-                room_id.getMotion() === 0);
+            room_id.getDoor() === 0 &&
+            room_id.getOccupied() === 0 &&
+            room_id.getMotion() === 0);
         };
 
         var checkGlobalSuccess = function() {
-            if (room_1.getRoomClear() === 1 && room_2.getRoomClear() === 1) {
+            if (room_1.getRoomClear() === 1 && room_2.getRoomClear() === 1 && room_3.getRoomClear() === 1) {
                 console.log("Rooms are clear.");
+            } else {
+                console.log("All rooms not clear");
             }
         };
 
@@ -1298,7 +1383,6 @@
             } else if (room_id.getOccupied() === 1) {
                 status_list[4] = "# Room is occupied";
             }
-            console.log(status_list);
             return status_list;
         };
 
@@ -1334,24 +1418,27 @@
             return room_user_config_int;
         };
 
-        var createDistraction = function() {
-            var distraction_active = false;
+        var createDistraction = function(room_id) {
+            room_id.setDistraction(1);
+            room_id.setOccupied(1);
+            console.log("Distraction was activated!");
             for (var i = 0; i < all_rooms.length; i++) {
-                if (all_rooms[i].getDistraction() === 1) {
-                    distraction_active = true;
-                    all_rooms[i].setOccupied(1);
+                if (all_rooms[i].getDoor() !== all_rooms_truth[i].door ||
+                    all_rooms[i].getMotion() !== all_rooms_truth[i].motion ||
+                    all_rooms[i].getBioauth() !== all_rooms_truth[i].bioauth) {
+                    death_flag = 1;
+                    console.log("Employees found the room misconfigured!");
                 }
             }
-            if (distraction_active) {
-                for (var i = 0; i < all_rooms.length; i++) {
-                    if (all_rooms[i].getDistraction() === 0) {
-                        all_rooms[i].setOccupied(0);
-                    }
+            for (var i = 0; i < all_rooms.length; i++) {
+                if (all_rooms[i].getDistraction() === 0) {
+                    all_rooms[i].setOccupied(0);
                 }
             }
         };
 
         me.handle = function (session, param1, param2, param3) {
+
             switch(param1) {
                 case "set":
                     switch(param2) {
@@ -1359,25 +1446,48 @@
                             room_security_status = createRoomConfig(room_1, param3);
                             session.output.push({output: true, text: printRoomSecurityStatus(room_1), breakLine: true});
                             break;
+                        case "room_2":
+                            room_security_status = createRoomConfig(room_2, param3);
+                            session.output.push({output: true, text: printRoomSecurityStatus(room_2), breakLine: true});
+                            break;
+                        case "room_3":
+                            room_security_status = createRoomConfig(room_3, param3);
+                            session.output.push({output: true, text: printRoomSecurityStatus(room_3), breakLine: true});
+                            break;
                         default:
                             console.log("Error");
                             break;
                     }
                     break;
                 case "status":
+                    session.output.push({output: true, text: printRoomGlobalStatus(room_3), breakLine: true});
+                    session.output.push({output: true, text: ["\nRoom #3 Status:\n====================\n"], breakLine: false});
                     session.output.push({output: true, text: printRoomGlobalStatus(room_2), breakLine: true});
                     session.output.push({output: true, text: ["\nRoom #2 Status:\n====================\n"], breakLine: false});
                     session.output.push({output: true, text: printRoomGlobalStatus(room_1), breakLine: true});
                     session.output.push({output: true, text: ["\nRoom #1 Status:\n====================\n"], breakLine: false});
                     break;
-                case "distract":
+                case "alarm":
                     switch(param2) {
                         case "room_1":
                             if (param3 === "on") {
-                                room_1.setDistraction(1);
-                                createDistraction();
+                                createDistraction(room_1);
                             } else if (param3 === "off") {
                                 room_1.setDistraction(0);
+                            }
+                            break;
+                        case "room_2":
+                            if (param3 === "on") {
+                                createDistraction(room_2);
+                            } else if (param3 === "off") {
+                                room_2.setDistraction(0);
+                            }
+                            break;
+                        case "room_3":
+                            if (param3 === "on") {
+                                createDistraction(room_3);
+                            } else if (param3 === "off") {
+                                room_3.setDistraction(0);
                             }
                             break;
                         default:
@@ -1391,6 +1501,22 @@
                             if (room_1.getEntered() === 1 && room_1.getExited() === 0) {
                                 session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
                                 room_1.setDataStolen(1);
+                            } else {
+                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
+                            }
+                            break;
+                        case "room_2":
+                            if (room_2.getEntered() === 1 && room_2.getExited() === 0) {
+                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
+                                room_2.setDataStolen(1);
+                            } else {
+                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
+                            }
+                            break;
+                        case "room_3":
+                            if (room_3.getEntered() === 1 && room_3.getExited() === 0) {
+                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
+                                room_3.setDataStolen(1);
                             } else {
                                 session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
                             }
@@ -1410,6 +1536,22 @@
                                 session.output.push({output: true, text: ["Fail!"], breakLine: true});
                             }
                             break;
+                        case "room_2":
+                            if (checkRoomSuccess(room_2) === true) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_2.setEntered(1);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
+                        case "room_3":
+                            if (checkRoomSuccess(room_3) === true) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_3.setEntered(1);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -1425,12 +1567,32 @@
                                 session.output.push({output: true, text: ["Fail!"], breakLine: true});
                             }
                             break;
+                        case "room_2":
+                            if (checkRoomSuccess(room_2) === true && room_2.getDataStolen() === 1) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_2.setExited(1);
+                                roomClear(room_2);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
+                        case "room_3":
+                            if (checkRoomSuccess(room_3) === true && room_3.getDataStolen() === 1) {
+                                session.output.push({output: true, text: ["Success!"], breakLine: true});
+                                room_3.setExited(1);
+                                roomClear(room_3);
+                            } else {
+                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
+                            }
+                            break;
                         default:
                             break;
                     }
                     break;
                 case "check-local":
                     console.log(checkRoomSuccess(room_1));
+                    console.log(checkRoomSuccess(room_2));
+                    console.log(checkRoomSuccess(room_3));
                     break;
                 case "check-global":
                     checkGlobalSuccess();
