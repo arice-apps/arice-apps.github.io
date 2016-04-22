@@ -1108,6 +1108,30 @@
 
     var stingerStrikeCommandHandler = function () {
 
+        var door_1 = {
+            "id": 1,
+            "name": "Rift Entity Containment Lab",
+            "win_message": "The strike team reports multiple rift entities sedated and attached to monitoring equipment.\n\n",
+            "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal....Down./+_",
+            "ciphertext": "\n>>>P.A/SSWOR,D: >>> BNAHRORAUMCL",
+            "plaintext": "BRUNOMARCHAL",
+            "hint": "!!!.....0,..22,,,///>!Rails./##.../1",
+            "complete": false,
+            "set_complete": function(status) {
+                door_1.complete = status;
+            }
+        };
+        var door_2 = {
+            "id": 2,
+            "name": "Records & Program Archive Office",
+            "complete": false
+        };
+        var door_3 = {
+            "id": 3,
+            "name": "Counterintelligence Technologies Branch",
+            "complete": false
+        };
+
         var me = {};
         me.command = 'stinger-str';
         me.description = ['Command a strike team through the STINGER interface.',
@@ -1115,505 +1139,64 @@
             "Example: stinger-str status [insert room_id]"
         ];
 
-        var room_1 = {
-            "door": 1,
-            "setDoor": function(status) {
-                room_1.door = status;
-            },
-            "getDoor": function() {
-                return room_1.door;
-            },
-            "motion": 1,
-            "setMotion": function(status) {
-                room_1.motion = status;
-            },
-            "getMotion": function() {
-                return room_1.motion;
-            },
-            "bioauth": 0,
-            "setBioauth": function(status) {
-                room_1.bioauth = status;
-            },
-            "getBioauth": function() {
-                return room_1.bioauth;
-            },
-            "distraction": 0,
-            "setDistraction": function(status) {
-                room_1.distraction = status;
-            },
-            "getDistraction": function() {
-                return room_1.distraction;
-            },
-            "occupied": 0,
-            "setOccupied": function(status) {
-                room_1.occupied = status;
-            },
-            "getOccupied": function() {
-                return room_1.occupied;
-            },
-            "entered": 0,
-            "setEntered": function(status) {
-                room_1.entered = status;
-            },
-            "getEntered": function() {
-                return room_1.entered;
-            },
-            "exited": 0,
-            "setExited": function(status) {
-                room_1.exited = status;
-            },
-            "getExited": function() {
-                return room_1.exited;
-            },
-            "data_stolen": 0,
-            "setDataStolen": function(status) {
-                room_1.data_stolen = status;
-            },
-            "getDataStolen": function() {
-                return room_1.data_stolen;
-            },
-            "room_clear": 0,
-            "setRoomClear": function(status) {
-                room_1.room_clear = status;
-            },
-            "getRoomClear": function() {
-                return room_1.room_clear;
-            }
-        };
-
-        var room_2 = {
-            "door": 1,
-            "setDoor": function(status) {
-                room_2.door = status;
-            },
-            "getDoor": function() {
-                return room_2.door;
-            },
-            "motion": 0,
-            "setMotion": function(status) {
-                room_2.motion = status;
-            },
-            "getMotion": function() {
-                return room_2.motion;
-            },
-            "bioauth": 1,
-            "setBioauth": function(status) {
-                room_2.bioauth = status;
-            },
-            "getBioauth": function() {
-                return room_2.bioauth;
-            },
-            "distraction": 0,
-            "setDistraction": function(status) {
-                room_2.distraction = status;
-            },
-            "getDistraction": function() {
-                return room_2.distraction;
-            },
-            "occupied": 1,
-            "setOccupied": function(status) {
-                room_2.occupied = status;
-            },
-            "getOccupied": function() {
-                return room_2.occupied;
-            },
-            "entered": 0,
-            "setEntered": function(status) {
-                room_2.entered = status;
-            },
-            "getEntered": function() {
-                return room_2.entered;
-            },
-            "exited": 0,
-            "setExited": function(status) {
-                room_2.exited = status;
-            },
-            "getExited": function() {
-                return room_2.exited;
-            },
-            "data_stolen": 0,
-            "setDataStolen": function(status) {
-                room_2.data_stolen = status;
-            },
-            "getDataStolen": function() {
-                return room_2.data_stolen;
-            },
-            "room_clear": 0,
-            "setRoomClear": function(status) {
-                room_2.room_clear = status;
-            },
-            "getRoomClear": function() {
-                return room_2.room_clear;
-            }
-        };
-
-        var room_3 = {
-            "door": 1,
-            "setDoor": function(status) {
-                room_3.door = status;
-            },
-            "getDoor": function() {
-                return room_3.door;
-            },
-            "motion": 1,
-            "setMotion": function(status) {
-                room_3.motion = status;
-            },
-            "getMotion": function() {
-                return room_3.motion;
-            },
-            "bioauth": 1,
-            "setBioauth": function(status) {
-                room_3.bioauth = status;
-            },
-            "getBioauth": function() {
-                return room_3.bioauth;
-            },
-            "distraction": 0,
-            "setDistraction": function(status) {
-                room_3.distraction = status;
-            },
-            "getDistraction": function() {
-                return room_3.distraction;
-            },
-            "occupied": 1,
-            "setOccupied": function(status) {
-                room_3.occupied = status;
-            },
-            "getOccupied": function() {
-                return room_3.occupied;
-            },
-            "entered": 0,
-            "setEntered": function(status) {
-                room_3.entered = status;
-            },
-            "getEntered": function() {
-                return room_3.entered;
-            },
-            "exited": 0,
-            "setExited": function(status) {
-                room_3.exited = status;
-            },
-            "getExited": function() {
-                return room_3.exited;
-            },
-            "data_stolen": 0,
-            "setDataStolen": function(status) {
-                room_3.data_stolen = status;
-            },
-            "getDataStolen": function() {
-                return room_3.data_stolen;
-            },
-            "room_clear": 0,
-            "setRoomClear": function(status) {
-                room_3.room_clear = status;
-            },
-            "getRoomClear": function() {
-                return room_3.room_clear;
-            }
-        };
-
-        var all_rooms = [room_1, room_2, room_3];
-        var room_1_truth = {
-            "door": 1,
-            "motion": 1,
-            "bioauth": 0
-        };
-        var room_2_truth = {
-            "door": 1,
-            "motion": 0,
-            "bioauth": 1
-        };
-        var room_3_truth = {
-            "door": 1,
-            "motion": 1,
-            "bioauth": 1
-        };
-        var all_rooms_truth = [room_1_truth, room_2_truth, room_3_truth];
-
-        var death_flag = 0;
-
-        var room_security_status = [];
-
-        var checkRoomSuccess = function (room_id) {
-            return (room_id.getBioauth() === 0 &&
-            room_id.getDoor() === 0 &&
-            room_id.getOccupied() === 0 &&
-            room_id.getMotion() === 0);
-        };
-
-        var checkGlobalSuccess = function() {
-            if (room_1.getRoomClear() === 1 && room_2.getRoomClear() === 1 && room_3.getRoomClear() === 1) {
-                console.log("Rooms are clear.");
-            } else {
-                console.log("All rooms not clear");
-            }
-        };
-
-        var roomClear = function(room_id) {
-            if (room_id.getEntered() === 1 && room_id.getExited() === 1) {
-                room_id.setRoomClear(1);
-            }
-        };
-
-        var printRoomGlobalStatus = function (room_id) {
-            var status_list = [];
-            if (room_id.getDoor() === 0) {
-                status_list[0] = "# Door off";
-            } else if (room_id.getDoor() === 1) {
-                status_list[0] = "# Door on";
-            }
-            if (room_id.getMotion() === 0) {
-                status_list[1] = "# Motion detection off";
-            } else if (room_id.getMotion() === 1) {
-                status_list[1] = "# Motion detection on";
-            }
-            if (room_id.getBioauth() === 0) {
-                status_list[2] = "# Bioauthentication off";
-            } else if (room_id.getBioauth() === 1) {
-                status_list[2] = "# Bioauthentication on";
-            }
-            if (room_id.getDistraction() === 0) {
-                status_list[3] = "# Alarm distraction off";
-            } else if (room_id.getDistraction() === 1) {
-                status_list[3] = "# Alarm distraction on";
-            }
-            if (room_id.getOccupied() === 0) {
-                status_list[4] = "# Room is empty";
-            } else if (room_id.getOccupied() === 1) {
-                status_list[4] = "# Room is occupied";
-            }
-            return status_list;
-        };
-
-        var printRoomSecurityStatus = function(room_id) {
-            var status_list = [];
-            if (room_id.getDoor() === 0) {
-                status_list[0] = "# Door off";
-            } else if (room_id.getDoor() === 1) {
-                status_list[0] = "# Door on";
-            }
-            if (room_id.getMotion() === 0) {
-                status_list[1] = "# Motion detection off";
-            } else if (room_id.getMotion() === 1) {
-                status_list[1] = "# Motion detection on";
-            }
-            if (room_id.getBioauth() === 0) {
-                status_list[2] = "# Bioauthentication off";
-            } else if (room_id.getBioauth() === 1) {
-                status_list[2] = "# Bioauthentication on";
-            }
-            return status_list;
-        };
-
-        var createRoomConfig = function(room_id, room_user_input) {
-            var room_user_config = room_user_input.toString().split("-");
-            var room_user_config_int = [0, 0, 0];
-            for (var i = 0; i < room_user_config.length; i++) {
-                room_user_config_int[i] = parseInt(room_user_config[i]);
-            }
-            room_id.setDoor(room_user_config_int[0]);
-            room_id.setMotion(room_user_config_int[1]);
-            room_id.setBioauth(room_user_config_int[2]);
-            return room_user_config_int;
-        };
-
-        var createDistraction = function(room_id) {
-            room_id.setDistraction(1);
-            room_id.setOccupied(1);
-            console.log("Distraction was activated!");
-            for (var i = 0; i < all_rooms.length; i++) {
-                if (all_rooms[i].getDoor() !== all_rooms_truth[i].door ||
-                    all_rooms[i].getMotion() !== all_rooms_truth[i].motion ||
-                    all_rooms[i].getBioauth() !== all_rooms_truth[i].bioauth) {
-                    death_flag = 1;
-                    console.log("Employees found the room misconfigured!");
-                }
-            }
-            for (var i = 0; i < all_rooms.length; i++) {
-                if (all_rooms[i].getDistraction() === 0) {
-                    all_rooms[i].setOccupied(0);
-                }
-            }
-        };
-
-        var checkRoomExit = function (room_id) {
-            if (checkRoomSuccess(room_id) === true && room_id.getDataStolen() === 1) {
-                return true;
-            }
-        };
 
         me.handle = function (session, param1, param2, param3) {
 
             switch(param1) {
-                case "set":
+                // Door hack command
+                case "imp":
                     switch(param2) {
-                        case "room_1":
-                            room_security_status = createRoomConfig(room_1, param3);
-                            session.output.push({output: true, text: printRoomSecurityStatus(room_1), breakLine: true});
-                            break;
-                        case "room_2":
-                            room_security_status = createRoomConfig(room_2, param3);
-                            session.output.push({output: true, text: printRoomSecurityStatus(room_2), breakLine: true});
-                            break;
-                        case "room_3":
-                            room_security_status = createRoomConfig(room_3, param3);
-                            session.output.push({output: true, text: printRoomSecurityStatus(room_3), breakLine: true});
-                            break;
-                        default:
-                            console.log("Error");
-                            break;
-                    }
-                    break;
-                case "status":
-                    session.output.push({output: true, text: printRoomGlobalStatus(room_3), breakLine: true});
-                    session.output.push({output: true, text: ["\nRoom #3 Status:\n====================\n"], breakLine: false});
-                    session.output.push({output: true, text: printRoomGlobalStatus(room_2), breakLine: true});
-                    session.output.push({output: true, text: ["\nRoom #2 Status:\n====================\n"], breakLine: false});
-                    session.output.push({output: true, text: printRoomGlobalStatus(room_1), breakLine: true});
-                    session.output.push({output: true, text: ["\nRoom #1 Status:\n====================\n"], breakLine: false});
-                    break;
-                case "alarm":
-                    switch(param2) {
-                        case "room_1":
-                            if (param3 === "on") {
-                                createDistraction(room_1);
-                            } else if (param3 === "off") {
-                                room_1.setDistraction(0);
-                            }
-                            break;
-                        case "room_2":
-                            if (param3 === "on") {
-                                createDistraction(room_2);
-                            } else if (param3 === "off") {
-                                room_2.setDistraction(0);
-                            }
-                            break;
-                        case "room_3":
-                            if (param3 === "on") {
-                                createDistraction(room_3);
-                            } else if (param3 === "off") {
-                                room_3.setDistraction(0);
+                        case "door_1":
+                            if (param3 === "--aggressive") {
+                                session.output.push({ output: true, text: [
+                                    "\n[[AGGRESSIVE SEARCH INITIATED...]]\n",
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_1.clue,
+                                    door_1.hint,
+                                    door_1.ciphertext
+                                ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_1.clue,
+                                    door_1.ciphertext
+                                ], breakLine: true });
                             }
                             break;
                         default:
-                            console.log("Error");
+                            console.log("Error with command!");
                             break;
+
                     }
                     break;
-                case "istealer":
+                // Password submit command
+                case "login":
                     switch(param2) {
-                        case "room_1":
-                            if (room_1.getEntered() === 1 && room_1.getExited() === 0) {
-                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
-                                room_1.setDataStolen(1);
-                            } else {
-                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
-                            }
-                            break;
-                        case "room_2":
-                            if (room_2.getEntered() === 1 && room_2.getExited() === 0) {
-                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
-                                room_2.setDataStolen(1);
-                            } else {
-                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
-                            }
-                            break;
-                        case "room_3":
-                            if (room_3.getEntered() === 1 && room_3.getExited() === 0) {
-                                session.output.push({output: true, text: ["Data stolen from the room!"], breakLine: true});
-                                room_3.setDataStolen(1);
-                            } else {
-                                session.output.push({output: true, text: ["You are not inside the room!"], breakLine: true});
+                        case "door_1":
+                            if (param3 === door_1.plaintext) {
+                                door_1.set_complete(true);
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door was hacked successfully!\n",
+                                    "\n",
+                                    door_1.win_message,
+                                    "iStealer beacon devices are activated, scanning for data sources... Loading modules....\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Cable attachment detected, downloading data...\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Data exfiltration complete! Exit command sent."
+                                ], breakLine: true });
                             }
                             break;
                         default:
-                            console.log("Error");
+                            console.log("Error with command!");
                             break;
                     }
-                    break;
-                case "enter":
-                    switch(param2) {
-                        case "room_1":
-                            if (checkRoomSuccess(room_1) === true) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_1.setEntered(1);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                            }
-                            break;
-                        case "room_2":
-                            if (checkRoomSuccess(room_2) === true) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_2.setEntered(1);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                            }
-                            break;
-                        case "room_3":
-                            if (checkRoomSuccess(room_3) === true) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_3.setEntered(1);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case "exit":
-                    switch(param2) {
-                        case "room_1":
-                            if (checkRoomExit(room_1)) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_1.setExited(1);
-                                roomClear(room_1);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                                if (room_1.getDataStolen() === 0) {
-                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
-                                }
-                            }
-                            break;
-                        case "room_2":
-                            if (checkRoomExit(room_2)) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_2.setExited(1);
-                                roomClear(room_2);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                                if (room_2.getDataStolen() === 0) {
-                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
-                                }
-                            }
-                            break;
-                        case "room_3":
-                            if (checkRoomExit(room_3)) {
-                                session.output.push({output: true, text: ["Success!"], breakLine: true});
-                                room_3.setExited(1);
-                                roomClear(room_3);
-                            } else {
-                                session.output.push({output: true, text: ["Fail!"], breakLine: true});
-                                if (room_3.getDataStolen() === 0) {
-                                    session.output.push({output: true, text: ["You didn't steal the room data!"], breakLine: true});
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case "check-local":
-                    console.log(checkRoomSuccess(room_1));
-                    console.log(checkRoomSuccess(room_2));
-                    console.log(checkRoomSuccess(room_3));
-                    break;
-                case "check-global":
-                    checkGlobalSuccess();
                     break;
                 default:
-                    console.log("Error with room!");
+                    console.log("Error with command!");
                     break;
             }
         };
