@@ -1113,9 +1113,9 @@
             "name": "Rift Entity Containment Lab",
             "win_message": "The strike team reports multiple rift entities sedated and attached to monitoring equipment.\n\n",
             "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal....Down./+_",
+            "hint": "!!!.....0,..22,,,///>!Rails./##.../1",
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> BNAHRORAUMCL",
             "plaintext": "BRUNOMARCHAL",
-            "hint": "!!!.....0,..22,,,///>!Rails./##.../1",
             "complete": false,
             "set_complete": function(status) {
                 door_1.complete = status;
@@ -1131,6 +1131,11 @@
         var door_2 = {
             "id": 2,
             "name": "Records & Program Archive Office",
+            "win_message": ".\n\n",
+            "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal....Down./+_",
+            "hint": "!!!.....0,..22,,,///>!HINTGOESHERE./##.../1",
+            "ciphertext": "\n>>>P.A/SSWOR,D: >>> 54 53 33 75 74 26 34 87",
+            "plaintext": "ALANGUTH",
             "complete": false,
             "set_complete": function(status) {
                 door_2.complete = status;
@@ -1146,6 +1151,11 @@
         var door_3 = {
             "id": 3,
             "name": "Counterintelligence Technologies Branch",
+            "win_message": ".\n\n",
+            "clue": "",
+            "hint": "!!!.....0,..22,,,///>!HINTGOESHERE./##.../1",
+            "ciphertext": "\n>>>P.A/SSWOR,D: >>> 37727173769",
+            "plaintext": "VISHNU",
             "complete": false,
             "set_complete": function(status) {
                 door_3.complete = status;
@@ -1161,7 +1171,7 @@
 
         var me = {};
         me.command = 'stinger-str';
-        me.description = ['Command a strike team through the STINGER interface.',
+        me.description = ['Help a strike team through the STINGER interface.',
             "\n",
             "Example: stinger-str status [insert room_id]"
         ];
@@ -1190,6 +1200,40 @@
                                 ], breakLine: true });
                             }
                             break;
+                        case "door_2":
+                            if (param3 === "--deep") {
+                                session.output.push({ output: true, text: [
+                                    "\n[[DEEP SEARCH INITIATED...]]\n",
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_2.clue,
+                                    door_2.hint,
+                                    door_2.ciphertext
+                                ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_2.clue,
+                                    door_2.ciphertext
+                                ], breakLine: true });
+                            }
+                            break;
+                        case "door_3":
+                            if (param3 === "--deep") {
+                                session.output.push({ output: true, text: [
+                                    "\n[[DEEP SEARCH INITIATED...]]\n",
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_3.clue,
+                                    door_3.hint,
+                                    door_3.ciphertext
+                                ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\nPrinting results of door access system implant:\n\n",
+                                    door_3.clue,
+                                    door_3.ciphertext
+                                ], breakLine: true });
+                            }
+                            break;
                         default:
                             console.log("Error with command!");
                             break;
@@ -1209,6 +1253,46 @@
                                     "\n",
                                     // Add door win message here
                                     door_1.win_message,
+                                    "iStealer beacon devices are activated, scanning for data sources... Loading modules....\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Cable attachment detected, downloading data...\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Data exfiltration complete! Exit command sent."
+                                ], breakLine: true });
+                            }
+                            break;
+                        case "door_2":
+                            if (param3 === door_2.plaintext) {
+                                // Set door as completed here
+                                door_2.set_complete(true);
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door was hacked successfully!\n",
+                                    "\n",
+                                    // Add door win message here
+                                    door_2.win_message,
+                                    "iStealer beacon devices are activated, scanning for data sources... Loading modules....\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Cable attachment detected, downloading data...\n",
+                                    "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
+                                    "\n",
+                                    "Data exfiltration complete! Exit command sent."
+                                ], breakLine: true });
+                            }
+                            break;
+                        case "door_3":
+                            if (param3 === door_3.plaintext) {
+                                // Set door as completed here
+                                door_3.set_complete(true);
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door was hacked successfully!\n",
+                                    "\n",
+                                    // Add door win message here
+                                    door_3.win_message,
                                     "iStealer beacon devices are activated, scanning for data sources... Loading modules....\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
