@@ -1119,17 +1119,44 @@
             "complete": false,
             "set_complete": function(status) {
                 door_1.complete = status;
+            },
+            "get_complete": function() {
+                if (door_1.complete === true) {
+                    return "OPEN";
+                } else {
+                    return "LOCKED";
+                }
             }
         };
         var door_2 = {
             "id": 2,
             "name": "Records & Program Archive Office",
-            "complete": false
+            "complete": false,
+            "set_complete": function(status) {
+                door_2.complete = status;
+            },
+            "get_complete": function() {
+                if (door_2.complete === true) {
+                    return "OPEN";
+                } else {
+                    return "LOCKED";
+                }
+            }
         };
         var door_3 = {
             "id": 3,
             "name": "Counterintelligence Technologies Branch",
-            "complete": false
+            "complete": false,
+            "set_complete": function(status) {
+                door_3.complete = status;
+            },
+            "get_complete": function() {
+                if (door_3.complete === true) {
+                    return "OPEN";
+                } else {
+                    return "LOCKED";
+                }
+            }
         };
 
         var me = {};
@@ -1147,9 +1174,9 @@
                 case "imp":
                     switch(param2) {
                         case "door_1":
-                            if (param3 === "--aggressive") {
+                            if (param3 === "--deep") {
                                 session.output.push({ output: true, text: [
-                                    "\n[[AGGRESSIVE SEARCH INITIATED...]]\n",
+                                    "\n[[DEEP SEARCH INITIATED...]]\n",
                                     "\nPrinting results of door access system implant:\n\n",
                                     door_1.clue,
                                     door_1.hint,
@@ -1174,11 +1201,13 @@
                     switch(param2) {
                         case "door_1":
                             if (param3 === door_1.plaintext) {
+                                // Set door as completed here
                                 door_1.set_complete(true);
                                 session.output.push({ output: true, text: [
                                     "\n",
                                     "Door was hacked successfully!\n",
                                     "\n",
+                                    // Add door win message here
                                     door_1.win_message,
                                     "iStealer beacon devices are activated, scanning for data sources... Loading modules....\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
@@ -1194,6 +1223,33 @@
                             console.log("Error with command!");
                             break;
                     }
+                    break;
+                // Operation success check command
+                case "op-complete":
+                    if (door_1.complete === true && door_2.complete === true && door_3.complete === true) {
+                        session.output.push({ output: true, text: [
+                            "\n",
+                            "Mission is a success! All high value rooms cleared and data obtained. Moving on to other sections of facility.:\n\n",
+                            "\n",
+                            "Success code: PL91BW"
+                        ], breakLine: true });
+                    } else {
+                        session.output.push({ output: true, text: [
+                            "\n",
+                            "Success conditions not met, continue mission and clear all rooms."
+                        ], breakLine: true });
+                    }
+                    break;
+                // Door status check command
+                case "list":
+                    session.output.push({ output: true, text: [
+                        "\n",
+                        "Door_1 : " + door_1.get_complete(),
+                        "\n",
+                        "Door_2 : " + door_2.get_complete(),
+                        "\n",
+                        "Door_3 : " + door_2.get_complete()
+                    ], breakLine: true });
                     break;
                 default:
                     console.log("Error with command!");
