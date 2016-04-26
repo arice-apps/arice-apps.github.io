@@ -803,7 +803,7 @@
             "name": "Rift Entity Containment Lab",
             "win_message": "The strike team reports multiple rift entities sedated and attached to monitoring equipment.\n\n",
             "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal.Ri.ght...Down./+_",
-            "hint": "!!!.....0,..22,,,///>!3Rails./##.../1",
+            "hint": "!!!.....+,..+,,,///>!Three-Rails./##.../+",
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> BNAH RORA UMCL",
             "plaintext": "BRUNOMARCHAL",
             "complete": false,
@@ -822,7 +822,7 @@
             "id": 2,
             "name": "Records & Program Archive Office",
             "win_message": "Several archives on current SIGIL programs and personnel are in the room, should provide excellent intel on operations.\n\n",
-            "clue": "..43%%...%%!..Alpha.3,,4Numeric///...Password\n-->>...Co.de$$..//Nam.#e--+Ram.say--///.\nCODEW.ORD./SATURN",
+            "clue": "..43%%...%%!..Alpha.3,,4Numeric///...Password\n-->>...Co.de$$..//Nam.#e--+Ram.say--///.\nCODEW.ORD./SATURN/..KEY=MANY",
             "hint": ["!!!.....SATUR./##.../1","!!!.....NBCDE./##.../1","!!!.....FGH(I/J)K./##.../1","!!!.....LMOPQ./##.../1","!!!.....VWXYZ./##.../1"],
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> 54 53 33 75 74 26 34 87",
             "plaintext": "ALANGUTH",
@@ -842,10 +842,10 @@
             "id": 3,
             "name": "Counterintelligence Technologies Branch",
             "win_message": "Files on Black Watchmen agents were found, along with research program details for equipment designed to perform surveillance on SIGIL targets.\n\n",
-            "clue": ["!..Alpha.3,,4Numeric///...Password","...>%%$...//Mar.k//___.Vic.tor//._Queb%ec//...Lub.yanka..","..QAZWFDKUJCERBPXVOTYSIHLGNM","...//..2...#$.SPAR.ES=(3,7)<<../"],
+            "clue": ["!..Alpha.3,,4Numeric///...Password","...>%%$...//Mar.k//___.Vic.tor//._Queb%ec//...Lub.yanka..","QAZWFDKUJCERBPXVOTYSIHLGNM/.","...//..2...#$.SPAR.ES=(3,7)<<../"],
             "hint": "!!!.....0,..22,,,///>!..///@###H.ollo.w(()----..C.oin>.,Checke.r()(Boar.d/2...../##.../1",
-            "ciphertext": "\n>>>P.A/SSWOR,D: >>> 37727173769",
-            "plaintext": "VISHNU",
+            "ciphertext": "\n>>>P.A/SSWOR,D: >>> 6723239323323273",
+            "plaintext": "DIETERZEH",
             "complete": false,
             "set_complete": function(status) {
                 door_3.complete = status;
@@ -859,11 +859,16 @@
             }
         };
 
+        var success_code = "PL" + (7*13) + "BW";
+
         var me = {};
         me.command = 'stinger-str';
-        me.description = ['Help a strike team through the STINGER interface.',
+        me.description = ['Provide strike team support from the STINGER terminal.',
             "\n",
-            "Example: stinger-str status [insert room_id]"
+            "Example: stinger-str list",
+            "Example: stinger-str imp <door_id>",
+            "Example: stinger-str login <door_id> <password>",
+            "Example: stinger-str op-complete"
         ];
 
 
@@ -1007,7 +1012,7 @@
                             "\n",
                             "All high value rooms cleared and data obtained. Moving on to other sections of facility...\n",
                             "\n",
-                            "Success code: PL91BW"
+                            "Success code: " + success_code
                         ], breakLine: true });
                     } else {
                         session.output.push({ output: true, text: [
