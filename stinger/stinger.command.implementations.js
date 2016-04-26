@@ -823,7 +823,7 @@
             "name": "Records & Program Archive Office",
             "win_message": "Several archives on current SIGIL programs and personnel are in the room, should provide excellent intel on operations.\n\n",
             "clue": "..43%%...%%!..Alpha.3,,4Numeric///...Password\n-->>...Co.de$$..//Nam.#e--+Ram.say--///.\nCODEW.ORD./SATURN",
-            "hint": ["!!!.....SATUR./##.../1","!!!.....NBCDE./##.../1","!!!.....FGH(I/J)K./##.../1","!!!.....LMNOPQ./##.../1","!!!.....VWXYZ./##.../1"],
+            "hint": ["!!!.....SATUR./##.../1","!!!.....NBCDE./##.../1","!!!.....FGH(I/J)K./##.../1","!!!.....LMOPQ./##.../1","!!!.....VWXYZ./##.../1"],
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> 54 53 33 75 74 26 34 87",
             "plaintext": "ALANGUTH",
             "complete": false,
@@ -949,7 +949,7 @@
                                     "Cable attachment detected, downloading data...\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
-                                    "Data exfiltration complete! Exit command sent."
+                                    "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HILSHIRE"
                                 ], breakLine: true });
                             }
                             break;
@@ -969,7 +969,7 @@
                                     "Cable attachment detected, downloading data...\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
-                                    "Data exfiltration complete! Exit command sent."
+                                    "Data exfiltration complete! Exit command sent. Extracted supervising officer name: CROFTMORE"
                                 ], breakLine: true });
                             }
                             break;
@@ -989,7 +989,7 @@
                                     "Cable attachment detected, downloading data...\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
-                                    "Data exfiltration complete! Exit command sent."
+                                    "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HASKELL"
                                 ], breakLine: true });
                             }
                             break;
@@ -1022,11 +1022,11 @@
                 case "list":
                     session.output.push({ output: true, text: [
                         "\n",
-                        "Door_1 : " + door_1.get_complete(),
+                        "door_1 : " + door_1.get_complete(),
                         "\n",
-                        "Door_2 : " + door_2.get_complete(),
+                        "door_2 : " + door_2.get_complete(),
                         "\n",
-                        "Door_3 : " + door_3.get_complete()
+                        "door_3 : " + door_3.get_complete()
                     ], breakLine: true });
                     break;
                 default:
