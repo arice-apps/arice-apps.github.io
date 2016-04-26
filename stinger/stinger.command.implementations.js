@@ -1112,9 +1112,9 @@
             "id": 1,
             "name": "Rift Entity Containment Lab",
             "win_message": "The strike team reports multiple rift entities sedated and attached to monitoring equipment.\n\n",
-            "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal....Down./+_",
-            "hint": "!!!.....0,..22,,,///>!Rails./##.../1",
-            "ciphertext": "\n>>>P.A/SSWOR,D: >>> BNAHRORAUMCL",
+            "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal.Ri.ght...Down./+_",
+            "hint": "!!!.....0,..22,,,///>!3Rails./##.../1",
+            "ciphertext": "\n>>>P.A/SSWOR,D: >>> BNAH RORA UMCL",
             "plaintext": "BRUNOMARCHAL",
             "complete": false,
             "set_complete": function(status) {
@@ -1131,9 +1131,9 @@
         var door_2 = {
             "id": 2,
             "name": "Records & Program Archive Office",
-            "win_message": ".\n\n",
-            "clue": "..a2/...Alpha.3,,4Numeric///...Password\n...===?//...Dia./gonal....Down./+_",
-            "hint": "!!!.....0,..22,,,///>!HINTGOESHERE./##.../1",
+            "win_message": "Several archives on current SIGIL programs and personnel are in the room, should provide excellent intel on operations.\n\n",
+            "clue": "..43%%...%%!..Alpha.3,,4Numeric///...Password\n-->>...Co.de$$..//Nam.#e--+Ram.say--///.\nCODEW.ORD./SATURN",
+            "hint": ["!!!.....SATUR./##.../1","!!!.....NBCDE./##.../1","!!!.....FGH(I/J)K./##.../1","!!!.....LMNOPQ./##.../1","!!!.....VWXYZ./##.../1"],
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> 54 53 33 75 74 26 34 87",
             "plaintext": "ALANGUTH",
             "complete": false,
@@ -1151,9 +1151,9 @@
         var door_3 = {
             "id": 3,
             "name": "Counterintelligence Technologies Branch",
-            "win_message": ".\n\n",
-            "clue": "",
-            "hint": "!!!.....0,..22,,,///>!HINTGOESHERE./##.../1",
+            "win_message": "Files on Black Watchmen agents were found, along with research program details for equipment designed to perform surveillance on SIGIL targets.\n\n",
+            "clue": ["!..Alpha.3,,4Numeric///...Password","...>%%$...//Mar.k//___.Vic.tor//._Queb%ec//...Lub.yanka..","..QAZWFDKUJCERBPXVOTYSIHLGNM","...//..2...#$.SPAR.ES=(3,7)<<../"],
+            "hint": "!!!.....0,..22,,,///>!..///@###H.ollo.w(()----..C.oin>.,Checke.r()(Boar.d/2...../##.../1",
             "ciphertext": "\n>>>P.A/SSWOR,D: >>> 37727173769",
             "plaintext": "VISHNU",
             "complete": false,
@@ -1189,7 +1189,7 @@
                                     "\n[[DEEP SEARCH INITIATED...]]\n",
                                     "\nPrinting results of door access system implant:\n\n",
                                     door_1.clue,
-                                    door_1.hint,
+                                    "\n" + door_1.hint,
                                     door_1.ciphertext
                                 ], breakLine: true });
                             } else {
@@ -1202,12 +1202,12 @@
                             break;
                         case "door_2":
                             if (param3 === "--deep") {
+                                session.output.push({ output: true, text: [door_2.ciphertext], breakLine: true });
+                                session.output.push({ output: true, text: door_2.hint, breakLine: false });
                                 session.output.push({ output: true, text: [
                                     "\n[[DEEP SEARCH INITIATED...]]\n",
                                     "\nPrinting results of door access system implant:\n\n",
-                                    door_2.clue,
-                                    door_2.hint,
-                                    door_2.ciphertext
+                                    door_2.clue
                                 ], breakLine: true });
                             } else {
                                 session.output.push({ output: true, text: [
@@ -1219,18 +1219,18 @@
                             break;
                         case "door_3":
                             if (param3 === "--deep") {
+                                session.output.push({output: true, text: [door_3.ciphertext], breakLine: true});
+                                session.output.push({output: true, text: [door_3.hint], breakLine: false});
+                                session.output.push({output: true, text: door_3.clue, breakLine: true});
                                 session.output.push({ output: true, text: [
                                     "\n[[DEEP SEARCH INITIATED...]]\n",
-                                    "\nPrinting results of door access system implant:\n\n",
-                                    door_3.clue,
-                                    door_3.hint,
-                                    door_3.ciphertext
+                                    "\nPrinting results of door access system implant:\n"
                                 ], breakLine: true });
                             } else {
+                                session.output.push({output: true, text: [door_3.ciphertext], breakLine: true});
+                                session.output.push({output: true, text: door_3.clue, breakLine: false});
                                 session.output.push({ output: true, text: [
-                                    "\nPrinting results of door access system implant:\n\n",
-                                    door_3.clue,
-                                    door_3.ciphertext
+                                    "\nPrinting results of door access system implant:\n"
                                 ], breakLine: true });
                             }
                             break;
@@ -1313,14 +1313,18 @@
                     if (door_1.complete === true && door_2.complete === true && door_3.complete === true) {
                         session.output.push({ output: true, text: [
                             "\n",
-                            "Mission is a success! All high value rooms cleared and data obtained. Moving on to other sections of facility.:\n\n",
+                            "Mission is a success!",
+                            "\n",
+                            "All high value rooms cleared and data obtained. Moving on to other sections of facility...\n",
                             "\n",
                             "Success code: PL91BW"
                         ], breakLine: true });
                     } else {
                         session.output.push({ output: true, text: [
                             "\n",
-                            "Success conditions not met, continue mission and clear all rooms."
+                            "Success conditions not met, continue mission and clear all rooms.",
+                            "\n",
+                            "To check the status of the doors we need to crack, use the 'stinger-str list' command"
                         ], breakLine: true });
                     }
                     break;
@@ -1332,7 +1336,7 @@
                         "\n",
                         "Door_2 : " + door_2.get_complete(),
                         "\n",
-                        "Door_3 : " + door_2.get_complete()
+                        "Door_3 : " + door_3.get_complete()
                     ], breakLine: true });
                     break;
                 default:
