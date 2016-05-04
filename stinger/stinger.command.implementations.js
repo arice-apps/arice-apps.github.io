@@ -228,7 +228,7 @@
 
         var me = {};
         me.command = 'stinger-cd';
-        me.description = ['Changes directory to access an infected computer system.', 
+        me.description = ['Changes directory to access an infected computer system.',
                             "Example: stinger-cd company-1 or stinger-cd company-1 DirectoryName",
                             "See a list of infected systems by typing 'stinger-ls'"];
 
@@ -933,7 +933,7 @@
                             }
                             break;
                         default:
-                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
+                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again.","Use <help stinger-str> to get info on available commands."], breakLine: true});
                             break;
 
                     }
@@ -1020,7 +1020,7 @@
                             }
                             break;
                         default:
-                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
+                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again.","Use <help stinger-str> to get info on available commands."], breakLine: true});
                             break;
                     }
                     break;
@@ -1056,7 +1056,7 @@
                     ], breakLine: true });
                     break;
                 default:
-                    session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
+                    session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again.","Use <help stinger-str> to get info on available commands."], breakLine: true});
                     break;
             }
         };
