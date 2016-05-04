@@ -1009,7 +1009,7 @@
                                     "Cable attachment detected, downloading data...\n",
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
-                                    "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HASKELL"
+                                    "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HASKIN"
                                 ], breakLine: true });
                             } else {
                                 session.output.push({ output: true, text: [
