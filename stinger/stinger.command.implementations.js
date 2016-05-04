@@ -933,7 +933,7 @@
                             }
                             break;
                         default:
-                            console.log("Error with command!");
+                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
                             break;
 
                     }
@@ -1020,7 +1020,7 @@
                             }
                             break;
                         default:
-                            console.log("Error with command!");
+                            session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
                             break;
                     }
                     break;
@@ -1056,7 +1056,7 @@
                     ], breakLine: true });
                     break;
                 default:
-                    console.log("Error with command!");
+                    session.output.push({output: true, text: ["There was an error with your command! Check syntax and try again."], breakLine: true});
                     break;
             }
         };
