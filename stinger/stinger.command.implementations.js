@@ -873,6 +873,9 @@
 
 
         me.handle = function (session, param1, param2, param3) {
+            makeLower(param1);
+            makeLower(param2);
+            makeLower(param3);
 
             switch(param1) {
                 // Door hack command
@@ -939,7 +942,7 @@
                 case "login":
                     switch(param2) {
                         case "door_1":
-                            if (param3 === door_1.plaintext) {
+                            if (makeLower(param3) === makeLower(door_1.plaintext)) {
                                 // Set door as completed here
                                 door_1.set_complete(true);
                                 session.output.push({ output: true, text: [
@@ -956,10 +959,16 @@
                                     "\n",
                                     "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HILSHIRE"
                                 ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door password was incorrect...\n",
+                                    "Evaluate other passwords or decryption methods and try again."
+                                ], breakLine: true });
                             }
                             break;
                         case "door_2":
-                            if (param3 === door_2.plaintext) {
+                            if (makeLower(param3) === makeLower(door_2.plaintext)) {
                                 // Set door as completed here
                                 door_2.set_complete(true);
                                 session.output.push({ output: true, text: [
@@ -976,10 +985,16 @@
                                     "\n",
                                     "Data exfiltration complete! Exit command sent. Extracted supervising officer name: CROFTMORE"
                                 ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door password was incorrect...\n",
+                                    "Evaluate other passwords or decryption methods and try again."
+                                ], breakLine: true });
                             }
                             break;
                         case "door_3":
-                            if (param3 === door_3.plaintext) {
+                            if (makeLower(param3) === makeLower(door_3.plaintext)) {
                                 // Set door as completed here
                                 door_3.set_complete(true);
                                 session.output.push({ output: true, text: [
@@ -995,6 +1010,12 @@
                                     "[0%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>100%]\n",
                                     "\n",
                                     "Data exfiltration complete! Exit command sent. Extracted supervising officer name: HASKELL"
+                                ], breakLine: true });
+                            } else {
+                                session.output.push({ output: true, text: [
+                                    "\n",
+                                    "Door password was incorrect...\n",
+                                    "Evaluate other passwords or decryption methods and try again."
                                 ], breakLine: true });
                             }
                             break;
