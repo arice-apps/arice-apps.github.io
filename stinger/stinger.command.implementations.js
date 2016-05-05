@@ -867,8 +867,9 @@
             "\n",
             "Example: stinger-str list",
             "Example: stinger-str imp <door_id>",
+            "Example: stinger-str imp <door_id> --deep (--deep flag could produce hints for decryption)",
             "Example: stinger-str login <door_id> <password>",
-            "Example: stinger-str op-complete"
+            "Example: stinger-str op-complete (checks success params and gives back success code)"
         ];
 
 
